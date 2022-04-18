@@ -3,11 +3,10 @@ package zadatak1;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class Prodavnica {
 
-	private Scanner scanner = new Scanner(System.in);
+	UnosPodatka unosPodatka = new UnosPodatka();
 
 	public Prodavnica() {
 		super();
@@ -17,14 +16,16 @@ public class Prodavnica {
 		Prodavnica prodavnica = new Prodavnica();
 		ArrayList<Artikal> listaArtikala = new ArrayList<>();
 		int br = -1;
+		
 		while (br != 0) {
 			System.out.println("Unesite opciju");
-			br = prodavnica.scanner.nextInt();
+			br = prodavnica.unosPodatka.unosInt();
 			if (br == 1)
+				
 				listaArtikala.add(prodavnica.unosNovogArtikla());
 			else if (br == 2) {
 				System.out.println("Unesite broj artikla u listi:");
-				int index = prodavnica.scanner.nextInt();
+				int index = prodavnica.unosPodatka.unosInt();
 				prodavnica.izmenaPodatka(listaArtikala.get(index));
 			} else if (br == 3) {
 				prodavnica.ispisPodataka(listaArtikala);
@@ -34,23 +35,24 @@ public class Prodavnica {
 				Collections.sort(listaArtikala, new SortByNaziv());
 				prodavnica.ispisListe(listaArtikala);
 
-				Collections.sort(listaArtikala, Collections.reverseOrder());
+				Collections.sort(listaArtikala, Collections.reverseOrder(new SortByNaziv()));
 				prodavnica.ispisListe(listaArtikala);
 
 				Collections.sort(listaArtikala, new SortByCeni());
 				prodavnica.ispisListe(listaArtikala);
 
-				Collections.sort(listaArtikala, Collections.reverseOrder());
+				Collections.sort(listaArtikala, Collections.reverseOrder(new SortByCeni()));
 				prodavnica.ispisListe(listaArtikala);
 
 				Collections.sort(listaArtikala, new SortByKategorija());
 				prodavnica.ispisListe(listaArtikala);
 
-				Collections.sort(listaArtikala, Collections.reverseOrder());
+				Collections.sort(listaArtikala, Collections.reverseOrder(new SortByKategorija()));
 				prodavnica.ispisListe(listaArtikala);
 
 			}
 		}
+		
 
 	}
 
@@ -60,43 +62,56 @@ public class Prodavnica {
 		System.out.println();
 	}
 
-	public Artikal unosNovogArtikla() {
-		Scanner scanner = new Scanner(System.in);
+	public Artikal unosNovogArtikla()  {
+		
+		
 		Artikal artikal = new Artikal();
 		
 		System.out.println("Unesite sifru:");
-		artikal.setSifra(scanner.nextLine());
+		artikal.setSifra(unosPodatka.unosString());
+		
 		System.out.println("Unesite naziv");
-		artikal.setNaziv(scanner.nextLine());
+		artikal.setNaziv(unosPodatka.unosString());
+		
 		System.out.println("Unesite cenu");
-		artikal.setCena(scanner.nextDouble());
+		artikal.setCena(unosPodatka.unosDouble());
+		
 		System.out.println("Unosite raspolozivu kolicinu");
-		artikal.setRaspoloziva_kolicina(scanner.nextInt());
+		artikal.setRaspoloziva_kolicina(unosPodatka.unosInt());
+		
 		System.out.println("Unesite opis");
-		artikal.setOpis(scanner.nextLine());
+		artikal.setOpis(unosPodatka.unosString());
+		
+		
 		System.out.println("Unesite kategoriju");
-		artikal.setKategorija(scanner.nextLine());
-		scanner.close();
+		artikal.setKategorija(unosPodatka.unosString());
+		
 		return artikal;
+		
 	}
 
 	public void izmenaPodatka(Artikal artikal) {
 		int br = -1;
+		
 		while (br != 0) {
 			System.out.println("Unesite opciju");
+			br = unosPodatka.unosInt();
 			if (br == 1) {
-				artikal.setSifra(scanner.nextLine());
+				artikal.setSifra(unosPodatka.unosString());
 			} else if (br == 2) {
-				artikal.setNaziv(scanner.nextLine());
+				artikal.setNaziv(unosPodatka.unosString());
 			}
 
 		}
+		
 	}
 
 	public void ispisPodataka(ArrayList<Artikal> lista) {
 		System.out.println("Ispis podataka, odaberite opciju:");
 		int br = -1;
-		while (br == 0) {
+		
+		while (br != 0) {
+			br = unosPodatka.unosInt();
 			if (br == 1) {
 				for (int i = 0; i < lista.size(); i++) {
 					System.out.println(i + 1 + " : " + lista.get(i));
@@ -107,7 +122,7 @@ public class Prodavnica {
 				}
 			} else if (br == 3) {
 				System.out.println("Unesite artikal");
-				String kategorija = scanner.nextLine();
+				String kategorija = unosPodatka.unosString();
 				for (Artikal artikal : lista) {
 					if (artikal.getKategorija().equalsIgnoreCase(kategorija)) {
 						System.out.println(artikal);
@@ -115,6 +130,7 @@ public class Prodavnica {
 				}
 			}
 		}
+		
 	}
 
 }
