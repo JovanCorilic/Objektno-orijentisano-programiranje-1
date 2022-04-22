@@ -18,7 +18,7 @@ public class Prodavnica {
 		int br = -1;
 		
 		while (br != 0) {
-			System.out.println("Unesite opciju");
+			System.out.println("Unesite opciju šðæžè");
 			br = prodavnica.unosPodatka.unosInt();
 			if (br == 1)
 				
