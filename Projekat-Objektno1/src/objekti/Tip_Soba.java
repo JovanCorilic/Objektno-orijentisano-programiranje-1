@@ -18,7 +18,15 @@ public class Tip_Soba extends Soba {
 
 	@Override
 	public String toString() {
-		return naziv_tipa + "," + brojSobe + "," + status;
+		return naziv_tipa + "|" + brojSobe + "|" + status;
 	}
+
+	public Tip_Soba(String text) {
+		super(text);
+		String[] lista = text.split("|");
+		this.naziv_tipa = lista[0];
+	}
+	
+	
 
 }

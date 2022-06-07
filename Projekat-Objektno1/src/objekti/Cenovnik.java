@@ -9,18 +9,18 @@ public class Cenovnik {
 	private double cena;
 	private LocalDateTime pocetakVazenja;
 	private LocalDateTime krajVazenja;
-	private Tip_Soba soba;
-	private Dodatne_Usluge_Hotela dodatne_Usluge_Hotela;
+	private int broj_sobe;
+	private String dodatna_usluga_hotela;
 
-	public Cenovnik(String naziv, double cena, LocalDateTime pocetakVazenja, LocalDateTime krajVazenja, Tip_Soba soba,
-			Dodatne_Usluge_Hotela dodatne_Usluge_Hotela) {
+	public Cenovnik(String naziv, double cena, LocalDateTime pocetakVazenja, LocalDateTime krajVazenja, int soba,
+			String dodatne_Usluge_Hotela) {
 		super();
 		this.naziv = naziv;
 		this.cena = cena;
 		this.pocetakVazenja = pocetakVazenja;
 		this.krajVazenja = krajVazenja;
-		this.soba = soba;
-		this.dodatne_Usluge_Hotela = dodatne_Usluge_Hotela;
+		this.broj_sobe = soba;
+		this.dodatna_usluga_hotela = dodatne_Usluge_Hotela;
 	}
 
 	public String getNaziv() {
@@ -55,25 +55,39 @@ public class Cenovnik {
 		this.krajVazenja = krajVazenja;
 	}
 
-	public Tip_Soba getSoba() {
-		return soba;
+	
+	public int getBroj_sobe() {
+		return broj_sobe;
 	}
 
-	public void setSoba(Tip_Soba soba) {
-		this.soba = soba;
+	public void setBroj_sobe(int broj_sobe) {
+		this.broj_sobe = broj_sobe;
 	}
 
-	public Dodatne_Usluge_Hotela getDodatne_Usluge_Hotela() {
-		return dodatne_Usluge_Hotela;
+	public String getDodatna_usluga_hotela() {
+		return dodatna_usluga_hotela;
 	}
 
-	public void setDodatne_Usluge_Hotela(Dodatne_Usluge_Hotela dodatne_Usluge_Hotela) {
-		this.dodatne_Usluge_Hotela = dodatne_Usluge_Hotela;
+	public void setDodatna_usluga_hotela(String dodatna_usluga_hotela) {
+		this.dodatna_usluga_hotela = dodatna_usluga_hotela;
 	}
+
+	
 
 	@Override
 	public String toString() {
-		return naziv + "," + cena + "," + KonverterDatum.konvertovanjeUString(pocetakVazenja) + "," + KonverterDatum.konvertovanjeUString(krajVazenja) + "," + soba + "," + dodatne_Usluge_Hotela;
+		return naziv + "|" + cena + "|" + KonverterDatum.konvertovanjeUString(pocetakVazenja) + "|"
+	+ KonverterDatum.konvertovanjeUString(krajVazenja) + "|" + broj_sobe + "|" + dodatna_usluga_hotela;
+	}
+	
+	public Cenovnik(String text) {
+		String[] lista = text.split("|");
+		this.naziv = lista[0];
+		this.cena = Double.parseDouble(lista[1]);
+		this.pocetakVazenja=KonverterDatum.konvertovanjeUDateTime(lista[2]);
+		this.krajVazenja=KonverterDatum.konvertovanjeUDateTime(lista[3]);
+		this.broj_sobe = Integer.parseInt(lista[4]);
+		this.dodatna_usluga_hotela = lista[5];
 	}
 
 }

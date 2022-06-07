@@ -9,19 +9,21 @@ public class KonverterDatum {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 		return temp.format(dateTimeFormatter);
 	}
+
 	public static LocalDateTime konvertovanjeUDateTime(String temp) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-		LocalDateTime parse = LocalDateTime.parse(temp,dateTimeFormatter);
+		LocalDateTime parse = LocalDateTime.parse(temp, dateTimeFormatter);
 		return parse;
 	}
-	
+
 	public static String konvertovanjeSamoDatumUString(LocalDate temp) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 		return temp.format(dateTimeFormatter);
 	}
-	public static LocalDate konvertovanjeSamoDatumUDateTime(String temp) {
+
+	public static LocalDate konvertovanjeSamoDatumUDate(String temp) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-		LocalDate parse = LocalDate.parse(temp,dateTimeFormatter);
+		LocalDate parse = LocalDate.parse(temp, dateTimeFormatter);
 		return parse;
 	}
 
