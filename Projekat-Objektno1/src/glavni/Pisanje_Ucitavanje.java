@@ -88,4 +88,48 @@ public class Pisanje_Ucitavanje {
 		br.close();
 		return mapa;
 	}
+	
+	public static HashMap<String, Zaposlen> UcitavanjeZaposleni() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("zaposleni.csv"));
+		String currentLine;
+		HashMap<String, Zaposlen>mapa = new HashMap<>();
+		while((currentLine=br.readLine())!=null) {
+			mapa.put(currentLine.split("|")[0], new Zaposlen(currentLine));
+		}
+		br.close();
+		return mapa;
+	}
+	
+	public static HashMap<String, Korisnik> UcitavanjeGosti() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("gosti.csv"));
+		String currentLine;
+		HashMap<String, Korisnik>mapa = new HashMap<>();
+		while((currentLine=br.readLine())!=null) {
+			mapa.put(currentLine.split("|")[0], new Korisnik(currentLine));
+		}
+		br.close();
+		return mapa;
+	}
+	
+	public static HashMap<String, Rezervacija> UcitavanjeRezervacije() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("rezervacije.csv"));
+		String currentLine;
+		HashMap<String, Rezervacija>mapa = new HashMap<>();
+		while((currentLine=br.readLine())!=null) {
+			mapa.put(currentLine.split("|")[0], new Rezervacija(currentLine));
+		}
+		br.close();
+		return mapa;
+	}
+	
+	public static HashMap<String, Tip_Soba> UcitavanjeSobe() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("sobe.csv"));
+		String currentLine;
+		HashMap<String, Tip_Soba>mapa = new HashMap<>();
+		while((currentLine=br.readLine())!=null) {
+			mapa.put(currentLine.split("|")[0], new Tip_Soba(currentLine));
+		}
+		br.close();
+		return mapa;
+	}
 }
