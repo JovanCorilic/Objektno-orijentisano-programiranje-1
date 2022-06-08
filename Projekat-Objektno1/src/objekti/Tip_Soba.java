@@ -26,7 +26,5 @@ public class Tip_Soba extends Soba {
 		String[] lista = text.split("|");
 		this.naziv_tipa = lista[0];
 	}
-	
-	
 
 }

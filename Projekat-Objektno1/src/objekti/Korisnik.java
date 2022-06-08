@@ -26,18 +26,18 @@ public class Korisnik {
 		this.telefon = telefon;
 		this.adresa = adresa;
 	}
-	
+
 	public Korisnik(String text) {
 		// TODO Auto-generated constructor stub
 		String[] lista = text.split("|");
 		this.email = lista[0];
-		this.lozinka =lista[1];
-		this.ime=lista[2];
-		this.prezime=lista[3];
-		this.pol=lista[4];
-		this.datumRodjenja=KonverterDatum.konvertovanjeSamoDatumUDate(lista[5]);
-		this.telefon=lista[6];
-		this.adresa=lista[7];
+		this.lozinka = lista[1];
+		this.ime = lista[2];
+		this.prezime = lista[3];
+		this.pol = lista[4];
+		this.datumRodjenja = KonverterDatum.konvertovanjeSamoDatumUDate(lista[5]);
+		this.telefon = lista[6];
+		this.adresa = lista[7];
 	}
 
 	public String getEmail() {
@@ -106,9 +106,8 @@ public class Korisnik {
 
 	@Override
 	public String toString() {
-		return email + "|" + lozinka + "|" + ime + "|" + prezime + "|" + pol + "|" 
-	+ KonverterDatum.konvertovanjeSamoDatumUString(datumRodjenja) + "|" + telefon + "|"
-				+ adresa;
+		return email + "|" + lozinka + "|" + ime + "|" + prezime + "|" + pol + "|"
+				+ KonverterDatum.konvertovanjeSamoDatumUString(datumRodjenja) + "|" + telefon + "|" + adresa;
 	}
 
 }

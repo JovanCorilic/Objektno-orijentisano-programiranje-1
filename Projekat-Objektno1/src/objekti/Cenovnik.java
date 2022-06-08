@@ -55,7 +55,6 @@ public class Cenovnik {
 		this.krajVazenja = krajVazenja;
 	}
 
-	
 	public int getBroj_sobe() {
 		return broj_sobe;
 	}
@@ -72,20 +71,18 @@ public class Cenovnik {
 		this.dodatna_usluga_hotela = dodatna_usluga_hotela;
 	}
 
-	
-
 	@Override
 	public String toString() {
 		return naziv + "|" + cena + "|" + KonverterDatum.konvertovanjeUString(pocetakVazenja) + "|"
-	+ KonverterDatum.konvertovanjeUString(krajVazenja) + "|" + broj_sobe + "|" + dodatna_usluga_hotela;
+				+ KonverterDatum.konvertovanjeUString(krajVazenja) + "|" + broj_sobe + "|" + dodatna_usluga_hotela;
 	}
-	
+
 	public Cenovnik(String text) {
 		String[] lista = text.split("|");
 		this.naziv = lista[0];
 		this.cena = Double.parseDouble(lista[1]);
-		this.pocetakVazenja=KonverterDatum.konvertovanjeUDateTime(lista[2]);
-		this.krajVazenja=KonverterDatum.konvertovanjeUDateTime(lista[3]);
+		this.pocetakVazenja = KonverterDatum.konvertovanjeUDateTime(lista[2]);
+		this.krajVazenja = KonverterDatum.konvertovanjeUDateTime(lista[3]);
 		this.broj_sobe = Integer.parseInt(lista[4]);
 		this.dodatna_usluga_hotela = lista[5];
 	}

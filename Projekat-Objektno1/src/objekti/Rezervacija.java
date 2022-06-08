@@ -75,8 +75,6 @@ public class Rezervacija {
 	public void setDatumKraja(LocalDateTime datumKraja) {
 		this.datumKraja = datumKraja;
 	}
-	
-	
 
 	public int getBroj_sobe() {
 		return broj_sobe;
@@ -93,8 +91,6 @@ public class Rezervacija {
 	public void setEmail_gosta(String email_gosta) {
 		this.email_gosta = email_gosta;
 	}
-	
-	
 
 	public String getBroj_pasosa() {
 		return broj_pasosa;
@@ -106,8 +102,9 @@ public class Rezervacija {
 
 	@Override
 	public String toString() {
-		return status + "|" + KonverterDatum.konvertovanjeUString(datumPocetka) + "|" 
-	+ KonverterDatum.konvertovanjeUString(datumKraja)+"|"+broj_sobe+"|"+email_gosta+"|"+broj_pasosa;
+		return status + "|" + KonverterDatum.konvertovanjeUString(datumPocetka) + "|"
+				+ KonverterDatum.konvertovanjeUString(datumKraja) + "|" + broj_sobe + "|" + email_gosta + "|"
+				+ broj_pasosa;
 	}
 
 }

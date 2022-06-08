@@ -28,11 +28,11 @@ public class Soba {
 		this.brojSobe = brojSobe;
 		this.status = status;
 	}
-	
+
 	public Soba(String text) {
 		// TODO Auto-generated constructor stub
 		String[] lista = text.split("|");
-		this.brojSobe=Integer.parseInt(lista[1]);
+		this.brojSobe = Integer.parseInt(lista[1]);
 		this.status = lista[2];
 	}
 

@@ -25,7 +25,7 @@ public class Dodatne_Usluge_Hotela {
 	public void setDeskripcija(String deskripcija) {
 		this.deskripcija = deskripcija;
 	}
-	
+
 	public Dodatne_Usluge_Hotela(String text) {
 		// TODO Auto-generated constructor stub
 		String[] lista = text.split("|");
