@@ -12,13 +12,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import gui.GlavniProzor;
+
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Hello World!");
-		System.out.println(KonverterDatum.konvertovanjeSamoDatumUString(LocalDate.now()));
-		System.out.println(KonverterDatum.konvertovanjeUString(LocalDateTime.now()));
+		GlavniProzor glavniProzor = new GlavniProzor();
+		glavniProzor.setVisible(true);
 		
 		
 	}
