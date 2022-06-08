@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,10 @@ public class SviCenovniciProzor extends JFrame {
 	public SviCenovniciProzor(HashMap<String, Cenovnik> mapa) {
 		setTitle("Svi cenovnici");
 		// kliknuti na celiju da se edituje
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension dimension = toolkit.getScreenSize();
+		setSize(400, 400);
+		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Kliknuti na celiju da se edituje");
 		JButton createNew = new JButton("Create new");
 		JPanel jPanel = new JPanel();
@@ -34,7 +40,7 @@ public class SviCenovniciProzor extends JFrame {
 		String[][] data = new String[mapa.size()][7];
 		int br = 0;
 		for (Cenovnik temp : mapa.values()) {
-			String[] lista = temp.toString().split("|");
+			String[] lista = temp.toString().split("\\|");
 			for (int i = 0; i < lista.length; i++) {
 				data[br][i] = lista[i];
 			}
@@ -42,19 +48,27 @@ public class SviCenovniciProzor extends JFrame {
 			br++;
 		}
 		
-		JTable jTable = new JTable(data,zaglavlja);
+		DefaultTableModel defaultTableModel = new DefaultTableModel(data,zaglavlja);
+		JTable jTable = new JTable(defaultTableModel);
 		Action delete = new AbstractAction() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTable jTable = (JTable)e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
-				((DefaultTableModel)jTable.getModel()).removeRow(modelRow);
+				mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
+				//mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+				
 				
 			}
 		};
 		Button deleteButton = new Button("Delete");
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 7);
+		try {
+		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 6);
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 		

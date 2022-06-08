@@ -73,7 +73,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Cenovnik> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Cenovnik(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Cenovnik(currentLine));
 		}
 		br.close();
 		return mapa;
@@ -84,7 +84,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Dodatne_Usluge_Hotela> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Dodatne_Usluge_Hotela(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Dodatne_Usluge_Hotela(currentLine));
 		}
 		br.close();
 		return mapa;
@@ -95,7 +95,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Zaposlen> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Zaposlen(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Zaposlen(currentLine));
 		}
 		br.close();
 		return mapa;
@@ -106,7 +106,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Korisnik> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Korisnik(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Korisnik(currentLine));
 		}
 		br.close();
 		return mapa;
@@ -117,7 +117,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Rezervacija> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Rezervacija(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Rezervacija(currentLine));
 		}
 		br.close();
 		return mapa;
@@ -128,7 +128,7 @@ public class Pisanje_Ucitavanje {
 		String currentLine;
 		HashMap<String, Tip_Soba> mapa = new HashMap<>();
 		while ((currentLine = br.readLine()) != null) {
-			mapa.put(currentLine.split("|")[0], new Tip_Soba(currentLine));
+			mapa.put(currentLine.split("\\|")[0], new Tip_Soba(currentLine));
 		}
 		br.close();
 		return mapa;

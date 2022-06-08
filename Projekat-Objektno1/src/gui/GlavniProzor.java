@@ -41,6 +41,7 @@ public class GlavniProzor extends JFrame {
 						JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION)
 					dispose();
+				
 			}
 
 		});
