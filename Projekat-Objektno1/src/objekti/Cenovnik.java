@@ -11,6 +11,37 @@ public class Cenovnik {
 	private LocalDateTime krajVazenja;
 	private int broj_sobe;
 	private String dodatna_usluga_hotela;
+	
+	public void unosObjekta(int column, String object) throws Exception {
+		switch (column) {
+		case 0:
+			naziv = object;
+			break;
+		case 1:
+			cena = Integer.parseInt(object);
+			break;
+		case 2:
+			LocalDateTime dateTime = KonverterDatum.konvertovanjeUDateTime(object);
+			if(dateTime.isAfter(krajVazenja))
+				throw new Exception();
+			pocetakVazenja = dateTime;
+			break;
+		case 3:
+			LocalDateTime dateTime2 = KonverterDatum.konvertovanjeUDateTime(object);
+			if(dateTime2.isBefore(pocetakVazenja))
+				throw new Exception();
+			krajVazenja = dateTime2;
+			break;
+		case 4:
+			broj_sobe = Integer.parseInt(object);
+			break;
+		case 5:
+			dodatna_usluga_hotela = object;
+			break;
+		default:
+			break;
+		}
+	}
 
 	public Cenovnik(String naziv, double cena, LocalDateTime pocetakVazenja, LocalDateTime krajVazenja, int soba,
 			String dodatne_Usluge_Hotela) {

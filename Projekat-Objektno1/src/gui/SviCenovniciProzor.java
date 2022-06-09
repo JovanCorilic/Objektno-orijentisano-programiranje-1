@@ -88,13 +88,14 @@ public class SviCenovniciProzor extends JFrame {
 			public void editingStopped(ChangeEvent e) {
 				try {
 
-				final DefaultCellEditor temp = (DefaultCellEditor) e.getSource();
+				final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 				final int row = jTable.getSelectedRow();
 				final int column = jTable.getSelectedColumn();
-				System.out.println(temp.getCellEditorValue() + " " + row + " " + column);
-				String temp2 = temp.getCellEditorValue().toString();
-				final String veluaAtCell = (String)jTable.getValueAt(row, 0);
-				mapa.get(veluaAtCell).setBroj_sobe(Integer.parseInt(temp2));
+				
+				String temp2 = defaultCellEditor.getCellEditorValue().toString();
+				final String kljuc = (String)jTable.getValueAt(row, 0);
+				
+				mapa.get(kljuc).unosObjekta(column, temp2);
 				}
 				catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
