@@ -29,7 +29,7 @@ public class GlavniProzor extends JFrame {
 		setTitle("Glavni Prozor");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
-		setSize(dimension.width, dimension.height);
+		setSize(400, 400);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

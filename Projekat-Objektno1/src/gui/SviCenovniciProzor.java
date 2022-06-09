@@ -5,36 +5,48 @@ import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import objekti.Cenovnik;
 
 public class SviCenovniciProzor extends JFrame {
+	private String cuvanje;
+	
 	public SviCenovniciProzor(HashMap<String, Cenovnik> mapa) {
 		setTitle("Svi cenovnici");
 		// kliknuti na celiju da se edituje
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
-		setSize(400, 400);
+		setSize(600, 400);
 		setLocationRelativeTo(null);
-		JLabel jLabel = new JLabel("Kliknuti na celiju da se edituje");
+		JLabel jLabel = new JLabel("Dupli klik na celiju da se edituje");
 		JButton createNew = new JButton("Create new");
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
-
+		
 		String[] zaglavlja = new String[] { "Naziv", "Cena", "Poèetak važenja", "Kraj važenja", "Broj sobe",
 				"Dodatna usluga hotela", "Brisanje" };
 		String[][] data = new String[mapa.size()][7];
@@ -48,29 +60,78 @@ public class SviCenovniciProzor extends JFrame {
 			br++;
 		}
 		
-		DefaultTableModel defaultTableModel = new DefaultTableModel(data,zaglavlja);
+		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
 		JTable jTable = new JTable(defaultTableModel);
+
 		Action delete = new AbstractAction() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JTable jTable = (JTable)e.getSource();
+				JTable jTable = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
 				mapa.remove(jTable.getValueAt(modelRow, 0).toString());
 				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
-				//mapa.remove(jTable.getValueAt(modelRow, 0).toString());
-				
-				
+				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+
 			}
 		};
 		Button deleteButton = new Button("Delete");
-		try {
+
 		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 6);
-		}catch (Exception e) {
-			// TODO: handle exception
+
+		jTable.setCellSelectionEnabled(true);
+
+		DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField());
+		cellEditor.addCellEditorListener(new CellEditorListener() {
+
+			@Override
+			public void editingStopped(ChangeEvent e) {
+				try {
+
+				final DefaultCellEditor temp = (DefaultCellEditor) e.getSource();
+				final int row = jTable.getSelectedRow();
+				final int column = jTable.getSelectedColumn();
+				System.out.println(temp.getCellEditorValue() + " " + row + " " + column);
+				String temp2 = temp.getCellEditorValue().toString();
+				final String veluaAtCell = (String)jTable.getValueAt(row, 0);
+				mapa.get(veluaAtCell).setBroj_sobe(Integer.parseInt(temp2));
+				}
+				catch (Exception e2) {
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(cuvanje, row, column);
+				}
+			}
+
+			@Override
+			public void editingCanceled(ChangeEvent e) {
+				
+
+			}
+		});
+
+		for (int i = 0; i < jTable.getColumnCount(); i++) {
+			jTable.setDefaultEditor(jTable.getColumnClass(i), cellEditor);
 		}
+
+		jTable.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				final JTable jTable = (JTable) e.getSource();
+				final int row = jTable.getSelectedRow();
+				final int column = jTable.getSelectedColumn();
+				final String valueInCell = (String) jTable.getValueAt(row, column);
+				cuvanje = (String) jTable.getValueAt(row, column);
+
+			}
+
+		});
+
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
-		
+
 	}
+
 }
