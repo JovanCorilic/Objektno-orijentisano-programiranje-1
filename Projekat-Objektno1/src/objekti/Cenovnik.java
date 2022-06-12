@@ -18,7 +18,7 @@ public class Cenovnik {
 			naziv = object;
 			break;
 		case 1:
-			cena = Integer.parseInt(object);
+			cena = Double.parseDouble(object);
 			break;
 		case 2:
 			LocalDateTime dateTime = KonverterDatum.konvertovanjeUDateTime(object);
@@ -41,6 +41,10 @@ public class Cenovnik {
 		default:
 			break;
 		}
+	}
+	
+	public Cenovnik() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Cenovnik(String naziv, double cena, LocalDateTime pocetakVazenja, LocalDateTime krajVazenja, int soba,

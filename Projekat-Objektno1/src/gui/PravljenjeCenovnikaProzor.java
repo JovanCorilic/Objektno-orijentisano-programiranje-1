@@ -15,34 +15,35 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.plaf.OptionPaneUI;
 
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Tip_Soba;
 
-public class PravljenjeCenovnikaProzor extends JFrame{
+public class PravljenjeCenovnikaProzor extends JFrame {
 	public PravljenjeCenovnikaProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje cenovnika");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
 		setSize(700, 200);
 		setLocationRelativeTo(null);
-		
-		/*setLayout(new GridBagLayout());
-		GridBagConstraints bagConstraints = new GridBagConstraints();
-		JLabel jLabel1 = new JLabel("Testiranje");
-		bagConstraints.gridx=0;
-		bagConstraints.gridy=0;
-		bagConstraints.insets=new Insets(10, 10, 10, 10);
-		add(jLabel1,bagConstraints);*/
-		
-		setLayout(new GridLayout(7,2));
+
+		/*
+		 * setLayout(new GridBagLayout()); GridBagConstraints bagConstraints = new
+		 * GridBagConstraints(); JLabel jLabel1 = new JLabel("Testiranje");
+		 * bagConstraints.gridx=0; bagConstraints.gridy=0; bagConstraints.insets=new
+		 * Insets(10, 10, 10, 10); add(jLabel1,bagConstraints);
+		 */
+
+		setLayout(new GridLayout(7, 2));
 		add(new JLabel("Naziv"));
 		JTextArea areaNaziv = new JTextArea();
-		//areaNaziv.setSize(20,20);
+		// areaNaziv.setSize(20,20);
 		add(areaNaziv);
 		add(new JLabel("Cena"));
 		JTextArea areacena = new JTextArea();
@@ -59,33 +60,50 @@ public class PravljenjeCenovnikaProzor extends JFrame{
 		add(new JLabel("Dodatna usluga hotela"));
 		JTextArea areadodatna_usluga_hotela = new JTextArea();
 		add(areadodatna_usluga_hotela);
-		
+
 		JButton buttonSave = new JButton("Napravi");
 		buttonSave.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				try {
+					Cenovnik cenovnik = new Cenovnik();
+
+					cenovnik.unosObjekta(0, areaNaziv.getText());
+					cenovnik.unosObjekta(1, areacena.getText());
+					cenovnik.unosObjekta(2, areapocetakVazenja.getText());
+					cenovnik.unosObjekta(3, areakrajVazenja.getText());
+					cenovnik.unosObjekta(4, areabroj_sobe.getText());
+					cenovnik.unosObjekta(5, areadodatna_usluga_hotela.getText());
+					
+					bazaObjekata.getMapaCenovnik().put(cenovnik.getNaziv(), cenovnik);
+
+					SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(bazaObjekata);
+					cenovniciProzor.setVisible(true);
+					dispose();
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!","Greška",JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 		});
-		
+
 		JButton buttonCancel = new JButton("Natrag");
-		
+
 		buttonCancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(bazaObjekata);
 				cenovniciProzor.setVisible(true);
 				dispose();
-				
+
 			}
 		});
-		/*JPanel jPanel = new JPanel();
-		jPanel.add(buttonSave);
-		jPanel.add(buttonCancel);
-		add(jPanel,BorderLayout.SOUTH);*/
+		/*
+		 * JPanel jPanel = new JPanel(); jPanel.add(buttonSave);
+		 * jPanel.add(buttonCancel); add(jPanel,BorderLayout.SOUTH);
+		 */
 		add(buttonSave);
 		add(buttonCancel);
 	}
