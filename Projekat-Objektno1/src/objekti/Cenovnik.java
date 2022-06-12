@@ -22,8 +22,9 @@ public class Cenovnik {
 			break;
 		case 2:
 			LocalDateTime dateTime = KonverterDatum.konvertovanjeUDateTime(object);
-			if(dateTime.isAfter(krajVazenja))
-				throw new Exception();
+			if(krajVazenja!=null)
+				if(dateTime.isAfter(krajVazenja))
+					throw new Exception();
 			pocetakVazenja = dateTime;
 			break;
 		case 3:
