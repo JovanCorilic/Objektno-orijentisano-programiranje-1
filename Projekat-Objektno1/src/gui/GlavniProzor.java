@@ -18,13 +18,14 @@ import javax.swing.JPanel;
 
 import glavni.Pisanje_Ucitavanje;
 import objekti.Cenovnik;
+import objekti.BazaObjekata;
 
 public class GlavniProzor extends JFrame {
 	private HashMap<String, Cenovnik>mapaCenovnik;
 	
-	public GlavniProzor() throws IOException {
+	public GlavniProzor(BazaObjekata bazaObjekata) throws IOException {
 		
-		ucitavanje();
+		ucitavanje(bazaObjekata);
 		
 		setTitle("Glavni Prozor");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -53,7 +54,7 @@ public class GlavniProzor extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(mapaCenovnik);
+				SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(bazaObjekata);
 				cenovniciProzor.setVisible(true);
 				
 			}
@@ -63,10 +64,10 @@ public class GlavniProzor extends JFrame {
 		add(jPanel);
 	}
 	
-	public void ucitavanje() throws IOException {
+	public void ucitavanje(BazaObjekata bazaObjekata) throws IOException {
 		//mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
-		mapaCenovnik = new HashMap<>();
+		
 		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), 12, "izmisljeno");
-		mapaCenovnik.put("test", cenovnik);
+		bazaObjekata.getMapaCenovnik().put("test", cenovnik);
 	}
 }

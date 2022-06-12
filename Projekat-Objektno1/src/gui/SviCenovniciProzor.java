@@ -29,12 +29,14 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import objekti.BazaObjekata;
 import objekti.Cenovnik;
 
 public class SviCenovniciProzor extends JFrame {
 	private String cuvanje;
-	
-	public SviCenovniciProzor(HashMap<String, Cenovnik> mapa) {
+
+	public SviCenovniciProzor(BazaObjekata bazaObjekata) {
+		HashMap<String, Cenovnik> mapa = bazaObjekata.getMapaCenovnik();
 		setTitle("Svi cenovnici");
 		// kliknuti na celiju da se edituje
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -43,22 +45,23 @@ public class SviCenovniciProzor extends JFrame {
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na celiju da se edituje");
 		JButton createNew = new JButton("Create new");
-		
+
 		createNew.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PravljenjeCenovnikaProzor pravljenjeCenovnikaProzor = new PravljenjeCenovnikaProzor();
+				PravljenjeCenovnikaProzor pravljenjeCenovnikaProzor = new PravljenjeCenovnikaProzor(bazaObjekata);
 				pravljenjeCenovnikaProzor.setVisible(true);
-				
+				dispose();
+
 			}
 		});
-		
+
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
-		
+
 		String[] zaglavlja = new String[] { "Naziv", "Cena", "Poèetak važenja", "Kraj važenja", "Broj sobe",
 				"Dodatna usluga hotela", "Brisanje" };
 		String[][] data = new String[mapa.size()][7];
@@ -71,7 +74,7 @@ public class SviCenovniciProzor extends JFrame {
 			data[br][lista.length] = "Delete";
 			br++;
 		}
-		
+
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
 		JTable jTable = new JTable(defaultTableModel);
 
@@ -100,16 +103,15 @@ public class SviCenovniciProzor extends JFrame {
 			public void editingStopped(ChangeEvent e) {
 				try {
 
-				final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
-				final int row = jTable.getSelectedRow();
-				final int column = jTable.getSelectedColumn();
-				
-				String temp2 = defaultCellEditor.getCellEditorValue().toString();
-				final String kljuc = (String)jTable.getValueAt(row, 0);
-				
-				mapa.get(kljuc).unosObjekta(column, temp2);
-				}
-				catch (Exception e2) {
+					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+
+					String temp2 = defaultCellEditor.getCellEditorValue().toString();
+					final String kljuc = (String) jTable.getValueAt(row, 0);
+
+					mapa.get(kljuc).unosObjekta(column, temp2);
+				} catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 					jTable.setValueAt(cuvanje, row, column);
@@ -118,7 +120,6 @@ public class SviCenovniciProzor extends JFrame {
 
 			@Override
 			public void editingCanceled(ChangeEvent e) {
-				
 
 			}
 		});
@@ -131,13 +132,15 @@ public class SviCenovniciProzor extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				final JTable jTable = (JTable) e.getSource();
-				final int row = jTable.getSelectedRow();
-				final int column = jTable.getSelectedColumn();
-				final String valueInCell = (String) jTable.getValueAt(row, column);
-				cuvanje = (String) jTable.getValueAt(row, column);
-
+				try {
+					final JTable jTable = (JTable) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					final String valueInCell = (String) jTable.getValueAt(row, column);
+					cuvanje = (String) jTable.getValueAt(row, column);
+				} catch (Exception e2) {
+					cuvanje = "";
+				}
 			}
 
 		});

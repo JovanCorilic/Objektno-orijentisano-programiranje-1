@@ -13,12 +13,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import gui.GlavniProzor;
+import objekti.BazaObjekata;
 
 public class Main {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		GlavniProzor glavniProzor = new GlavniProzor();
+		BazaObjekata bazaObjekata = new BazaObjekata();
+		bazaObjekata.ucitavanje();
+		
+		GlavniProzor glavniProzor = new GlavniProzor(bazaObjekata);
+		
+		
+		
 		glavniProzor.setVisible(true);
 		
 		

@@ -8,6 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,8 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 
+import objekti.BazaObjekata;
+import objekti.Cenovnik;
+import objekti.Tip_Soba;
+
 public class PravljenjeCenovnikaProzor extends JFrame{
-	public PravljenjeCenovnikaProzor() {
+	public PravljenjeCenovnikaProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje cenovnika");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
@@ -54,7 +61,27 @@ public class PravljenjeCenovnikaProzor extends JFrame{
 		add(areadodatna_usluga_hotela);
 		
 		JButton buttonSave = new JButton("Napravi");
+		buttonSave.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		
 		JButton buttonCancel = new JButton("Natrag");
+		
+		buttonCancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(bazaObjekata);
+				cenovniciProzor.setVisible(true);
+				dispose();
+				
+			}
+		});
 		/*JPanel jPanel = new JPanel();
 		jPanel.add(buttonSave);
 		jPanel.add(buttonCancel);
