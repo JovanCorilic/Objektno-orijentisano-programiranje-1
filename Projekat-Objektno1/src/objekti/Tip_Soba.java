@@ -1,11 +1,21 @@
 package objekti;
 
-public class Tip_Soba extends Soba {
-	private String naziv_tipa;
+import java.util.ArrayList;
 
-	public Tip_Soba(int brojSobe, String status, String naziv_tipa) {
-		super(brojSobe, status);
+public class Tip_Soba {
+	private String naziv_tipa;
+	private String deskripcija;
+
+	public Tip_Soba(String text) {
+		String[]lista = text.split("\\|");
+		this.naziv_tipa=lista[0];
+		this.deskripcija=lista[1];
+	}
+
+	public Tip_Soba(String naziv_tipa, String deskripcija) {
+		super();
 		this.naziv_tipa = naziv_tipa;
+		this.deskripcija = deskripcija;
 	}
 	
 	public Tip_Soba() {
@@ -22,13 +32,7 @@ public class Tip_Soba extends Soba {
 
 	@Override
 	public String toString() {
-		return naziv_tipa + "|" + brojSobe + "|" + status;
-	}
-
-	public Tip_Soba(String text) {
-		super(text);
-		String[] lista = text.split("|");
-		this.naziv_tipa = lista[0];
+		return naziv_tipa + "|" + deskripcija;
 	}
 
 }

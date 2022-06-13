@@ -13,6 +13,7 @@ import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
 import objekti.Korisnik;
 import objekti.Rezervacija;
+import objekti.Soba;
 import objekti.Tip_Soba;
 import objekti.Zaposlen;
 
@@ -58,12 +59,36 @@ public class Pisanje_Ucitavanje {
 		printWriter.close();
 	}
 
-	public static void PisanjeSobe(HashMap<Integer, Tip_Soba> mapa) throws IOException {
+	public static void PisanjeSobe(HashMap<Integer, Soba> mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("sobe.csv"), false);
-		for (Tip_Soba temp : mapa.values()) {
+		for (Soba temp : mapa.values()) {
 			printWriter.println(temp.toString());
 		}
 		printWriter.close();
+	}
+	
+	public static void PisanjeTipaSobe(ArrayList<Tip_Soba>lista) throws IOException {
+		PrintWriter printWriter = new PrintWriter(new FileWriter("tipSobe.csv"), false);
+		for (Tip_Soba temp : lista) {
+			printWriter.println(temp.toString());
+		}
+		printWriter.close();
+		
+	}
+	
+	public static ArrayList<Tip_Soba> UcitavanjeTipSobe() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("tipSobe.csv"));
+			String currentLine;
+			ArrayList<Tip_Soba> mapa = new ArrayList<>();
+			while ((currentLine = br.readLine()) != null) {
+				mapa.add(new Tip_Soba(currentLine));
+			}
+			br.close();
+			return mapa;
+		} catch (Exception e) {
+			return new ArrayList<>();
+		}
 	}
 
 	public static HashMap<String, Cenovnik> UcitavanjeCenovnik() throws IOException {
@@ -141,13 +166,13 @@ public class Pisanje_Ucitavanje {
 		}
 	}
 
-	public static HashMap<Integer, Tip_Soba> UcitavanjeSobe() throws IOException {
+	public static HashMap<Integer, Soba> UcitavanjeSobe() throws IOException {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("sobe.csv"));
 			String currentLine;
-			HashMap<Integer, Tip_Soba> mapa = new HashMap<>();
+			HashMap<Integer, Soba> mapa = new HashMap<>();
 			while ((currentLine = br.readLine()) != null) {
-				mapa.put(Integer.parseInt(currentLine.split("\\|")[0]), new Tip_Soba(currentLine));
+				mapa.put(Integer.parseInt(currentLine.split("\\|")[0]), new Soba(currentLine));
 			}
 			br.close();
 			return mapa;

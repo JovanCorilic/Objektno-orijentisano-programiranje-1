@@ -1,8 +1,9 @@
 package objekti;
 
 public class Soba {
-	protected int brojSobe;
-	protected String status;
+	private int brojSobe;
+	private String status;
+	private String tip_Soba;
 
 	public static enum Statusi {
 		ZAU("ZAUZETO"), SPR("SPREMANJE"), SLO("SLOBODNA");
@@ -22,22 +23,24 @@ public class Soba {
 		}
 
 	}
-	
+
 	public Soba() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Soba(int brojSobe, String status) {
+	public Soba(int brojSobe, String status, String tip_Soba) {
 		super();
 		this.brojSobe = brojSobe;
 		this.status = status;
+		this.tip_Soba = tip_Soba;
 	}
 
 	public Soba(String text) {
 		// TODO Auto-generated constructor stub
 		String[] lista = text.split("|");
-		this.brojSobe = Integer.parseInt(lista[1]);
-		this.status = lista[2];
+		this.brojSobe = Integer.parseInt(lista[0]);
+		this.status = lista[1];
+		this.tip_Soba = lista[2];
 	}
 
 	public int getBrojSobe() {
@@ -56,9 +59,17 @@ public class Soba {
 		this.status = status;
 	}
 
+	public String getTip_Soba() {
+		return tip_Soba;
+	}
+
+	public void setTip_Soba(String tip_Soba) {
+		this.tip_Soba = tip_Soba;
+	}
+
 	@Override
 	public String toString() {
-		return brojSobe + "|" + status;
+		return brojSobe + "|" + status + "|" + tip_Soba;
 	}
 
 }
