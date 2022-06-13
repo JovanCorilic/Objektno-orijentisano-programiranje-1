@@ -22,6 +22,10 @@ public class Soba {
 		}
 
 	}
+	
+	public Soba() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Soba(int brojSobe, String status) {
 		super();

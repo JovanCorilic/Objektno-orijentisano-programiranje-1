@@ -1,4 +1,4 @@
-package gui;
+package guiCenovnik;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -29,6 +29,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import gui.ButtonColumn;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 

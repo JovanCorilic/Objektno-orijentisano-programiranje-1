@@ -28,6 +28,10 @@ public class Zaposlen extends Korisnik {
 		}
 
 	}
+	
+	public Zaposlen() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public Zaposlen(String email, String lozinka, String ime, String prezime, String pol, LocalDate datumRodjenja,
 			String telefon, String adresa, String nivo_strucne_spreme, int godina_staza, Double plata,

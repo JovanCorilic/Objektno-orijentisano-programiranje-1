@@ -43,13 +43,14 @@ public class Rezervacija {
 	}
 
 	public Rezervacija(String status, LocalDateTime datumPocetka, LocalDateTime datumKraja, int broj_sobe,
-			String email_gosta) {
+			String email_gosta, String broj_pasosa) {
 		super();
 		this.status = status;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
 		this.broj_sobe = broj_sobe;
 		this.email_gosta = email_gosta;
+		this.broj_pasosa = broj_pasosa;
 	}
 
 	public String getStatus() {

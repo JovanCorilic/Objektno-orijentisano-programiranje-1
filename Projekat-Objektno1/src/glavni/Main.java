@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 import gui.GlavniProzor;
 import objekti.BazaObjekata;
+import objekti.Rezervacija;
 
 public class Main {
 

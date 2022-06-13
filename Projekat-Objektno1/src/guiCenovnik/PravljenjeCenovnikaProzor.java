@@ -1,4 +1,4 @@
-package gui;
+package guiCenovnik;
 
 import java.awt.BorderLayout;
 import java.awt.Button;

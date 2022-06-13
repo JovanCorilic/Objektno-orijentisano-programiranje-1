@@ -7,6 +7,10 @@ public class Tip_Soba extends Soba {
 		super(brojSobe, status);
 		this.naziv_tipa = naziv_tipa;
 	}
+	
+	public Tip_Soba() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getNaziv_tipa() {
 		return naziv_tipa;

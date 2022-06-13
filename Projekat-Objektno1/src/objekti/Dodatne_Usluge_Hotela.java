@@ -9,6 +9,10 @@ public class Dodatne_Usluge_Hotela {
 		this.naziv = naziv;
 		this.deskripcija = deskripcija;
 	}
+	
+	public Dodatne_Usluge_Hotela() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getNaziv() {
 		return naziv;

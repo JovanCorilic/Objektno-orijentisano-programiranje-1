@@ -1,6 +1,7 @@
 package objekti;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import glavni.KonverterDatum;
 
@@ -25,6 +26,10 @@ public class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 		this.telefon = telefon;
 		this.adresa = adresa;
+	}
+	
+	public Korisnik() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Korisnik(String text) {
