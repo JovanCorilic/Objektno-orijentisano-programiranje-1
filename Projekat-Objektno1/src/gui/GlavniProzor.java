@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import glavni.Pisanje_Ucitavanje;
 import guiCenovnik.SviCenovniciProzor;
+import guiRezervacija.SveRezervacijeProzor;
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
 import objekti.Korisnik;
@@ -68,7 +69,18 @@ public class GlavniProzor extends JFrame {
 			}
 		});
 		jPanel.add(btnCenovnik);
-
+		
+		JButton btnRezervacija = new JButton("Rezervacija");
+		btnRezervacija.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+				rezervacijeProzor.setVisible(true);
+				
+			}
+		});
+		jPanel.add(btnRezervacija);
 		add(jPanel);
 	}
 

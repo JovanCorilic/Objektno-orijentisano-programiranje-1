@@ -11,6 +11,37 @@ public class Rezervacija {
 	private int broj_sobe;
 	private String email_gosta;
 	private String broj_pasosa;
+	
+	public void unosObjekta(Integer column,String text) throws Exception {
+		switch (column) {
+		case 0:
+			status=text;
+			break;
+		case 1:
+			LocalDateTime dateTime = KonverterDatum.konvertovanjeUDateTime(text);
+			if(datumKraja!=null)
+				if(dateTime.isAfter(datumKraja))
+					throw new Exception();
+			datumPocetka = dateTime;
+			break;
+		case 2:
+			LocalDateTime dateTime2 = KonverterDatum.konvertovanjeUDateTime(text);
+			if(dateTime2.isBefore(datumPocetka))
+				throw new Exception();
+			datumKraja = dateTime2;
+			break;
+		case 3:
+			broj_sobe = Integer.parseInt(text);
+			break;
+		case 4:
+			email_gosta = text;
+			break;
+		case 5:
+			broj_pasosa=text;
+		default:
+			break;
+		}
+	}
 
 	// String prodUrl = Environment.PROD.getUrl();
 	public static enum Statusi {
