@@ -58,19 +58,24 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 					rezervacija.unosObjekta(1, areapocetakVazenja.getText());
 					rezervacija.unosObjekta(2, areakrajVazenja.getText());
-					if (areabroj_sobe.getText().equals("")) {
-						rezervacija.unosObjekta(4, areaEmail.getText());
-						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-						if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()))
-							throw arrayIndexOutOfBoundsException;
-					} else {
-						rezervacija.unosObjekta(3, areabroj_sobe.getText());
-						ExceptionInInitializerError expError = new ExceptionInInitializerError();
-						if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
-							throw expError;
-					}
+
+					rezervacija.unosObjekta(4, areaEmail.getText());
+					ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
+					if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()))
+						throw arrayIndexOutOfBoundsException;
+
 					rezervacija.unosObjekta(5, areaPasos.getText());
-					ArithmeticException exception = new ArithmeticException();
+
+					rezervacija.unosObjekta(3, areabroj_sobe.getText());
+					ExceptionInInitializerError expError = new ExceptionInInitializerError();
+					if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
+						throw expError;
+
+					if (areaEmail.getText().equals("") && areaPasos.getText().equals("")
+							&& areabroj_sobe.getText().equals("")) {
+						ArithmeticException exception = new ArithmeticException();
+						throw exception;
+					}
 
 					bazaObjekata.getListaRezervacija().add(rezervacija);
 
@@ -78,6 +83,9 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					rezervacijeProzor.setVisible(true);
 					dispose();
 
+				} catch (ArithmeticException e3) {
+					JOptionPane.showMessageDialog(null, "Fale esencijalne stvari za rezervaciju!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
@@ -88,26 +96,26 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				}
-				JButton buttonCancel = new JButton("Natrag");
 
-				buttonCancel.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
-						rezervacijeProzor.setVisible(true);
-						dispose();
-
-					}
-				});
-				/*
-				 * JPanel jPanel = new JPanel(); jPanel.add(buttonSave);
-				 * jPanel.add(buttonCancel); add(jPanel,BorderLayout.SOUTH);
-				 */
-				add(buttonSave);
-				add(buttonCancel);
 			}
 		});
+		JButton buttonCancel = new JButton("Natrag");
 
+		buttonCancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+				rezervacijeProzor.setVisible(true);
+				dispose();
+
+			}
+		});
+		/*
+		 * JPanel jPanel = new JPanel(); jPanel.add(buttonSave);
+		 * jPanel.add(buttonCancel); add(jPanel,BorderLayout.SOUTH);
+		 */
+		add(buttonSave);
+		add(buttonCancel);
 	}
 }
