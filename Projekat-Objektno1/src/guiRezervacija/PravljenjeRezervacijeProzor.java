@@ -52,50 +52,62 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					Cenovnik cenovnik = new Cenovnik();
+					Rezervacija rezervacija = new Rezervacija();
 
-					cenovnik.unosObjekta(0, areaNaziv.getText());
-					cenovnik.unosObjekta(1, areacena.getText());
-					cenovnik.unosObjekta(2, areapocetakVazenja.getText());
-					cenovnik.unosObjekta(3, areakrajVazenja.getText());
+					rezervacija.unosObjekta(0, box.getSelectedItem().toString());
+
+					rezervacija.unosObjekta(1, areapocetakVazenja.getText());
+					rezervacija.unosObjekta(2, areakrajVazenja.getText());
 					if (areabroj_sobe.getText().equals("")) {
-						cenovnik.unosObjekta(5, areadodatna_usluga_hotela.getText());
+						rezervacija.unosObjekta(4, areaEmail.getText());
 						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-						if (!bazaObjekata.getMapaDodatneUslugeHotela().containsKey(cenovnik.getDodatna_usluga_hotela()))
+						if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()))
 							throw arrayIndexOutOfBoundsException;
 					} else {
-						cenovnik.unosObjekta(4, areabroj_sobe.getText());
+						rezervacija.unosObjekta(3, areabroj_sobe.getText());
 						ExceptionInInitializerError expError = new ExceptionInInitializerError();
-						if (!bazaObjekata.getMapaSoba().containsKey(cenovnik.getBroj_sobe()))
+						if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
 							throw expError;
 					}
-
+					rezervacija.unosObjekta(5, areaPasos.getText());
 					ArithmeticException exception = new ArithmeticException();
 
-					if (bazaObjekata.getMapaCenovnik().containsKey(cenovnik.getNaziv())) {
-						throw exception;
-					}
+					bazaObjekata.getListaRezervacija().add(rezervacija);
 
-					bazaObjekata.getMapaCenovnik().put(cenovnik.getNaziv(), cenovnik);
-
-					SviCenovniciProzor cenovniciProzor = new SviCenovniciProzor(bazaObjekata);
-					cenovniciProzor.setVisible(true);
+					SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+					rezervacijeProzor.setVisible(true);
 					dispose();
-				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "Veæ postoji cenovnik sa tim nazivom!", "Greška",
-							JOptionPane.ERROR_MESSAGE);
+
 				} catch (ExceptionInInitializerError e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greška",
+					JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				}
+				JButton buttonCancel = new JButton("Natrag");
 
+				buttonCancel.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+						rezervacijeProzor.setVisible(true);
+						dispose();
+
+					}
+				});
+				/*
+				 * JPanel jPanel = new JPanel(); jPanel.add(buttonSave);
+				 * jPanel.add(buttonCancel); add(jPanel,BorderLayout.SOUTH);
+				 */
+				add(buttonSave);
+				add(buttonCancel);
 			}
 		});
+
 	}
 }

@@ -42,6 +42,10 @@ public class Rezervacija {
 			break;
 		}
 	}
+	
+	public Rezervacija() {
+		// TODO Auto-generated constructor stub
+	}
 
 	// String prodUrl = Environment.PROD.getUrl();
 	public static enum Statusi {
