@@ -86,7 +86,7 @@ public class PravljenjeGostaProzor extends JFrame{
 					gostiProzor.setVisible(true);
 					dispose();
 				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim email-om!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Veććžđšćč postoji gost sa tim email-om!", "Gre�ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Gre�ka",
