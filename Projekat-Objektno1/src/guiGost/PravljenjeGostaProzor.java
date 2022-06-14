@@ -38,7 +38,7 @@ public class PravljenjeGostaProzor extends JFrame{
 		add(new JLabel("Pol"));
 		JTextArea areapol = new JTextArea();
 		add(areapol);
-		add(new JLabel("Datum rođenja"));
+		add(new JLabel("Datum rođenja (Mora biti u formatu 24.11.2022)"));
 		JTextArea areadatumRodjenja = new JTextArea(KonverterDatum.konvertovanjeSamoDatumUString(LocalDate.now()));
 		add(areadatumRodjenja);
 		add(new JLabel("Telefon"));
@@ -86,16 +86,16 @@ public class PravljenjeGostaProzor extends JFrame{
 					gostiProzor.setVisible(true);
 					dispose();
 				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim email-om!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim email-om!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Jedno ili vi�e polja ste pogre�no uneli!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogre�no uneli!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
