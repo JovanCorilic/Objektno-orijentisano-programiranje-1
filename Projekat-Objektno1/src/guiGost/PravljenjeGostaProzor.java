@@ -56,7 +56,13 @@ public class PravljenjeGostaProzor extends JFrame{
 				try {
 					Korisnik gost = new Korisnik();
 
-					gost.unosObjekta(0, areaNaziv.getText());
+					gost.unosObjekta(0, areaemail.getText());
+					ArithmeticException exception = new ArithmeticException();
+
+					if (bazaObjekata.getMapaCenovnik().containsKey(gost.getEmail())) {
+						throw exception;
+					}
+					
 					gost.unosObjekta(1, areacena.getText());
 					gost.unosObjekta(2, areapocetakVazenja.getText());
 					gost.unosObjekta(3, areakrajVazenja.getText());
@@ -72,11 +78,7 @@ public class PravljenjeGostaProzor extends JFrame{
 							throw expError;
 					}
 
-					ArithmeticException exception = new ArithmeticException();
-
-					if (bazaObjekata.getMapaCenovnik().containsKey(gost.getNaziv())) {
-						throw exception;
-					}
+					
 
 					bazaObjekata.getMapaCenovnik().put(gost.getNaziv(), gost);
 
@@ -84,7 +86,7 @@ public class PravljenjeGostaProzor extends JFrame{
 					gostiProzor.setVisible(true);
 					dispose();
 				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "Ve postoji cenovnik sa tim nazivom!", "Greška",
+					JOptionPane.showMessageDialog(null, "Veæ postoji gost sa tim email-om!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
