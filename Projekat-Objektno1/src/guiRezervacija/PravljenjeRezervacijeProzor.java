@@ -30,10 +30,10 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
 		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
 		add(box);
-		add(new JLabel("PoËetak vaûenja (Mora biti u formatu 24.11.2022 13:20)"));
+		add(new JLabel("Poƒçetak va≈æenja (Mora biti u formatu 24.11.2022 13:20)"));
 		JTextArea areapocetakVazenja = new JTextArea("24.11.2022 13:20");
 		add(areapocetakVazenja);
-		add(new JLabel("Kraj vaûenja (Mora biti u formatu 24.11.2022 13:20)"));
+		add(new JLabel("Kraj va≈æenja (Mora biti u formatu 24.11.2022 13:20)"));
 		JTextArea areakrajVazenja = new JTextArea("24.11.2022 13:20");
 		add(areakrajVazenja);
 		add(new JLabel("Broj sobe"));
@@ -42,7 +42,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		add(new JLabel("Email gosta"));
 		JTextArea areaEmail = new JTextArea();
 		add(areaEmail);
-		add(new JLabel("Broj pasoöa"));
+		add(new JLabel("Broj paso≈°a"));
 		JTextArea areaPasos = new JTextArea();
 		add(areaPasos);
 
@@ -84,16 +84,16 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					dispose();
 
 				} catch (ArithmeticException e3) {
-					JOptionPane.showMessageDialog(null, "Fale esencijalne stvari za rezervaciju!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Fale esencijalne stvari za rezervaciju!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Jedno ili viöe polja ste pogreöno uneli!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Jedno ili vi≈°e polja ste pogre≈°no uneli!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				}
 

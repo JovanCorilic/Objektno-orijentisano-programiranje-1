@@ -98,12 +98,12 @@ public class GlavniProzor extends JFrame {
 		Rezervacija rezervacija = new Rezervacija(Rezervacija.Statusi.NACEK.getVrednost(), LocalDateTime.now(),
 				LocalDateTime.now(), 12, korisnik.getEmail(), korisnik.getLozinka());
 		bazaObjekata.getListaRezervacija().add(rezervacija);
-		Tip_Soba tip_Soba = new Tip_Soba("ObiËna","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
+		Tip_Soba tip_Soba = new Tip_Soba("Obiƒçna","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
 		bazaObjekata.getListaTipovaSoba().add(tip_Soba);
 		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
 		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
-		Zaposlen zaposlen = new Zaposlen("testNeki@gmail.com", "wfhw2ufgwjf", "Pera", "PeriÊ", "Srednji",
-				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, "obiËan");
+		Zaposlen zaposlen = new Zaposlen("testNeki@gmail.com", "wfhw2ufgwjf", "Pera", "Periƒá", "Srednji",
+				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, "obiƒçan");
 		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
 	}
 }

@@ -49,7 +49,7 @@ public class Rezervacija {
 
 	// String prodUrl = Environment.PROD.getUrl();
 	public static enum Statusi {
-		NACEK("NA �EKANJU"), POTVR("POTVRDJENA"), ODBIJ("ODBIJENA"), OTKAZ("OTKAZANA");
+		NACEK("NA ČEKANJU"), POTVR("POTVRĐENA"), ODBIJ("ODBIJENA"), OTKAZ("OTKAZANA");
 
 		private String vrednost;
 

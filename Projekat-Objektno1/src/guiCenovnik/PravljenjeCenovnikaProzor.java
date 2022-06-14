@@ -48,10 +48,10 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 		add(new JLabel("Cena"));
 		JTextArea areacena = new JTextArea();
 		add(areacena);
-		add(new JLabel("PoËetak vaûenja (Mora biti u formatu 24.11.2022 13:20)"));
+		add(new JLabel("Poƒçetak va≈æenja (Mora biti u formatu 24.11.2022 13:20)"));
 		JTextArea areapocetakVazenja = new JTextArea("24.11.2022 13:20");
 		add(areapocetakVazenja);
-		add(new JLabel("Kraj vaûenja (Mora biti u formatu 24.11.2022 13:20)"));
+		add(new JLabel("Kraj va≈æenja (Mora biti u formatu 24.11.2022 13:20)"));
 		JTextArea areakrajVazenja = new JTextArea("24.11.2022 13:20");
 		add(areakrajVazenja);
 		add(new JLabel("Broj sobe"));
@@ -97,16 +97,16 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 					cenovniciProzor.setVisible(true);
 					dispose();
 				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "VeÊ postoji cenovnik sa tim nazivom!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Veƒá postoji cenovnik sa tim nazivom!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Jedno ili viöe polja ste pogreöno uneli!", "Greöka",
+					JOptionPane.showMessageDialog(null, "Jedno ili vi≈°e polja ste pogre≈°no uneli!", "Gre≈°ka",
 							JOptionPane.ERROR_MESSAGE);
 				}
 

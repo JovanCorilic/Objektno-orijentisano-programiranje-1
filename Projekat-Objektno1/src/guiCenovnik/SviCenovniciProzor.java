@@ -44,7 +44,7 @@ public class SviCenovniciProzor extends JFrame {
 		Dimension dimension = toolkit.getScreenSize();
 		setSize(800, 400);
 		setLocationRelativeTo(null);
-		JLabel jLabel = new JLabel("Dupli klik na celiju da se edituje");
+		JLabel jLabel = new JLabel("Dupli klik na ƒáeliju da se edituje");
 		JButton createNew = new JButton("Create new");
 
 		createNew.addActionListener(new ActionListener() {
@@ -63,7 +63,7 @@ public class SviCenovniciProzor extends JFrame {
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
 
-		String[] zaglavlja = new String[] { "Naziv", "Cena", "PoËetak vaûenja", "Kraj vaûenja", "Broj sobe",
+		String[] zaglavlja = new String[] { "Naziv", "Cena", "Poƒçetak va≈æenja", "Kraj va≈æenja", "Broj sobe",
 				"Dodatna usluga hotela", "Brisanje" };
 		String[][] data = new String[mapa.size()][7];
 		int br = 0;

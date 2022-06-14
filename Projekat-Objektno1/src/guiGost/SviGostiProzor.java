@@ -34,7 +34,7 @@ public class SviGostiProzor extends JFrame{
 		setTitle("Svi gosti");
 		setSize(800, 400);
 		setLocationRelativeTo(null);
-		JLabel jLabel = new JLabel("Dupli klik na celiju da se edituje");
+		JLabel jLabel = new JLabel("Dupli klik na Ä‡eliju da se edituje");
 		JButton createNew = new JButton("Create new");
 
 		createNew.addActionListener(new ActionListener() {
@@ -53,8 +53,8 @@ public class SviGostiProzor extends JFrame{
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
 		
-		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol",
-				"Datum roðenja", "Telefon", "Adresa","Brisanje" };
+		String[] zaglavlja = new String[] { "Email", "Broj pasoÅ¡a", "Ime", "Prezime", "Pol",
+				"Datum roÄ‘enja", "Telefon", "Adresa","Brisanje" };
 		
 		String[][] data = new String[mapa.size()][9];
 		int br = 0;

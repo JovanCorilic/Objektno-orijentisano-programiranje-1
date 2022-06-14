@@ -26,7 +26,7 @@ public class PravljenjeGostaProzor extends JFrame{
 		add(new JLabel("Email"));
 		JTextArea areaemail = new JTextArea();
 		add(areaemail);
-		add(new JLabel("Broj paso�a"));
+		add(new JLabel("Broj pasoša"));
 		JTextArea arealozinka = new JTextArea();
 		add(arealozinka);
 		add(new JLabel("Ime"));
@@ -38,7 +38,7 @@ public class PravljenjeGostaProzor extends JFrame{
 		add(new JLabel("Pol"));
 		JTextArea areapol = new JTextArea();
 		add(areapol);
-		add(new JLabel("Datum ro�enja"));
+		add(new JLabel("Datum rođenja"));
 		JTextArea areadatumRodjenja = new JTextArea(KonverterDatum.konvertovanjeSamoDatumUString(LocalDate.now()));
 		add(areadatumRodjenja);
 		add(new JLabel("Telefon"));
@@ -86,7 +86,7 @@ public class PravljenjeGostaProzor extends JFrame{
 					gostiProzor.setVisible(true);
 					dispose();
 				} catch (ArithmeticException exception) {
-					JOptionPane.showMessageDialog(null, "Veććžđšćč postoji gost sa tim email-om!", "Gre�ka",
+					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim email-om!", "Gre�ka",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Gre�ka",

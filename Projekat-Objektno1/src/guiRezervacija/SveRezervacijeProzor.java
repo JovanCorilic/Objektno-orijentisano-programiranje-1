@@ -39,7 +39,7 @@ public class SveRezervacijeProzor extends JFrame{
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		setSize(800,400);
 		setLocationRelativeTo(null);
-		JLabel jLabel = new JLabel("Dupli klik na celiju da se edituje");
+		JLabel jLabel = new JLabel("Dupli klik na ƒáeliju da se edituje");
 		JButton createNew = new JButton("Create new");
 
 		createNew.addActionListener(new ActionListener() {
@@ -58,8 +58,8 @@ public class SveRezervacijeProzor extends JFrame{
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
 		
-		String[] zaglavlja = new String[] { "Status", "Datum poËetka", "Datum kraja", "Broj sobe",
-				"Email gosta", "Broj pasoöa gosta","Brisanje" };
+		String[] zaglavlja = new String[] { "Status", "Datum poƒçetka", "Datum kraja", "Broj sobe",
+				"Email gosta", "Broj paso≈°a gosta","Brisanje" };
 		ArrayList<Rezervacija>lista = bazaObjekata.getListaRezervacija();
 		String[][] data = new String[lista.size()][7];
 		int br = 0;
