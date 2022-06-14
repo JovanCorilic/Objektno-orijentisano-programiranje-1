@@ -88,7 +88,7 @@ public class SviZaposleniProzor extends JFrame {
 
 		Button deleteButton = new Button("Delete");
 
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 8);
+		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 12);
 
 		jTable.setCellSelectionEnabled(true);
 

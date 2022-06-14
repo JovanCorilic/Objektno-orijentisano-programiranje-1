@@ -131,7 +131,7 @@ public class GlavniProzor extends JFrame {
 		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
 		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
 		Zaposlen zaposlen = new Zaposlen("testNeki@gmail.com", "wfhw2ufgwjf", "Pera", "Perić", "Srednji",
-				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, "običan");
+				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.ADMIN.getTip());
 		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
 	}
 }
