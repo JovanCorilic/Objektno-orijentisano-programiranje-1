@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.plaf.OptionPaneUI;
 
 import objekti.BazaObjekata;
@@ -32,7 +33,7 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 		Dimension dimension = toolkit.getScreenSize();
 		setSize(700, 200);
 		setLocationRelativeTo(null);
-
+		setResizable(false);
 		/*
 		 * setLayout(new GridBagLayout()); GridBagConstraints bagConstraints = new
 		 * GridBagConstraints(); JLabel jLabel1 = new JLabel("Testiranje");
@@ -42,23 +43,23 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 
 		setLayout(new GridLayout(7, 2));
 		add(new JLabel("Naziv"));
-		JTextArea areaNaziv = new JTextArea();
+		JTextField areaNaziv = new JTextField();
 		// areaNaziv.setSize(20,20);
 		add(areaNaziv);
 		add(new JLabel("Cena"));
-		JTextArea areacena = new JTextArea();
+		JTextField areacena = new JTextField();
 		add(areacena);
 		add(new JLabel("Početak važenja (Mora biti u formatu 24.11.2022 13:20)"));
-		JTextArea areapocetakVazenja = new JTextArea("24.11.2022 13:20");
+		JTextField areapocetakVazenja = new JTextField("24.11.2022 13:20");
 		add(areapocetakVazenja);
 		add(new JLabel("Kraj važenja (Mora biti u formatu 24.11.2022 13:20)"));
-		JTextArea areakrajVazenja = new JTextArea("24.11.2022 13:20");
+		JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 		add(areakrajVazenja);
 		add(new JLabel("Broj sobe"));
-		JTextArea areabroj_sobe = new JTextArea();
+		JTextField areabroj_sobe = new JTextField();
 		add(areabroj_sobe);
 		add(new JLabel("Dodatna usluga hotela"));
-		JTextArea areadodatna_usluga_hotela = new JTextArea();
+		JTextField areadodatna_usluga_hotela = new JTextField();
 		add(areadodatna_usluga_hotela);
 
 		JButton buttonSave = new JButton("Napravi");

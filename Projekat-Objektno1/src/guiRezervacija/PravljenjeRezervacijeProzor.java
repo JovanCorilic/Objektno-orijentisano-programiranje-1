@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import guiCenovnik.SviCenovniciProzor;
 import objekti.BazaObjekata;
@@ -21,7 +22,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		setTitle("Pravljenje rezervacije");
 		setSize(700, 200);
 		setLocationRelativeTo(null);
-
+		setResizable(false);
 		setLayout(new GridLayout(7, 2));
 		add(new JLabel("Status rezervacije"));
 		JComboBox<String> box = new JComboBox<>();
@@ -31,19 +32,19 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
 		add(box);
 		add(new JLabel("Početak važenja (Mora biti u formatu 24.11.2022 13:20)"));
-		JTextArea areapocetakVazenja = new JTextArea("24.11.2022 13:20");
+		JTextField areapocetakVazenja = new JTextField("24.11.2022 13:20");
 		add(areapocetakVazenja);
 		add(new JLabel("Kraj važenja (Mora biti u formatu 24.11.2022 13:20)"));
-		JTextArea areakrajVazenja = new JTextArea("24.11.2022 13:20");
+		JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 		add(areakrajVazenja);
 		add(new JLabel("Broj sobe"));
-		JTextArea areabroj_sobe = new JTextArea();
+		JTextField areabroj_sobe = new JTextField();
 		add(areabroj_sobe);
 		add(new JLabel("Email gosta"));
-		JTextArea areaEmail = new JTextArea();
+		JTextField areaEmail = new JTextField();
 		add(areaEmail);
 		add(new JLabel("Broj pasoša"));
-		JTextArea areaPasos = new JTextArea();
+		JTextField areaPasos = new JTextField();
 		add(areaPasos);
 
 		JButton buttonSave = new JButton("Napravi");

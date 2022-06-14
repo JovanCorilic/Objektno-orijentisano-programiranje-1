@@ -20,33 +20,33 @@ public class PravljenjeGostaProzor extends JFrame {
 	public PravljenjeGostaProzor(BazaObjekata bazaObjekata) {
 		setTitle("Upisivanje gosta");
 
-		setSize(700, 200);
+		setSize(700, 250);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(9, 2));
-
+		setResizable(false);
 		add(new JLabel("Email"));
 		JTextField areaemail = new JTextField();
 		add(areaemail);
 		add(new JLabel("Broj pasoša"));
-		JTextArea arealozinka = new JTextArea();
+		JTextField arealozinka = new JTextField();
 		add(arealozinka);
 		add(new JLabel("Ime"));
-		JTextArea areaime = new JTextArea();
+		JTextField areaime = new JTextField();
 		add(areaime);
 		add(new JLabel("Prezime"));
-		JTextArea areaprezime = new JTextArea();
+		JTextField areaprezime = new JTextField();
 		add(areaprezime);
 		add(new JLabel("Pol"));
-		JTextArea areapol = new JTextArea();
+		JTextField areapol = new JTextField();
 		add(areapol);
 		add(new JLabel("Datum rođenja (Mora biti u formatu 24.11.2022)"));
-		JTextArea areadatumRodjenja = new JTextArea(KonverterDatum.konvertovanjeSamoDatumUString(LocalDate.now()));
+		JTextField areadatumRodjenja = new JTextField(KonverterDatum.konvertovanjeSamoDatumUString(LocalDate.now()));
 		add(areadatumRodjenja);
 		add(new JLabel("Telefon"));
-		JTextArea areatelefon = new JTextArea();
+		JTextField areatelefon = new JTextField();
 		add(areatelefon);
 		add(new JLabel("Adresa"));
-		JTextArea areaadresa = new JTextArea();
+		JTextField areaadresa = new JTextField();
 		add(areaadresa);
 
 		JButton buttonSave = new JButton("Napravi");
