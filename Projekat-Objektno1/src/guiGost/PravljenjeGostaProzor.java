@@ -95,7 +95,7 @@ public class PravljenjeGostaProzor extends JFrame{
 					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogre�no uneli!", "Greška",
+					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
