@@ -14,6 +14,38 @@ public class Korisnik {
 	protected LocalDate datumRodjenja;
 	protected String telefon;
 	protected String adresa;
+	
+	public void unosObjekta(Integer column,String text) {
+		switch (column) {
+		case 0:
+			email = text;
+			break;
+		case 1:
+			lozinka = text;
+			break;
+		case 2:
+			ime=text;
+			break;
+		case 3:
+			prezime = text;
+			break;
+		case 4:
+			pol = text;
+			break;
+		case 5:
+			datumRodjenja = KonverterDatum.konvertovanjeSamoDatumUDate(text);
+			break;
+		case 6:
+			telefon = text;
+			break;
+		case 7:
+			adresa = text;
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 	public Korisnik(String email, String lozinka, String ime, String prezime, String pol, LocalDate datumRodjenja,
 			String telefon, String adresa) {
