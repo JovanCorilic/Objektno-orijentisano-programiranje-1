@@ -85,7 +85,7 @@ public class SviGostiProzor extends JFrame{
 		
 		Button deleteButton = new Button("Delete");
 
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 6);
+		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 8);
 
 		jTable.setCellSelectionEnabled(true);
 

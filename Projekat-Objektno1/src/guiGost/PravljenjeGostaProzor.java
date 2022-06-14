@@ -10,21 +10,22 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import glavni.KonverterDatum;
 import objekti.BazaObjekata;
 import objekti.Korisnik;
 
-public class PravljenjeGostaProzor extends JFrame{
+public class PravljenjeGostaProzor extends JFrame {
 	public PravljenjeGostaProzor(BazaObjekata bazaObjekata) {
 		setTitle("Upisivanje gosta");
-		
+
 		setSize(700, 200);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(9, 2));
-		
+
 		add(new JLabel("Email"));
-		JTextArea areaemail = new JTextArea();
+		JTextField areaemail = new JTextField();
 		add(areaemail);
 		add(new JLabel("Broj pasoša"));
 		JTextArea arealozinka = new JTextArea();
@@ -47,7 +48,7 @@ public class PravljenjeGostaProzor extends JFrame{
 		add(new JLabel("Adresa"));
 		JTextArea areaadresa = new JTextArea();
 		add(areaadresa);
-		
+
 		JButton buttonSave = new JButton("Napravi");
 		buttonSave.addActionListener(new ActionListener() {
 
@@ -62,25 +63,23 @@ public class PravljenjeGostaProzor extends JFrame{
 					if (bazaObjekata.getMapaCenovnik().containsKey(gost.getEmail())) {
 						throw exception;
 					}
-					
-					gost.unosObjekta(1, areacena.getText());
-					gost.unosObjekta(2, areapocetakVazenja.getText());
-					gost.unosObjekta(3, areakrajVazenja.getText());
-					if (areabroj_sobe.getText().equals("")) {
-						gost.unosObjekta(5, areadodatna_usluga_hotela.getText());
-						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-						if (!bazaObjekata.getMapaDodatneUslugeHotela().containsKey(gost.getDodatna_usluga_hotela()))
+
+					gost.unosObjekta(1, arealozinka.getText());
+					ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
+					for (Korisnik temp : bazaObjekata.getMapaGosti().values()) {
+						if (temp.getLozinka().equals(gost.getLozinka()))
 							throw arrayIndexOutOfBoundsException;
-					} else {
-						gost.unosObjekta(4, areabroj_sobe.getText());
-						ExceptionInInitializerError expError = new ExceptionInInitializerError();
-						if (!bazaObjekata.getMapaSoba().containsKey(gost.getBroj_sobe()))
-							throw expError;
 					}
 
+					gost.unosObjekta(2, areaime.getText());
+					gost.unosObjekta(3, areaprezime.getText());
+					gost.unosObjekta(4, areapol.getText());
+					gost.unosObjekta(5, areadatumRodjenja.getText());
+					gost.unosObjekta(6, areatelefon.getText());
+					gost.unosObjekta(7, areaadresa.getText());
 					
 
-					bazaObjekata.getMapaCenovnik().put(gost.getNaziv(), gost);
+					bazaObjekata.getMapaGosti().put(gost.getEmail(), gost);
 
 					SviGostiProzor gostiProzor = new SviGostiProzor(bazaObjekata);
 					gostiProzor.setVisible(true);
@@ -88,11 +87,8 @@ public class PravljenjeGostaProzor extends JFrame{
 				} catch (ArithmeticException exception) {
 					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim email-om!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
-				} catch (ExceptionInInitializerError e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
-							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greška",
+					JOptionPane.showMessageDialog(null, "Već postoji gost sa tim brojem pasoša!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
