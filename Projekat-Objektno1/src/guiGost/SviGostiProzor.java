@@ -25,12 +25,13 @@ import javax.swing.table.DefaultTableModel;
 import glavni.ButtonColumn;
 import objekti.BazaObjekata;
 import objekti.Korisnik;
+import objekti.Rezervacija;
 
-public class SviGostiProzor extends JFrame{
+public class SviGostiProzor extends JFrame {
 	private String cuvanje;
-	
+
 	public SviGostiProzor(BazaObjekata bazaObjekata) {
-		HashMap<String, Korisnik>mapa = bazaObjekata.getMapaGosti();
+		HashMap<String, Korisnik> mapa = bazaObjekata.getMapaGosti();
 		setTitle("Svi gosti");
 		setSize(800, 400);
 		setLocationRelativeTo(null);
@@ -52,10 +53,10 @@ public class SviGostiProzor extends JFrame{
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
-		
-		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol",
-				"Datum rođenja", "Telefon", "Adresa","Brisanje" };
-		
+
+		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
+				"Adresa", "Brisanje" };
+
 		String[][] data = new String[mapa.size()][9];
 		int br = 0;
 		for (Korisnik temp : mapa.values()) {
@@ -66,7 +67,7 @@ public class SviGostiProzor extends JFrame{
 			data[br][lista.length] = "Delete";
 			br++;
 		}
-		
+
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
 		JTable jTable = new JTable(defaultTableModel);
 
@@ -82,7 +83,7 @@ public class SviGostiProzor extends JFrame{
 
 			}
 		};
-		
+
 		Button deleteButton = new Button("Delete");
 
 		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 8);
@@ -101,9 +102,23 @@ public class SviGostiProzor extends JFrame{
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					final String kljuc = (String) jTable.getValueAt(row, 0);
+					
+					if (column == 0) {
+						String tempKljuc = cuvanje;
+						Korisnik korisnik = mapa.get(tempKljuc);
+						mapa.remove(tempKljuc);
+						korisnik.setEmail(temp2);
+						mapa.put(temp2, korisnik);
+						for (Rezervacija rezervacija : bazaObjekata.getListaRezervacija()) {
+							if(rezervacija.getEmail_gosta().equals(tempKljuc)) {
+								rezervacija.setEmail_gosta(temp2);
+							}
+						}
+					} else {
+						final String kljuc = (String) jTable.getValueAt(row, 0);
+						mapa.get(kljuc).unosObjekta(column, temp2);
+					}
 
-					mapa.get(kljuc).unosObjekta(column, temp2);
 				} catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
@@ -140,6 +155,6 @@ public class SviGostiProzor extends JFrame{
 
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
-		
+
 	}
 }

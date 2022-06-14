@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -105,10 +106,19 @@ public class SveRezervacijeProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					final String kljuc = (String) jTable.getValueAt(row, 0);
-
+					if(column==4) {
+						throw new ArithmeticException() ;
+					}
+					
 					lista.get(row).unosObjekta(column, temp2);
-				} catch (Exception e2) {
+				}catch (ArithmeticException e5) {
+					JOptionPane.showMessageDialog(null, "Email se menja samo kod korisnika!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(cuvanje, row, column);
+				} 
+				catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 					jTable.setValueAt(cuvanje, row, column);
