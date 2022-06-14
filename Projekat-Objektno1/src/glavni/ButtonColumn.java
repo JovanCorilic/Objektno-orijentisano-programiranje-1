@@ -1,4 +1,4 @@
-package gui;
+package glavni;
 
 import java.awt.*;
 import java.awt.event.*;

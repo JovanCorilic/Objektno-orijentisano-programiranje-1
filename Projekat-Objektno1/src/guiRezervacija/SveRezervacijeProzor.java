@@ -25,19 +25,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import gui.ButtonColumn;
+import glavni.ButtonColumn;
 import guiCenovnik.PravljenjeCenovnikaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
 
-public class SveRezervacijeProzor extends JFrame{
+public class SveRezervacijeProzor extends JFrame {
 	private String cuvanje;
-	
+
 	public SveRezervacijeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Sve rezervacije");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		setSize(800,400);
+		setSize(800, 400);
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");
@@ -57,10 +57,10 @@ public class SveRezervacijeProzor extends JFrame{
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
 		add(jPanel, BorderLayout.NORTH);
-		
-		String[] zaglavlja = new String[] { "Status", "Datum početka", "Datum kraja", "Broj sobe",
-				"Email gosta", "Broj pasoša gosta","Brisanje" };
-		ArrayList<Rezervacija>lista = bazaObjekata.getListaRezervacija();
+
+		String[] zaglavlja = new String[] { "Status", "Datum početka", "Datum kraja", "Broj sobe", "Email gosta",
+				"Broj pasoša gosta", "Brisanje" };
+		ArrayList<Rezervacija> lista = bazaObjekata.getListaRezervacija();
 		String[][] data = new String[lista.size()][7];
 		int br = 0;
 		for (Rezervacija temp : lista) {
@@ -71,7 +71,7 @@ public class SveRezervacijeProzor extends JFrame{
 			data[br][lista2.length] = "Delete";
 			br++;
 		}
-		
+
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
 		JTable jTable = new JTable(defaultTableModel);
 
@@ -90,7 +90,7 @@ public class SveRezervacijeProzor extends JFrame{
 		Button deleteButton = new Button("Delete");
 
 		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 6);
-		
+
 		jTable.setCellSelectionEnabled(true);
 
 		DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField());
@@ -141,17 +141,17 @@ public class SveRezervacijeProzor extends JFrame{
 			}
 
 		});
-		
+
 		JComboBox<String> box = new JComboBox<>();
 		box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
 		box.addItem(Rezervacija.Statusi.ODBIJ.getVrednost());
 		box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
 		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
-		
+
 		TableColumn column = jTable.getColumnModel().getColumn(0);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
 		cellEditor2.addCellEditorListener(new CellEditorListener() {
-			
+
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
@@ -161,25 +161,24 @@ public class SveRezervacijeProzor extends JFrame{
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					final String kljuc = (String) jTable.getValueAt(row, 0);
 
 					lista.get(row).unosObjekta(column, temp2);
 				} catch (Exception e2) {
-					/*final int row = jTable.getSelectedRow();
-					final int column = jTable.getSelectedColumn();
-					jTable.setValueAt(cuvanje, row, column);*/
+					/*
+					 * final int row = jTable.getSelectedRow(); final int column =
+					 * jTable.getSelectedColumn(); jTable.setValueAt(cuvanje, row, column);
+					 */
 				}
-				
+
 			}
-			
+
 			@Override
 			public void editingCanceled(ChangeEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		column.setCellEditor(cellEditor2);
-		
 
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);

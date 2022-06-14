@@ -1,4 +1,4 @@
-package gui;
+package glavni;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,10 +17,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import glavni.Pisanje_Ucitavanje;
 import guiCenovnik.SviCenovniciProzor;
 import guiGost.SviGostiProzor;
 import guiRezervacija.SveRezervacijeProzor;
+import guiZaposlen.SviZaposleniProzor;
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
 import objekti.Korisnik;
@@ -95,6 +95,20 @@ public class GlavniProzor extends JFrame {
 			}
 		});
 		jPanel.add(btnGosti);
+		
+		JButton btnZaposleni = new JButton("Zaposleni");
+		btnZaposleni.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SviZaposleniProzor rezervacijeProzor = new SviZaposleniProzor(bazaObjekata);
+				rezervacijeProzor.setVisible(true);
+				
+			}
+		});
+		jPanel.add(btnZaposleni);
+		
+		
 		add(jPanel);
 	}
 

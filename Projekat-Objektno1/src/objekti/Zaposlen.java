@@ -28,7 +28,50 @@ public class Zaposlen extends Korisnik {
 		}
 
 	}
-	
+
+	public void unosObjektaZaposlen(Integer column, String text) {
+		switch (column) {
+		case 0:
+			email = text;
+			break;
+		case 1:
+			lozinka = text;
+			break;
+		case 2:
+			ime = text;
+			break;
+		case 3:
+			prezime = text;
+			break;
+		case 4:
+			pol = text;
+			break;
+		case 5:
+			datumRodjenja = KonverterDatum.konvertovanjeSamoDatumUDate(text);
+			break;
+		case 6:
+			telefon = text;
+			break;
+		case 7:
+			adresa = text;
+			break;
+		case 8:
+			nivo_strucne_spreme = text;
+			break;
+		case 9:
+			godina_staza = Integer.parseInt(text);
+			break;
+		case 10:
+			plata = Double.parseDouble(text);
+			break;
+		case 11:
+			tip_zaposlen = text;
+			break;
+		default:
+			break;
+		}
+	}
+
 	public Zaposlen() {
 		// TODO Auto-generated constructor stub
 	}
