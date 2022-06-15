@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.AbstractAction;
@@ -31,6 +32,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import glavni.ButtonColumn;
+import glavni.GhostText;
+import glavni.KonverterDatum;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 
@@ -62,8 +65,18 @@ public class SviCenovniciProzor extends JFrame {
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
+		
+		
+		JTextField pretraga = new JTextField();
+		GhostText ghostText = new GhostText(pretraga,"Unesite tekst ovde...");
+		JButton buttonPretraga = new JButton("Pretraga");
+		jPanel.add(new JLabel("             "));
+		pretraga.setPreferredSize(new Dimension(200,25));
+		jPanel.add(pretraga);
+		jPanel.add(buttonPretraga);
+		
+		
 		add(jPanel, BorderLayout.NORTH);
-
 		String[] zaglavlja = new String[] { "Naziv", "Cena", "Početak važenja", "Kraj važenja", "Broj sobe",
 				"Dodatna usluga hotela", "Brisanje" };
 		String[][] data = new String[mapa.size()][7];
@@ -161,10 +174,27 @@ public class SviCenovniciProzor extends JFrame {
 			}
 
 		});
+		
+		buttonPretraga.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String temp = pretraga.getText();
+				for(int i = 0;i<data.length;i++) {
+					if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
+						((DefaultTableModel) jTable.getModel()).removeRow(i);
+					}
+				}
+				
+			}
+		});
 
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 
 	}
+	
+	
 
 }

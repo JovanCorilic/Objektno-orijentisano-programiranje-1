@@ -2,6 +2,7 @@ package guiRezervacija;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import glavni.ButtonColumn;
+import glavni.GhostText;
+import glavni.KonverterDatum;
 import guiCenovnik.PravljenjeCenovnikaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
@@ -57,6 +60,13 @@ public class SveRezervacijeProzor extends JFrame {
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
+		JTextField pretraga = new JTextField();
+		GhostText ghostText = new GhostText(pretraga,"Unesite tekst ovde...");
+		JButton buttonPretraga = new JButton("Pretraga");
+		jPanel.add(new JLabel("             "));
+		pretraga.setPreferredSize(new Dimension(200,25));
+		jPanel.add(pretraga);
+		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
 
 		String[] zaglavlja = new String[] { "Status", "Datum početka", "Datum kraja", "Broj sobe", "Email gosta",
@@ -189,6 +199,21 @@ public class SveRezervacijeProzor extends JFrame {
 			}
 		});
 		column.setCellEditor(cellEditor2);
+		
+		buttonPretraga.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String temp = pretraga.getText();
+				for(int i = 0;i<data.length;i++) {
+					if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
+						((DefaultTableModel) jTable.getModel()).removeRow(i);
+					}
+				}
+				
+			}
+		});
 
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);

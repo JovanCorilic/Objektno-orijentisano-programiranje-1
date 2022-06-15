@@ -2,6 +2,7 @@ package guiGost;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,6 +24,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.DefaultTableModel;
 
 import glavni.ButtonColumn;
+import glavni.GhostText;
+import glavni.KonverterDatum;
 import objekti.BazaObjekata;
 import objekti.Korisnik;
 import objekti.Rezervacija;
@@ -52,6 +55,13 @@ public class SviGostiProzor extends JFrame {
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
+		JTextField pretraga = new JTextField();
+		GhostText ghostText = new GhostText(pretraga,"Unesite tekst ovde...");
+		JButton buttonPretraga = new JButton("Pretraga");
+		jPanel.add(new JLabel("             "));
+		pretraga.setPreferredSize(new Dimension(200,25));
+		jPanel.add(pretraga);
+		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
 
 		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
@@ -152,7 +162,20 @@ public class SviGostiProzor extends JFrame {
 			}
 
 		});
-
+		buttonPretraga.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				String temp = pretraga.getText();
+				for(int i = 0;i<data.length;i++) {
+					if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
+						((DefaultTableModel) jTable.getModel()).removeRow(i);
+					}
+				}
+				
+			}
+		});
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 
