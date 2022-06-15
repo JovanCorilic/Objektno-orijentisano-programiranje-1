@@ -39,7 +39,7 @@ public class PravljenjeDodatneUslugeHotelaProzor extends JFrame{
 					dodatne_usluge_hotela.unosObjekta(0, areaNaziv.getText());
 					ArithmeticException exception = new ArithmeticException();
 
-					if (bazaObjekata.getMapaCenovnik().containsKey(dodatne_usluge_hotela.getNaziv())) {
+					if (bazaObjekata.getMapaDodatneUslugeHotela().containsKey(dodatne_usluge_hotela.getNaziv())) {
 						throw exception;
 					}
 					

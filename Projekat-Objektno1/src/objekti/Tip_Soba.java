@@ -43,6 +43,16 @@ public class Tip_Soba {
 	public void setNaziv_tipa(String naziv_tipa) {
 		this.naziv_tipa = naziv_tipa;
 	}
+	
+	
+
+	public String getDeskripcija() {
+		return deskripcija;
+	}
+
+	public void setDeskripcija(String deskripcija) {
+		this.deskripcija = deskripcija;
+	}
 
 	@Override
 	public String toString() {
