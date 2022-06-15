@@ -11,6 +11,20 @@ public class Tip_Soba {
 		this.naziv_tipa=lista[0];
 		this.deskripcija=lista[1];
 	}
+	
+	public void unosObjekta(Integer column,String text) {
+		switch (column) {
+		case 0:
+			naziv_tipa=text;
+			break;
+		case 1:
+			deskripcija=text;
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 	public Tip_Soba(String naziv_tipa, String deskripcija) {
 		super();

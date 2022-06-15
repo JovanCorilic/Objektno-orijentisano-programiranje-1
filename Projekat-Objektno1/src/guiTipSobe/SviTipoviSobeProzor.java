@@ -1,4 +1,4 @@
-package guiDodatneUslugeHotela;
+package guiTipSobe;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -25,15 +25,16 @@ import javax.swing.table.DefaultTableModel;
 import glavni.ButtonColumn;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
-import objekti.Dodatne_Usluge_Hotela;
+import objekti.Tip_Soba;
 
-public class SveDodatneUslugeHotelaProzor extends JFrame{
+public class SviTipoviSobeProzor extends JFrame{
 	private String cuvanje;
-	public SveDodatneUslugeHotelaProzor(BazaObjekata bazaObjekata) {
-		HashMap<String, Dodatne_Usluge_Hotela>mapa = bazaObjekata.getMapaDodatneUslugeHotela();
-		setTitle("Sve dodatne usluge hotela");
-		setSize(500, 400);
+	public SviTipoviSobeProzor(BazaObjekata bazaObjekata) {
+		HashMap<String, Tip_Soba>mapa = bazaObjekata.getMapaTipovaSobe();
+		setTitle("Svi tipovi sobe");
+		setSize(200, 400);
 		setLocationRelativeTo(null);
+		
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");
 
@@ -41,13 +42,13 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PravljenjeDodatneUslugeHotelaProzor pravljenjeDodatneUslugeHotelaProzor = new PravljenjeDodatneUslugeHotelaProzor(bazaObjekata);
-				pravljenjeDodatneUslugeHotelaProzor.setVisible(true);
+				PravljenjeTipaSobeProzor pravljenjeTipaSobeProzor = new PravljenjeTipaSobeProzor(bazaObjekata);
+				pravljenjeTipaSobeProzor.setVisible(true);
 				dispose();
 
 			}
 		});
-		
+
 		JPanel jPanel = new JPanel();
 		jPanel.add(jLabel);
 		jPanel.add(createNew);
@@ -56,7 +57,7 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 		String[] zaglavlja = new String[] { "Naziv", "Deskripcija", "Brisanje" };
 		String[][] data = new String[mapa.size()][3];
 		int br = 0;
-		for (Dodatne_Usluge_Hotela temp : mapa.values()) {
+		for (Tip_Soba temp : mapa.values()) {
 			String[] lista = temp.toString().split("\\|");
 			for (int i = 0; i < lista.length; i++) {
 				data[br][i] = lista[i];
@@ -100,13 +101,13 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 					
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
 					if(column == 0) {
-						Dodatne_Usluge_Hotela dodatne_Usluge_Hotela = mapa.get(cuvanje);
+						Tip_Soba tipSoba = mapa.get(cuvanje);
 						mapa.remove(cuvanje);
-						dodatne_Usluge_Hotela.unosObjekta(column, temp2);
-						mapa.put(temp2, dodatne_Usluge_Hotela);
+						tipSoba.unosObjekta(column, temp2);
+						mapa.put(temp2, tipSoba);
 						for(Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
-							if(cenovnik.getDodatna_usluga_hotela().equals(cuvanje))
-								cenovnik.setDodatna_usluga_hotela(temp2);
+							if(cenovnik.getTip_sobe().equals(cuvanje))
+								cenovnik.setTip_sobe(temp2);
 						}
 						
 					}else {
@@ -152,5 +153,4 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 	}
-
 }

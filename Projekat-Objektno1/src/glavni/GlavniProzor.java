@@ -21,6 +21,8 @@ import guiCenovnik.SviCenovniciProzor;
 import guiDodatneUslugeHotela.SveDodatneUslugeHotelaProzor;
 import guiGost.SviGostiProzor;
 import guiRezervacija.SveRezervacijeProzor;
+import guiSoba.SveSobeProzor;
+import guiTipSobe.SviTipoviSobeProzor;
 import guiZaposlen.SviZaposleniProzor;
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
@@ -121,6 +123,29 @@ public class GlavniProzor extends JFrame {
 		});
 		jPanel.add(btnDodatne);
 		
+		JButton btnSobe = new JButton("Sobe");
+		btnZaposleni.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SveSobeProzor rezervacijeProzor = new SveSobeProzor(bazaObjekata);
+				rezervacijeProzor.setVisible(true);
+				
+			}
+		});
+		jPanel.add(btnSobe);
+		
+		JButton btnTipSobe = new JButton("Dodatne usluge hotela");
+		btnZaposleni.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SviTipoviSobeProzor rezervacijeProzor = new SviTipoviSobeProzor(bazaObjekata);
+				rezervacijeProzor.setVisible(true);
+				
+			}
+		});
+		jPanel.add(btnTipSobe);
 		
 		add(jPanel);
 	}

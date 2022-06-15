@@ -67,27 +67,27 @@ public class Pisanje_Ucitavanje {
 		printWriter.close();
 	}
 	
-	public static void PisanjeTipaSobe(ArrayList<Tip_Soba>lista) throws IOException {
+	public static void PisanjeTipaSobe(HashMap<String,Tip_Soba>mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("tipSobe.csv"), false);
-		for (Tip_Soba temp : lista) {
+		for (Tip_Soba temp : mapa.values()) {
 			printWriter.println(temp.toString());
 		}
 		printWriter.close();
 		
 	}
 	
-	public static ArrayList<Tip_Soba> UcitavanjeTipSobe() {
+	public static HashMap<String,Tip_Soba> UcitavanjeTipSobe() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("tipSobe.csv"));
 			String currentLine;
-			ArrayList<Tip_Soba> mapa = new ArrayList<>();
+			HashMap<String,Tip_Soba> mapa = new HashMap<>();
 			while ((currentLine = br.readLine()) != null) {
-				mapa.add(new Tip_Soba(currentLine));
+				mapa.put(currentLine.split("\\|")[0],new Tip_Soba(currentLine));
 			}
 			br.close();
 			return mapa;
 		} catch (Exception e) {
-			return new ArrayList<>();
+			return new HashMap<>();
 		}
 	}
 

@@ -82,7 +82,7 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 					} else {
 						cenovnik.unosObjekta(4, areabroj_sobe.getText());
 						ExceptionInInitializerError expError = new ExceptionInInitializerError();
-						if (!bazaObjekata.getMapaSoba().containsKey(cenovnik.getBroj_sobe()))
+						if (!bazaObjekata.getMapaTipovaSobe().containsKey(cenovnik.getTip_sobe()))
 							throw expError;
 					}
 

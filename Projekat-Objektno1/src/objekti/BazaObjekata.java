@@ -13,14 +13,14 @@ public class BazaObjekata {
 	private ArrayList<Rezervacija> listaRezervacija;
 	private HashMap<Integer, Soba> mapaSoba;
 	private HashMap<String, Zaposlen> mapaZaposlenih;
-	private ArrayList<Tip_Soba> listaTipovaSoba;
+	private HashMap<String,Tip_Soba> mapaTipovaSobe;
 
 	public void ucitavanje() throws IOException {
 		mapaCenovnik = Pisanje_Ucitavanje.UcitavanjeCenovnik();
 		mapaDodatneUslugeHotela = Pisanje_Ucitavanje.UcitavanjeDodatne_Usluge_Hotela();
 		mapaGosti = Pisanje_Ucitavanje.UcitavanjeGosti();
 		listaRezervacija = Pisanje_Ucitavanje.UcitavanjeRezervacije();
-		listaTipovaSoba=Pisanje_Ucitavanje.UcitavanjeTipSobe();
+		mapaTipovaSobe=Pisanje_Ucitavanje.UcitavanjeTipSobe();
 		mapaSoba = Pisanje_Ucitavanje.UcitavanjeSobe();
 		mapaZaposlenih = Pisanje_Ucitavanje.UcitavanjeZaposleni();
 	}
@@ -32,14 +32,16 @@ public class BazaObjekata {
 		Pisanje_Ucitavanje.PisanjeRezervacija(listaRezervacija);
 		Pisanje_Ucitavanje.PisanjeSobe(mapaSoba);
 		Pisanje_Ucitavanje.PisanjeZaposlen(mapaZaposlenih);
-		Pisanje_Ucitavanje.PisanjeTipaSobe(listaTipovaSoba);
+		Pisanje_Ucitavanje.PisanjeTipaSobe(mapaTipovaSobe);
 
 	}
+
+	
 
 	public BazaObjekata(HashMap<String, Cenovnik> mapaCenovnik,
 			HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela, HashMap<String, Korisnik> mapaGosti,
 			ArrayList<Rezervacija> listaRezervacija, HashMap<Integer, Soba> mapaSoba,
-			HashMap<String, Zaposlen> mapaZaposlenih, ArrayList<Tip_Soba> listaTipovaSoba) {
+			HashMap<String, Zaposlen> mapaZaposlenih, HashMap<String, Tip_Soba> mapaTipovaSobe) {
 		super();
 		this.mapaCenovnik = mapaCenovnik;
 		this.mapaDodatneUslugeHotela = mapaDodatneUslugeHotela;
@@ -47,7 +49,7 @@ public class BazaObjekata {
 		this.listaRezervacija = listaRezervacija;
 		this.mapaSoba = mapaSoba;
 		this.mapaZaposlenih = mapaZaposlenih;
-		this.listaTipovaSoba = listaTipovaSoba;
+		this.mapaTipovaSobe = mapaTipovaSobe;
 	}
 
 	public BazaObjekata() {
@@ -57,7 +59,7 @@ public class BazaObjekata {
 		mapaSoba = new HashMap<>();
 		mapaZaposlenih = new HashMap<>();
 		listaRezervacija = new ArrayList<>();
-		listaTipovaSoba = new ArrayList<>();
+		mapaTipovaSobe = new HashMap<>();
 	}
 
 	public HashMap<String, Cenovnik> getMapaCenovnik() {
@@ -108,12 +110,14 @@ public class BazaObjekata {
 		this.mapaZaposlenih = mapaZaposlenih;
 	}
 
-	public ArrayList<Tip_Soba> getListaTipovaSoba() {
-		return listaTipovaSoba;
+	public HashMap<String, Tip_Soba> getMapaTipovaSobe() {
+		return mapaTipovaSobe;
 	}
 
-	public void setListaTipovaSoba(ArrayList<Tip_Soba> listaTipovaSoba) {
-		this.listaTipovaSoba = listaTipovaSoba;
+	public void setMapaTipovaSobe(HashMap<String, Tip_Soba> mapaTipovaSobe) {
+		this.mapaTipovaSobe = mapaTipovaSobe;
 	}
+
+	
 
 }
