@@ -112,7 +112,7 @@ public class GlavniProzor extends JFrame {
 		jPanel.add(btnZaposleni);
 		
 		JButton btnDodatne = new JButton("Dodatne usluge hotela");
-		btnZaposleni.addActionListener(new ActionListener() {
+		btnDodatne.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -124,7 +124,7 @@ public class GlavniProzor extends JFrame {
 		jPanel.add(btnDodatne);
 		
 		JButton btnSobe = new JButton("Sobe");
-		btnZaposleni.addActionListener(new ActionListener() {
+		btnSobe.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -135,8 +135,8 @@ public class GlavniProzor extends JFrame {
 		});
 		jPanel.add(btnSobe);
 		
-		JButton btnTipSobe = new JButton("Dodatne usluge hotela");
-		btnZaposleni.addActionListener(new ActionListener() {
+		JButton btnTipSobe = new JButton("Tip sobe");
+		btnTipSobe.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +153,7 @@ public class GlavniProzor extends JFrame {
 	public void ucitavanje(BazaObjekata bazaObjekata) throws IOException {
 		// mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
 
-		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), 12, "izmisljeno");
+		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		bazaObjekata.getMapaCenovnik().put("test", cenovnik);
 		Dodatne_Usluge_Hotela dodatne_Usluge_Hotela = new Dodatne_Usluge_Hotela("testDodatne",
 				"wefuwfuwhfuwhf wfwjfiwj fiwfihwfhw ihfiwhfiwhfiw hwfihfwih fwihf wi wifhwihfwihfuiggsjfs wfwf.");
@@ -165,7 +165,7 @@ public class GlavniProzor extends JFrame {
 				LocalDateTime.now(), 12, korisnik.getEmail(), korisnik.getLozinka());
 		bazaObjekata.getListaRezervacija().add(rezervacija);
 		Tip_Soba tip_Soba = new Tip_Soba("Obična","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
-		bazaObjekata.getListaTipovaSoba().add(tip_Soba);
+		bazaObjekata.getMapaTipovaSobe().put(tip_Soba.getNaziv_tipa(),tip_Soba);
 		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
 		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
 		Zaposlen zaposlen = new Zaposlen("testNeki@gmail.com", "wfhw2ufgwjf", "Pera", "Perić", "Srednji",

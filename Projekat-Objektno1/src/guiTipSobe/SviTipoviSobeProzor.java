@@ -25,6 +25,7 @@ import javax.swing.table.DefaultTableModel;
 import glavni.ButtonColumn;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
+import objekti.Soba;
 import objekti.Tip_Soba;
 
 public class SviTipoviSobeProzor extends JFrame{
@@ -108,6 +109,11 @@ public class SviTipoviSobeProzor extends JFrame{
 						for(Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
 							if(cenovnik.getTip_sobe().equals(cuvanje))
 								cenovnik.setTip_sobe(temp2);
+						}
+						for(Soba soba : bazaObjekata.getMapaSoba().values()) {
+							if(soba.getTip_Soba().equals(cuvanje)) {
+								soba.setTip_Soba(temp2);
+							}
 						}
 						
 					}else {

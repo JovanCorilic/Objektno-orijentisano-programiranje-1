@@ -4,6 +4,23 @@ public class Soba {
 	private int brojSobe;
 	private String status;
 	private String tip_Soba;
+	
+	public void unosObjekta(Integer column,String text) {
+		switch (column) {
+		case 0:
+			brojSobe = Integer.parseInt(text);
+			break;
+		case 1:
+			status = text;
+			break;
+		case 2:
+			tip_Soba = text;
+			break;
+		default:
+			break;
+		}
+		
+	}
 
 	public static enum Statusi {
 		ZAU("ZAUZETO"), SPR("SPREMANJE"), SLO("SLOBODNA");
