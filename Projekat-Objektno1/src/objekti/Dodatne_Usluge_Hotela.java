@@ -3,6 +3,19 @@ package objekti;
 public class Dodatne_Usluge_Hotela {
 	private String naziv;
 	private String deskripcija;
+	
+	public void unosObjekta(Integer column,String text) {
+		switch (column) {
+		case 0:
+			naziv = text;
+			break;
+		case 1:
+			deskripcija = text;
+			break;
+		default:
+			break;
+		}
+	}
 
 	public Dodatne_Usluge_Hotela(String naziv, String deskripcija) {
 		super();
