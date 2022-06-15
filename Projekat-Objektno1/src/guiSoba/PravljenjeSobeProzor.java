@@ -19,7 +19,7 @@ public class PravljenjeSobeProzor extends JFrame{
 	public PravljenjeSobeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje sobe");
 
-		setSize(400, 400);
+		setSize(300, 120);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(4, 2));
 		setResizable(false);
@@ -32,12 +32,13 @@ public class PravljenjeSobeProzor extends JFrame{
 		boxStatus.addItem(Soba.Statusi.SLO.getVrednost());
 		boxStatus.addItem(Soba.Statusi.SPR.getVrednost());
 		boxStatus.addItem(Soba.Statusi.ZAU.getVrednost());
+		add(boxStatus);
 		add(new JLabel("Tip sobe"));
 		JComboBox<String>boxTipSobe = new JComboBox<>();
 		for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
 			boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
 		}
-		
+		add(boxTipSobe);
 		JButton buttonSave = new JButton("Napravi");
 		buttonSave.addActionListener(new ActionListener() {
 

@@ -16,7 +16,7 @@ import objekti.Dodatne_Usluge_Hotela;
 public class PravljenjeDodatneUslugeHotelaProzor extends JFrame{
 	public PravljenjeDodatneUslugeHotelaProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje dodatne usluge hotela");
-		setSize(400, 200);
+		setSize(500, 120);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		

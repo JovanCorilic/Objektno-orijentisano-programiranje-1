@@ -16,7 +16,7 @@ import objekti.Tip_Soba;
 public class PravljenjeTipaSobeProzor extends JFrame{
 	public PravljenjeTipaSobeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje dodatne usluge hotela");
-		setSize(400, 200);
+		setSize(500, 120);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setLayout(new GridLayout(3, 2));

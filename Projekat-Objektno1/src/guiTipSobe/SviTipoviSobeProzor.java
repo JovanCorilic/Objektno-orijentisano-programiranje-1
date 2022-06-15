@@ -33,7 +33,7 @@ public class SviTipoviSobeProzor extends JFrame{
 	public SviTipoviSobeProzor(BazaObjekata bazaObjekata) {
 		HashMap<String, Tip_Soba>mapa = bazaObjekata.getMapaTipovaSobe();
 		setTitle("Svi tipovi sobe");
-		setSize(200, 400);
+		setSize(700, 400);
 		setLocationRelativeTo(null);
 		
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");

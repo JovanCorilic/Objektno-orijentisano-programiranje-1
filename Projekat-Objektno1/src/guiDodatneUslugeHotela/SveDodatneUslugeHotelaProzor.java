@@ -32,7 +32,7 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 	public SveDodatneUslugeHotelaProzor(BazaObjekata bazaObjekata) {
 		HashMap<String, Dodatne_Usluge_Hotela>mapa = bazaObjekata.getMapaDodatneUslugeHotela();
 		setTitle("Sve dodatne usluge hotela");
-		setSize(500, 400);
+		setSize(700, 600);
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");
