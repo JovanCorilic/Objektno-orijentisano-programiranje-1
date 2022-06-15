@@ -18,6 +18,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -107,12 +108,27 @@ public class SviCenovniciProzor extends JFrame {
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
-
+					
+					ArithmeticException arithmeticException = new ArithmeticException();
+					if(column == 4 || column == 5)
+						throw arithmeticException;
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					final String kljuc = (String) jTable.getValueAt(row, 0);
+					if(column == 0) {
+						Cenovnik cenovnik = mapa.get(cuvanje);
+						mapa.remove(cuvanje);
+						cenovnik.unosObjekta(column, temp2);
+						mapa.put(temp2, cenovnik);
+						
+					}else {
+						final String kljuc = (String) jTable.getValueAt(row, 0);
 
-					mapa.get(kljuc).unosObjekta(column, temp2);
-				} catch (Exception e2) {
+						mapa.get(kljuc).unosObjekta(column, temp2);
+					}
+				}catch (ArithmeticException e2) {
+					JOptionPane.showMessageDialog(null, "Polja  broj sobe i naziv dodatne usluge hotela se menjaju u svojoj listi respektivno!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+				} 
+				catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 					jTable.setValueAt(cuvanje, row, column);

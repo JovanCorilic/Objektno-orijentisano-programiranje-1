@@ -106,13 +106,13 @@ public class SveRezervacijeProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					if(column==4) {
+					if(column==4 || column ==5 || column == 3) {
 						throw new ArithmeticException() ;
 					}
 					
 					lista.get(row).unosObjekta(column, temp2);
 				}catch (ArithmeticException e5) {
-					JOptionPane.showMessageDialog(null, "Email se menja samo kod korisnika!", "Greška",
+					JOptionPane.showMessageDialog(null, "Polja email, broj sobe i broj pasoša se menjaju u svojoj listi respektivno!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();

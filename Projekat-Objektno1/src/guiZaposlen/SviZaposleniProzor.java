@@ -104,8 +104,15 @@ public class SviZaposleniProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
+					if(column==0) {
+						Zaposlen zaposlen = mapa.get(cuvanje);
+						mapa.remove(cuvanje);
+						zaposlen.unosObjektaZaposlen(column, temp2);
+						mapa.put(temp2, zaposlen);
+					}
+					
 					final String kljuc = (String) jTable.getValueAt(row, 0);
-
+					
 					mapa.get(kljuc).unosObjektaZaposlen(column, temp2);
 				} catch (Exception e2) {
 					final int row = jTable.getSelectedRow();

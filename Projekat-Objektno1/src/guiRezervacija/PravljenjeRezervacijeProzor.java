@@ -62,7 +62,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 					rezervacija.unosObjekta(4, areaEmail.getText());
 					ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-					if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()))
+					if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()) && areaPasos.getText().equals(""))
 						throw arrayIndexOutOfBoundsException;
 
 					rezervacija.unosObjekta(5, areaPasos.getText());
@@ -91,7 +91,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om!", "Greška",
+					JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om i niste upisali broj pasoša!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
