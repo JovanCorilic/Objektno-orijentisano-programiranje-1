@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -165,11 +166,15 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						
+						ArrayList<Integer>listaZaBrisanje = new ArrayList<>();
 						String temp = pretraga.getText();
 						for(int i = 0;i<data.length;i++) {
 							if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
-								((DefaultTableModel) jTable.getModel()).removeRow(i);
+								listaZaBrisanje.add(i);
 							}
+						}
+						for(int j = listaZaBrisanje.size()-1;j>-1;j--) {
+							((DefaultTableModel) jTable.getModel()).removeRow(listaZaBrisanje.get(j));
 						}
 						
 					}

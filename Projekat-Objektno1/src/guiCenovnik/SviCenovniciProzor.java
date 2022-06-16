@@ -77,7 +77,7 @@ public class SviCenovniciProzor extends JFrame {
 		
 		
 		add(jPanel, BorderLayout.NORTH);
-		String[] zaglavlja = new String[] { "Naziv", "Cena", "Početak važenja", "Kraj važenja", "Broj sobe",
+		String[] zaglavlja = new String[] { "Naziv", "Cena", "Početak važenja", "Kraj važenja", "Tip sobe",
 				"Dodatna usluga hotela", "Brisanje" };
 		String[][] data = new String[mapa.size()][7];
 		int br = 0;
@@ -179,12 +179,15 @@ public class SviCenovniciProzor extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ArrayList<Integer>listaZaBrisanje = new ArrayList<>();
 				String temp = pretraga.getText();
 				for(int i = 0;i<data.length;i++) {
 					if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
-						((DefaultTableModel) jTable.getModel()).removeRow(i);
+						listaZaBrisanje.add(i);
 					}
+				}
+				for(int j = listaZaBrisanje.size()-1;j>-1;j--) {
+					((DefaultTableModel) jTable.getModel()).removeRow(listaZaBrisanje.get(j));
 				}
 				
 			}

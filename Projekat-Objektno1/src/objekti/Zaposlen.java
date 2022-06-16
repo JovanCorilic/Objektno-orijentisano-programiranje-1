@@ -28,6 +28,10 @@ public class Zaposlen extends Korisnik {
 		}
 
 	}
+	
+	public void racunanjePlate() {
+		plata += 1.2 * plata*godina_staza*10/100;
+	}
 
 	public void unosObjektaZaposlen(Integer column, String text) {
 		switch (column) {

@@ -8,6 +8,8 @@ public class Rezervacija {
 	private String status;
 	private LocalDateTime datumPocetka;
 	private LocalDateTime datumKraja;
+	private String tip_sobe;
+	private int broj_ljudi;
 	private int broj_sobe;
 	private String email_gosta;
 	private String broj_pasosa;
@@ -72,9 +74,12 @@ public class Rezervacija {
 		this.status = lista[0];
 		this.datumPocetka = KonverterDatum.konvertovanjeUDateTime(lista[1]);
 		this.datumKraja = KonverterDatum.konvertovanjeUDateTime(lista[2]);
-		this.broj_sobe = Integer.parseInt(lista[3]);
-		this.email_gosta = lista[4];
-		this.broj_pasosa = lista[5];
+		
+		this.tip_sobe=lista[3];
+		this.broj_ljudi=Integer.parseInt(lista[4]);
+		this.broj_sobe = Integer.parseInt(lista[5]);
+		this.email_gosta = lista[6];
+		this.broj_pasosa = lista[7];
 	}
 
 	public Rezervacija(String status, LocalDateTime datumPocetka, LocalDateTime datumKraja, int broj_sobe,
@@ -135,11 +140,29 @@ public class Rezervacija {
 	public void setBroj_pasosa(String broj_pasosa) {
 		this.broj_pasosa = broj_pasosa;
 	}
+	
+	
+
+	public String getTip_sobe() {
+		return tip_sobe;
+	}
+
+	public void setTip_sobe(String tip_sobe) {
+		this.tip_sobe = tip_sobe;
+	}
+
+	public int getBroj_ljudi() {
+		return broj_ljudi;
+	}
+
+	public void setBroj_ljudi(int broj_ljudi) {
+		this.broj_ljudi = broj_ljudi;
+	}
 
 	@Override
 	public String toString() {
 		return status + "|" + KonverterDatum.konvertovanjeUString(datumPocetka) + "|"
-				+ KonverterDatum.konvertovanjeUString(datumKraja) + "|" + broj_sobe + "|" + email_gosta + "|"
+				+ KonverterDatum.konvertovanjeUString(datumKraja) + "|"+tip_sobe+"|"+broj_ljudi+"|" + broj_sobe + "|" + email_gosta + "|"
 				+ broj_pasosa;
 	}
 

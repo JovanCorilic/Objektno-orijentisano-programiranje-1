@@ -55,7 +55,7 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 		add(new JLabel("Kraj važenja (Mora biti u formatu 24.11.2022 13:20)"));
 		JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 		add(areakrajVazenja);
-		add(new JLabel("Broj sobe"));
+		add(new JLabel("Tip sobe"));
 		JTextField areabroj_sobe = new JTextField();
 		add(areabroj_sobe);
 		add(new JLabel("Dodatna usluga hotela"));
@@ -101,7 +101,7 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 					JOptionPane.showMessageDialog(null, "Već postoji cenovnik sa tim nazivom!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ExceptionInInitializerError e2) {
-					JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
+					JOptionPane.showMessageDialog(null, "Ne postoji tip sobe sa tim nazivom!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 				} catch (ArrayIndexOutOfBoundsException e2) {
 					JOptionPane.showMessageDialog(null, "Ne postoji dodatna usluga sa tim nazivom!", "Greška",
