@@ -17,30 +17,26 @@ public class Rezervacija {
 	
 	public void unosObjekta(Integer column,String text) throws Exception {
 		switch (column) {
-		case 0:
+		case 1:
 			status=text;
 			break;
-		case 1:
+		case 2:
 			LocalDateTime dateTime = KonverterDatum.konvertovanjeUDateTime(text);
 			if(datumKraja!=null)
 				if(dateTime.isAfter(datumKraja))
 					throw new Exception();
 			datumPocetka = dateTime;
 			break;
-		case 2:
+		case 3:
 			LocalDateTime dateTime2 = KonverterDatum.konvertovanjeUDateTime(text);
 			if(dateTime2.isBefore(datumPocetka))
 				throw new Exception();
 			datumKraja = dateTime2;
 			break;
-		case 3:
-			broj_sobe = Integer.parseInt(text);
-			break;
-		case 4:
-			email_gosta = text;
-			break;
 		case 5:
-			broj_pasosa=text;
+			broj_ljudi=Integer.parseInt(text);
+			break;
+		
 		default:
 			break;
 		}
