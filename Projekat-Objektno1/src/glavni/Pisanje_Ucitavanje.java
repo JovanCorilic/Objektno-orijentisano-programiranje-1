@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
@@ -74,6 +75,37 @@ public class Pisanje_Ucitavanje {
 		}
 		printWriter.close();
 		
+	}
+	
+	public static void PisanjeSobarice(HashMap<String, ArrayList<Integer>>mapa) throws IOException {
+		PrintWriter printWriter = new PrintWriter(new FileWriter("sobarice.csv"),false);
+		for(Map.Entry<String, ArrayList<Integer>> entry : mapa.entrySet()) {
+			printWriter.print(entry.getKey());
+			for(Integer i : entry.getValue()) {
+				printWriter.print("|"+i);
+			}
+			printWriter.println();
+		}
+		printWriter.close();
+	}
+	
+	public static HashMap<String, ArrayList<Integer>> UcitavanjeSobarice(){
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader("sobarice.csv"));
+			String currentLine;
+			HashMap<String, ArrayList<Integer>>mapa = new HashMap<>();
+			while((currentLine = bufferedReader.readLine())!=null) {
+				String[]lista = currentLine.split("\\|");
+				mapa.put(lista[0], new ArrayList<>());
+				for(int i = 1;i<lista.length;i++) {
+					mapa.get(lista[0]).add(Integer.parseInt(lista[i]));
+				}
+				
+			}
+			return mapa;
+		} catch (Exception e) {
+			return new HashMap<>();
+		}
 	}
 	
 	public static HashMap<String,Tip_Soba> UcitavanjeTipSobe() {

@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -101,6 +102,9 @@ public class PravljenjeZaposlenogProzor extends JFrame{
 						throw arrayIndexOutOfBoundsException;
 					
 					zaposlen.unosObjektaZaposlen(11, box.getSelectedItem().toString());
+					if(box.getSelectedItem().toString().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+						bazaObjekata.getMapaSobarica().put(zaposlen.getEmail(), new ArrayList<>());
+					}
 					
 					bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
 

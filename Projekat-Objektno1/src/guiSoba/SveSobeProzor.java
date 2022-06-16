@@ -184,8 +184,13 @@ public class SveSobeProzor extends JFrame{
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-
+					
 					final String kljuc = (String) jTable.getValueAt(row, 0);
+					
+					if(column==1) {
+						String nesto = bazaObjekata.NajslobodnijaSobarica();
+						bazaObjekata.getMapaSobarica().get(nesto).add(Integer.parseInt(kljuc));
+					}
 
 					mapa.get(kljuc).unosObjekta(column, temp2);
 				} catch (Exception e2) {
