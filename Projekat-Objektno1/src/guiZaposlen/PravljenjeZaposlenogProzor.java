@@ -61,7 +61,7 @@ public class PravljenjeZaposlenogProzor extends JFrame{
 		add(areaplata);
 		add(new JLabel("Tip zaposlenog"));
 		JComboBox<String> box = new JComboBox<>();
-		box.addItem(Zaposlen.tipovi.ADMIN.getTip());
+		
 		box.addItem(Zaposlen.tipovi.REC.getTip());
 		box.addItem(Zaposlen.tipovi.SOBARICA.getTip());
 		add(box);
