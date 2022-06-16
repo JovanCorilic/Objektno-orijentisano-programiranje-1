@@ -52,9 +52,9 @@ public class Pisanje_Ucitavanje {
 		printWriter.close();
 	}
 
-	public static void PisanjeRezervacija(ArrayList<Rezervacija> lista) throws IOException {
+	public static void PisanjeRezervacija(HashMap<Integer, Rezervacija> mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("rezervacije.csv"), false);
-		for (Rezervacija temp : lista) {
+		for (Rezervacija temp : mapa.values()) {
 			printWriter.println(temp.toString());
 		}
 		printWriter.close();
@@ -183,18 +183,21 @@ public class Pisanje_Ucitavanje {
 		}
 	}
 
-	public static ArrayList<Rezervacija> UcitavanjeRezervacije() throws IOException {
+	public static HashMap<Integer,Rezervacija> UcitavanjeRezervacije() throws IOException {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("rezervacije.csv"));
 			String currentLine;
-			ArrayList<Rezervacija> lista = new ArrayList<>();
+			HashMap<Integer,Rezervacija> lista = new HashMap<>();
+			int temp = 0;
+			
 			while ((currentLine = br.readLine()) != null) {
-				lista.add(new Rezervacija(currentLine));
+				lista.put(temp , new Rezervacija(currentLine));
+				temp++;
 			}
 			br.close();
 			return lista;
 		} catch (Exception e) {
-			return new ArrayList<>();
+			return new HashMap<>();
 		}
 	}
 

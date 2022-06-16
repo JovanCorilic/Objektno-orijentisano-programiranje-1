@@ -120,7 +120,7 @@ public class SviGostiProzor extends JFrame {
 						mapa.remove(tempKljuc);
 						korisnik.setEmail(temp2);
 						mapa.put(temp2, korisnik);
-						for (Rezervacija rezervacija : bazaObjekata.getListaRezervacija()) {
+						for (Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
 							if(rezervacija.getEmail_gosta().equals(tempKljuc)) {
 								rezervacija.setEmail_gosta(temp2);
 							}

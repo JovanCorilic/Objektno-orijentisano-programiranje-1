@@ -29,6 +29,7 @@ import glavni.GhostText;
 import glavni.KonverterDatum;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
+import objekti.Rezervacija;
 import objekti.Soba;
 import objekti.Tip_Soba;
 
@@ -124,6 +125,11 @@ public class SviTipoviSobeProzor extends JFrame{
 						for(Soba soba : bazaObjekata.getMapaSoba().values()) {
 							if(soba.getTip_Soba().equals(cuvanje)) {
 								soba.setTip_Soba(temp2);
+							}
+						}
+						for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+							if(rezervacija.getTip_sobe().equals(cuvanje)) {
+								rezervacija.setTip_sobe(temp2);
 							}
 						}
 						

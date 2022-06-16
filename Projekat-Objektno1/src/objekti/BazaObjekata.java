@@ -11,7 +11,7 @@ public class BazaObjekata {
 	private HashMap<String, Cenovnik> mapaCenovnik;
 	private HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela;
 	private HashMap<String, Korisnik> mapaGosti;
-	private ArrayList<Rezervacija> listaRezervacija;
+	private HashMap<Integer, Rezervacija> mapaRezervacija;
 	private HashMap<Integer, Soba> mapaSoba;
 	private HashMap<String, Zaposlen> mapaZaposlenih;
 	private HashMap<String, Tip_Soba> mapaTipovaSobe;
@@ -36,7 +36,7 @@ public class BazaObjekata {
 		mapaCenovnik = Pisanje_Ucitavanje.UcitavanjeCenovnik();
 		mapaDodatneUslugeHotela = Pisanje_Ucitavanje.UcitavanjeDodatne_Usluge_Hotela();
 		mapaGosti = Pisanje_Ucitavanje.UcitavanjeGosti();
-		listaRezervacija = Pisanje_Ucitavanje.UcitavanjeRezervacije();
+		mapaRezervacija = Pisanje_Ucitavanje.UcitavanjeRezervacije();
 		mapaTipovaSobe = Pisanje_Ucitavanje.UcitavanjeTipSobe();
 		mapaSoba = Pisanje_Ucitavanje.UcitavanjeSobe();
 		mapaZaposlenih = Pisanje_Ucitavanje.UcitavanjeZaposleni();
@@ -54,23 +54,27 @@ public class BazaObjekata {
 		Pisanje_Ucitavanje.PisanjeCenovnik(mapaCenovnik);
 		Pisanje_Ucitavanje.PisanjeDodatneUslugeHotela(mapaDodatneUslugeHotela);
 		Pisanje_Ucitavanje.PisanjeKorisnik(mapaGosti);
-		Pisanje_Ucitavanje.PisanjeRezervacija(listaRezervacija);
+		Pisanje_Ucitavanje.PisanjeRezervacija(mapaRezervacija);
 		Pisanje_Ucitavanje.PisanjeSobe(mapaSoba);
 		Pisanje_Ucitavanje.PisanjeZaposlen(mapaZaposlenih);
 		Pisanje_Ucitavanje.PisanjeTipaSobe(mapaTipovaSobe);
 		Pisanje_Ucitavanje.PisanjeSobarice(mapaSobarica);
 	}
 
+	
+
+	
+
 	public BazaObjekata(HashMap<String, Cenovnik> mapaCenovnik,
 			HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela, HashMap<String, Korisnik> mapaGosti,
-			ArrayList<Rezervacija> listaRezervacija, HashMap<Integer, Soba> mapaSoba,
+			HashMap<Integer, Rezervacija> mapaRezervacija, HashMap<Integer, Soba> mapaSoba,
 			HashMap<String, Zaposlen> mapaZaposlenih, HashMap<String, Tip_Soba> mapaTipovaSobe,
 			HashMap<String, ArrayList<Integer>> mapaSobarica) {
 		super();
 		this.mapaCenovnik = mapaCenovnik;
 		this.mapaDodatneUslugeHotela = mapaDodatneUslugeHotela;
 		this.mapaGosti = mapaGosti;
-		this.listaRezervacija = listaRezervacija;
+		this.mapaRezervacija = mapaRezervacija;
 		this.mapaSoba = mapaSoba;
 		this.mapaZaposlenih = mapaZaposlenih;
 		this.mapaTipovaSobe = mapaTipovaSobe;
@@ -83,7 +87,7 @@ public class BazaObjekata {
 		mapaGosti = new HashMap<>();
 		mapaSoba = new HashMap<>();
 		mapaZaposlenih = new HashMap<>();
-		listaRezervacija = new ArrayList<>();
+		mapaRezervacija = new HashMap<>();
 		mapaTipovaSobe = new HashMap<>();
 		mapaSobarica = new HashMap<>();
 	}
@@ -120,12 +124,16 @@ public class BazaObjekata {
 		this.mapaGosti = mapaGosti;
 	}
 
-	public ArrayList<Rezervacija> getListaRezervacija() {
-		return listaRezervacija;
+	
+
+	
+
+	public HashMap<Integer, Rezervacija> getMapaRezervacija() {
+		return mapaRezervacija;
 	}
 
-	public void setListaRezervacija(ArrayList<Rezervacija> listaRezervacija) {
-		this.listaRezervacija = listaRezervacija;
+	public void setMapaRezervacija(HashMap<Integer, Rezervacija> mapaRezervacija) {
+		this.mapaRezervacija = mapaRezervacija;
 	}
 
 	public HashMap<Integer, Soba> getMapaSoba() {

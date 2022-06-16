@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -69,17 +70,18 @@ public class SveRezervacijeProzor extends JFrame {
 		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
 
-		String[] zaglavlja = new String[] { "Status", "Datum početka", "Datum kraja", "Broj sobe", "Email gosta",
+		String[] zaglavlja = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
 				"Broj pasoša gosta", "Brisanje" };
-		ArrayList<Rezervacija> lista = bazaObjekata.getListaRezervacija();
-		String[][] data = new String[lista.size()][7];
+		HashMap<Integer, Rezervacija> mapa = bazaObjekata.getMapaRezervacija();
+		String[][] data = new String[mapa.size()][10];
 		int br = 0;
-		for (Rezervacija temp : lista) {
+		for (Rezervacija temp : mapa.values()) {
 			String[] lista2 = temp.toString().split("\\|");
-			for (int i = 0; i < lista2.length; i++) {
-				data[br][i] = lista2[i];
+			data[br][0] = temp.getId() + "";
+			for (int i = 1; i < lista2.length+1; i++) {
+				data[br][i] = lista2[i-1];
 			}
-			data[br][lista2.length] = "Delete";
+			data[br][lista2.length+1] = "Delete";
 			br++;
 		}
 
@@ -92,7 +94,7 @@ public class SveRezervacijeProzor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JTable jTable = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
-				lista.remove(modelRow);
+				mapa.remove(Integer.parseInt(jTable.getValueAt(modelRow, 0).toString()));
 				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
 				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
 
@@ -100,7 +102,7 @@ public class SveRezervacijeProzor extends JFrame {
 		};
 		Button deleteButton = new Button("Delete");
 
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 6);
+		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 9);
 
 		jTable.setCellSelectionEnabled(true);
 
@@ -116,18 +118,29 @@ public class SveRezervacijeProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					if(column==4 || column ==5 || column == 3) {
+					if(column==4 || column ==6 || column == 7 || column == 8) {
 						throw new ArithmeticException() ;
 					}
+					ExceptionInInitializerError error = new ExceptionInInitializerError();
+					if(column==0)
+						throw error;
 					
-					lista.get(row).unosObjekta(column, temp2);
+					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
+
+					mapa.get(kljuc).unosObjekta(column, temp2);
 				}catch (ArithmeticException e5) {
-					JOptionPane.showMessageDialog(null, "Polja email, broj sobe i broj pasoša se menjaju u svojoj listi respektivno!", "Greška",
+					JOptionPane.showMessageDialog(null, "Polja email, tip sobe ,broj sobe i broj pasoša se menjaju u svojoj listi respektivno!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 					jTable.setValueAt(cuvanje, row, column);
-				} 
+				}catch (ExceptionInInitializerError e3) {
+					JOptionPane.showMessageDialog(null, "ID se ne dira!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(cuvanje, row, column);
+				}
 				catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
@@ -168,7 +181,7 @@ public class SveRezervacijeProzor extends JFrame {
 		box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
 		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
 
-		TableColumn column = jTable.getColumnModel().getColumn(0);
+		TableColumn column = jTable.getColumnModel().getColumn(1);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
 		cellEditor2.addCellEditorListener(new CellEditorListener() {
 
@@ -182,7 +195,9 @@ public class SveRezervacijeProzor extends JFrame {
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
 
-					lista.get(row).unosObjekta(column, temp2);
+					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
+
+					mapa.get(kljuc).unosObjekta(column, temp2);
 				} catch (Exception e2) {
 					/*
 					 * final int row = jTable.getSelectedRow(); final int column =

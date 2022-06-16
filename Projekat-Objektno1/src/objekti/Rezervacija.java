@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import glavni.KonverterDatum;
 
 public class Rezervacija {
+	private Integer id;
 	private String status;
 	private LocalDateTime datumPocetka;
 	private LocalDateTime datumKraja;
@@ -49,6 +50,7 @@ public class Rezervacija {
 		// TODO Auto-generated constructor stub
 	}
 
+
 	// String prodUrl = Environment.PROD.getUrl();
 	public static enum Statusi {
 		NACEK("NA ČEKANJU"), POTVR("POTVRĐENA"), ODBIJ("ODBIJENA"), OTKAZ("OTKAZANA");
@@ -82,12 +84,17 @@ public class Rezervacija {
 		this.broj_pasosa = lista[7];
 	}
 
-	public Rezervacija(String status, LocalDateTime datumPocetka, LocalDateTime datumKraja, int broj_sobe,
-			String email_gosta, String broj_pasosa) {
+	
+
+	public Rezervacija(Integer id, String status, LocalDateTime datumPocetka, LocalDateTime datumKraja, String tip_sobe,
+			int broj_ljudi, int broj_sobe, String email_gosta, String broj_pasosa) {
 		super();
+		this.id = id;
 		this.status = status;
 		this.datumPocetka = datumPocetka;
 		this.datumKraja = datumKraja;
+		this.tip_sobe = tip_sobe;
+		this.broj_ljudi = broj_ljudi;
 		this.broj_sobe = broj_sobe;
 		this.email_gosta = email_gosta;
 		this.broj_pasosa = broj_pasosa;
@@ -127,6 +134,16 @@ public class Rezervacija {
 
 	public String getEmail_gosta() {
 		return email_gosta;
+	}
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setEmail_gosta(String email_gosta) {

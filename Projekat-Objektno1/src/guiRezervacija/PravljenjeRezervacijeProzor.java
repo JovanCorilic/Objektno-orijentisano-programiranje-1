@@ -77,8 +77,8 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						ArithmeticException exception = new ArithmeticException();
 						throw exception;
 					}
-
-					bazaObjekata.getListaRezervacija().add(rezervacija);
+					rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
+					bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
 
 					SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
 					rezervacijeProzor.setVisible(true);

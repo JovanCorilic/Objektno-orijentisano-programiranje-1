@@ -119,7 +119,7 @@ public class SveSobeProzor extends JFrame{
 						mapa.remove(cuvanje);
 						soba.unosObjekta(column, temp2);
 						mapa.put(Integer.parseInt(temp2), soba);
-						for(Rezervacija rezervacija : bazaObjekata.getListaRezervacija()) {
+						for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
 							if(rezervacija.getBroj_sobe()==Integer.parseInt(cuvanje)) {
 								rezervacija.setBroj_sobe(Integer.parseInt(temp2));
 							}
