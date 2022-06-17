@@ -73,8 +73,8 @@ public class SviZaposleniProzor extends JFrame {
 		String[][] data = new String[mapa.size()][13];
 		int br = 0;
 		for (Zaposlen temp : mapa.values()) {
-			if(temp.getTip_zaposlen().equals(Zaposlen.tipovi.ADMIN.getTip()))
-				continue;
+			/*if(temp.getTip_zaposlen().equals(Zaposlen.tipovi.ADMIN.getTip()))
+				continue;*/
 			String[] lista = temp.toString().split("\\|");
 			for (int i = 0; i < lista.length; i++) {
 				data[br][i] = lista[i];
