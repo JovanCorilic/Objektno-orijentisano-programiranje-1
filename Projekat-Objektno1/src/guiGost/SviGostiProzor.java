@@ -181,6 +181,7 @@ public class SviGostiProzor extends JFrame {
 				
 			}
 		});
+		jTable.setAutoCreateRowSorter(true);
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 
