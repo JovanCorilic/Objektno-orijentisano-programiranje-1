@@ -37,7 +37,9 @@ public class Main {
 		// mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
 
 		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
+		Cenovnik cenovnik2 = new Cenovnik("test123", 600, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		bazaObjekata.getMapaCenovnik().put("test", cenovnik);
+		bazaObjekata.getMapaCenovnik().put(cenovnik2.getNaziv(), cenovnik2);
 		Dodatne_Usluge_Hotela dodatne_Usluge_Hotela = new Dodatne_Usluge_Hotela("testDodatne",
 				"wefuwfuwhfuwhf wfwjfiwj fiwfihwfhw ihfiwhfiwhfiw hwfihfwih fwihf wi wifhwihfwihfuiggsjfs wfwf.");
 		bazaObjekata.getMapaDodatneUslugeHotela().put(dodatne_Usluge_Hotela.getNaziv(), dodatne_Usluge_Hotela);

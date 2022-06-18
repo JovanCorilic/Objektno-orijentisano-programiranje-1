@@ -37,7 +37,7 @@ import objekti.BazaObjekata;
 public class GlavniProzor extends JFrame {
 	private HashMap<String, Cenovnik> mapaCenovnik;
 
-	public GlavniProzor(BazaObjekata bazaObjekata, String email, String tipKorisnika) {
+	public GlavniProzor(BazaObjekata bazaObjekata) {
 
 		
 
@@ -164,11 +164,11 @@ public class GlavniProzor extends JFrame {
 		
 		add(jPanel);
 		JLabel jLabel = new JLabel();
-		if(tipKorisnika.equals("")) {
-			Korisnik korisnik = bazaObjekata.getMapaGosti().get(email);
+		if(bazaObjekata.getTipKorisnika().equals("")) {
+			Korisnik korisnik = bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail());
 			jLabel.setText("Vi ste "+ korisnik.getIme()+" "+korisnik.getPrezime());
 		}else {
-			Zaposlen zaposlen = bazaObjekata.getMapaZaposlenih().get(email);
+			Zaposlen zaposlen = bazaObjekata.getMapaZaposlenih().get(bazaObjekata.getEmail());
 			jLabel.setText("Vi ste "+zaposlen.getIme()+" "+zaposlen.getPrezime()+" "+zaposlen.getTip_zaposlen());
 		}
 		add(jLabel,BorderLayout.SOUTH);

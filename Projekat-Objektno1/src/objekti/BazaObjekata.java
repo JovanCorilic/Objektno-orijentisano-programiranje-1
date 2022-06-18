@@ -8,6 +8,8 @@ import java.util.Map;
 import glavni.Pisanje_Ucitavanje;
 
 public class BazaObjekata {
+	private String email;
+	private String tipKorisnika;
 	private HashMap<String, Cenovnik> mapaCenovnik;
 	private HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela;
 	private HashMap<String, Korisnik> mapaGosti;
@@ -98,6 +100,24 @@ public class BazaObjekata {
 
 	public HashMap<String, ArrayList<Integer>> getMapaSobarica() {
 		return mapaSobarica;
+	}
+	
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTipKorisnika() {
+		return tipKorisnika;
+	}
+
+	public void setTipKorisnika(String tipKorisnika) {
+		this.tipKorisnika = tipKorisnika;
 	}
 
 	public void setMapaSobarica(HashMap<String, ArrayList<Integer>> mapaSobarica) {

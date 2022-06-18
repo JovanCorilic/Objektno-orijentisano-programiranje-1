@@ -89,7 +89,7 @@ public class SviTipoviSobeProzor extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				JTable jTable = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
-				mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+				mapa.remove(jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString());
 				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
 				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
 

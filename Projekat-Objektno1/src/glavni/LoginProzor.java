@@ -18,7 +18,7 @@ import objekti.BazaObjekata;
 public class LoginProzor extends JFrame {
 	public LoginProzor(BazaObjekata bazaObjekata){
 		
-		
+		setTitle("Logovanje");
 		setSize(300, 150);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -43,8 +43,9 @@ public class LoginProzor extends JFrame {
 				String tempLozinka = String.valueOf(lozinka.getPassword());
 				if (bazaObjekata.getMapaZaposlenih().containsKey(temp)) {
 					if (bazaObjekata.getMapaZaposlenih().get(temp).getLozinka().equals(tempLozinka)) {
-						GlavniProzor glavniProzor = new GlavniProzor(bazaObjekata, temp,
-								bazaObjekata.getMapaZaposlenih().get(temp).getTip_zaposlen());
+						bazaObjekata.setEmail(temp);
+						bazaObjekata.setTipKorisnika(bazaObjekata.getMapaZaposlenih().get(temp).getTip_zaposlen());
+						GlavniProzor glavniProzor = new GlavniProzor(bazaObjekata);
 						glavniProzor.setVisible(true);
 						dispose();
 						
@@ -54,7 +55,9 @@ public class LoginProzor extends JFrame {
 					}
 				}else if(bazaObjekata.getMapaGosti().containsKey(temp)) {
 					if (bazaObjekata.getMapaGosti().get(temp).getLozinka().equals(tempLozinka)) {
-						GlavniProzor glavniProzor = new GlavniProzor(bazaObjekata, temp,"");
+						bazaObjekata.setEmail(temp);
+						bazaObjekata.setTipKorisnika("");
+						GlavniProzor glavniProzor = new GlavniProzor(bazaObjekata);
 						glavniProzor.setVisible(true);
 						dispose();
 						
