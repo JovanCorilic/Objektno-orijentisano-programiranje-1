@@ -43,7 +43,7 @@ public class Main {
 		Dodatne_Usluge_Hotela dodatne_Usluge_Hotela = new Dodatne_Usluge_Hotela("testDodatne",
 				"wefuwfuwhfuwhf wfwjfiwj fiwfihwfhw ihfiwhfiwhfiw hwfihfwih fwihf wi wifhwihfwihfuiggsjfs wfwf.");
 		bazaObjekata.getMapaDodatneUslugeHotela().put(dodatne_Usluge_Hotela.getNaziv(), dodatne_Usluge_Hotela);
-		Korisnik korisnik = new Korisnik("test@hotmail.com", "35435435454", "Neko", "Nesto", "M", LocalDate.now(),
+		Korisnik korisnik = new Korisnik("4", "1", "Neko", "Nesto", "M", LocalDate.now(),
 				"2656545454", "Tamo amo 57");
 		bazaObjekata.getMapaGosti().put(korisnik.getEmail(), korisnik);
 		Rezervacija rezervacija = new Rezervacija(0,Rezervacija.Statusi.NACEK.getVrednost(), LocalDateTime.now(),
