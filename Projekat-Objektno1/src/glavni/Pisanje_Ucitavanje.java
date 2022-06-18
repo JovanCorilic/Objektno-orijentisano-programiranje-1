@@ -89,6 +89,37 @@ public class Pisanje_Ucitavanje {
 		printWriter.close();
 	}
 	
+	public static void PisanjeRezervacijaDodatneUsluge(HashMap<Integer, ArrayList<String>> mapa) throws IOException {
+		PrintWriter printWriter = new PrintWriter(new FileWriter("rezervacijeDodatneUsluge.csv"),false);
+		for(Map.Entry<Integer, ArrayList<String>> entry : mapa.entrySet()) {
+			printWriter.print(entry.getKey());
+			for(String i : entry.getValue()) {
+				printWriter.print("|"+i);
+			}
+			printWriter.println();
+		}
+		printWriter.close();
+	}
+	
+	public static HashMap<Integer, ArrayList<String>> UcitavanjeRezervacijaDodatneUsluge() {
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader("rezervacijeDodatneUsluge.csv"));
+			String currentLine;
+			HashMap<Integer, ArrayList<String>>mapa = new HashMap<>();
+			while((currentLine = bufferedReader.readLine())!=null) {
+				String[]lista = currentLine.split("\\|");
+				mapa.put(Integer.parseInt(lista[0]), new ArrayList<>());
+				for(int i = 1;i<lista.length;i++) {
+					mapa.get(Integer.parseInt(lista[0])).add(lista[i]);
+				}
+				
+			}
+			return mapa;
+		} catch (Exception e) {
+			return new HashMap<>();
+		}
+	}
+	
 	public static HashMap<String, ArrayList<Integer>> UcitavanjeSobarice(){
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("sobarice.csv"));

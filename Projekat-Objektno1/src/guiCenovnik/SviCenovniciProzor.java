@@ -34,6 +34,7 @@ import javax.swing.table.DefaultTableModel;
 import glavni.ButtonColumn;
 import glavni.GhostText;
 import glavni.KonverterDatum;
+import glavni.OperacijePretrage;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 
@@ -180,14 +181,23 @@ public class SviCenovniciProzor extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Integer>listaZaBrisanje = new ArrayList<>();
+				String[][]tempData = new String[jTable.getRowCount()][jTable.getColumnCount()];
+				for(int t = 0;t<jTable.getRowCount();t++) {
+					for(int k = 0;k<jTable.getColumnCount();k++) {
+						tempData[t][k]=(String) jTable.getValueAt(t, k);
+					}
+				}
+				
 				String temp = pretraga.getText();
-				for(int i = 0;i<data.length;i++) {
-					if(!KonverterDatum.daLiSadrzi(data[i], temp)) {
+				for(int i = 0;i<tempData.length;i++) {
+					if(!OperacijePretrage.daLiSadrzi(tempData[i], temp)) {
 						listaZaBrisanje.add(i);
 					}
 				}
 				for(int j = listaZaBrisanje.size()-1;j>-1;j--) {
-					((DefaultTableModel) jTable.getModel()).removeRow(listaZaBrisanje.get(j));
+					
+					((DefaultTableModel) jTable.getModel()).removeRow(jTable.convertRowIndexToModel(listaZaBrisanje.get(j)));
+					
 				}
 				
 			}
@@ -195,6 +205,7 @@ public class SviCenovniciProzor extends JFrame {
 		
 		jTable.setAutoCreateRowSorter(true);
 
+		jTable.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
 

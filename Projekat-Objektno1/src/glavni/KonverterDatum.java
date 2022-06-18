@@ -27,12 +27,6 @@ public class KonverterDatum {
 		return parse;
 	}
 	
-	public static boolean daLiSadrzi(String[]lista,String text) {
-		for(String temp:lista) {
-			if(temp.toUpperCase().contains(text.toUpperCase()))
-				return true;
-		}
-		return false;
-	}
+	
 
 }
