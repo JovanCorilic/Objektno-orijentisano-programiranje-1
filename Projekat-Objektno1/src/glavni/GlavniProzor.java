@@ -53,9 +53,10 @@ public class GlavniProzor extends JFrame {
 				// TODO Auto-generated method stub
 				int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni?", "Pitanje",
 						JOptionPane.YES_NO_OPTION);
-				if (choice == JOptionPane.YES_OPTION)
+				if (choice == JOptionPane.YES_OPTION) {
 					dispose();
-
+					System.exit(EXIT_ON_CLOSE);
+				}
 			}
 
 		});
