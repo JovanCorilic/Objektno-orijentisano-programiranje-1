@@ -36,9 +36,9 @@ import objekti.BazaObjekata;
 public class GlavniProzor extends JFrame {
 	private HashMap<String, Cenovnik> mapaCenovnik;
 
-	public GlavniProzor(BazaObjekata bazaObjekata) throws IOException {
+	public GlavniProzor(BazaObjekata bazaObjekata, String email, String tipKorisnika) {
 
-		ucitavanje(bazaObjekata);
+		
 
 		setTitle("Glavni Prozor");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -148,29 +148,21 @@ public class GlavniProzor extends JFrame {
 		});
 		jPanel.add(btnTipSobe);
 		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoginProzor loginProzor = new LoginProzor(bazaObjekata);
+				loginProzor.setVisible(true);
+				dispose();
+				
+			}
+		});
+		jPanel.add(btnLogout);
+		
 		add(jPanel);
 	}
 
-	public void ucitavanje(BazaObjekata bazaObjekata) throws IOException {
-		// mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
-
-		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
-		bazaObjekata.getMapaCenovnik().put("test", cenovnik);
-		Dodatne_Usluge_Hotela dodatne_Usluge_Hotela = new Dodatne_Usluge_Hotela("testDodatne",
-				"wefuwfuwhfuwhf wfwjfiwj fiwfihwfhw ihfiwhfiwhfiw hwfihfwih fwihf wi wifhwihfwihfuiggsjfs wfwf.");
-		bazaObjekata.getMapaDodatneUslugeHotela().put(dodatne_Usluge_Hotela.getNaziv(), dodatne_Usluge_Hotela);
-		Korisnik korisnik = new Korisnik("test@hotmail.com", "35435435454", "Neko", "Nesto", "M", LocalDate.now(),
-				"2656545454", "Tamo amo 57");
-		bazaObjekata.getMapaGosti().put(korisnik.getEmail(), korisnik);
-		Rezervacija rezervacija = new Rezervacija(0,Rezervacija.Statusi.NACEK.getVrednost(), LocalDateTime.now(),
-				LocalDateTime.now(),"Obična",3, 12, korisnik.getEmail(), korisnik.getLozinka());
-		bazaObjekata.getMapaRezervacija().put(0,rezervacija);
-		Tip_Soba tip_Soba = new Tip_Soba("Obična","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
-		bazaObjekata.getMapaTipovaSobe().put(tip_Soba.getNaziv_tipa(),tip_Soba);
-		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
-		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
-		Zaposlen zaposlen = new Zaposlen("testNeki@gmail.com", "wfhw2ufgwjf", "Pera", "Perić", "Srednji",
-				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.ADMIN.getTip());
-		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
-	}
+	
 }

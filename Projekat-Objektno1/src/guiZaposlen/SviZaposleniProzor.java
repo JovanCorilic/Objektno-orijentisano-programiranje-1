@@ -38,7 +38,7 @@ public class SviZaposleniProzor extends JFrame {
 
 	public SviZaposleniProzor(BazaObjekata bazaObjekata) {
 		HashMap<String, Zaposlen> mapa = bazaObjekata.getMapaZaposlenih();
-
+		
 		setTitle("Svi gosti");
 		setSize(1200, 400);
 		setLocationRelativeTo(null);
