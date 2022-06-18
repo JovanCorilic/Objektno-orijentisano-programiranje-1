@@ -116,8 +116,8 @@ public class SveSobeProzor extends JFrame{
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
 					if(column == 0) {
-						Soba soba = mapa.get(cuvanje);
-						mapa.remove(cuvanje);
+						Soba soba = mapa.get(Integer.parseInt(cuvanje));
+						mapa.remove(Integer.parseInt(cuvanje));
 						soba.unosObjekta(column, temp2);
 						mapa.put(Integer.parseInt(temp2), soba);
 						for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
@@ -125,11 +125,20 @@ public class SveSobeProzor extends JFrame{
 								rezervacija.setBroj_sobe(Integer.parseInt(temp2));
 							}
 						}
+						for(ArrayList<Integer>lista : bazaObjekata.getMapaSobarica().values()) {
+							if(lista.contains(Integer.parseInt(cuvanje))) {
+								for(int t : lista) {
+									if(t==Integer.parseInt(cuvanje)) {
+										t=Integer.parseInt(temp2);
+									}
+								}
+							}
+						}
 						
 					}else {
 						final String kljuc = (String) jTable.getValueAt(row, 0);
 
-						mapa.get(kljuc).unosObjekta(column, temp2);
+						mapa.get(Integer.parseInt(kljuc)).unosObjekta(column, temp2);
 					}
 				}
 				catch (Exception e2) {
@@ -193,7 +202,7 @@ public class SveSobeProzor extends JFrame{
 						bazaObjekata.getMapaSobarica().get(nesto).add(Integer.parseInt(kljuc));
 					}
 
-					mapa.get(kljuc).unosObjekta(column, temp2);
+					mapa.get(Integer.parseInt(kljuc)).unosObjekta(column, temp2);
 				} catch (Exception e2) {
 					/*
 					 * final int row = jTable.getSelectedRow(); final int column =
@@ -233,7 +242,7 @@ public class SveSobeProzor extends JFrame{
 
 					final String kljuc = (String) jTable.getValueAt(row, 0);
 
-					mapa.get(kljuc).unosObjekta(column, temp2);
+					mapa.get(Integer.parseInt(kljuc)).unosObjekta(column, temp2);
 				} catch (Exception e2) {
 					/*
 					 * final int row = jTable.getSelectedRow(); final int column =

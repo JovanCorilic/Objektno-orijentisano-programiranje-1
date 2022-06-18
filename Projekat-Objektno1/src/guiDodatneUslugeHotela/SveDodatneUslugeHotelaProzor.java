@@ -121,6 +121,15 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 							if(cenovnik.getDodatna_usluga_hotela().equals(cuvanje))
 								cenovnik.setDodatna_usluga_hotela(temp2);
 						}
+						for(ArrayList<String> lista : bazaObjekata.getMapaRezervacijaDodatneUsluge().values()) {
+							if(lista.contains(cuvanje)) {
+								for(String t : lista) {
+									if(t.equals(cuvanje)) {
+										t=temp2;
+									}
+								}
+							}
+						}
 						
 					}else {
 						final String kljuc = (String) jTable.getValueAt(row, 0);

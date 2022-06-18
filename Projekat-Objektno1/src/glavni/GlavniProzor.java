@@ -63,7 +63,7 @@ public class GlavniProzor extends JFrame {
 		});
 
 		JPanel jPanel = new JPanel();
-
+		
 		JButton btnCenovnik = new JButton("Cenovnik");
 		btnCenovnik.addActionListener(new ActionListener() {
 
@@ -74,7 +74,7 @@ public class GlavniProzor extends JFrame {
 
 			}
 		});
-		jPanel.add(btnCenovnik);
+		
 		
 		JButton btnRezervacija = new JButton("Rezervacija");
 		btnRezervacija.addActionListener(new ActionListener() {
@@ -86,7 +86,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnRezervacija);
+		
 		
 		
 		JButton btnGosti = new JButton("Gosti");
@@ -99,7 +99,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnGosti);
+		
 		
 		JButton btnZaposleni = new JButton("Zaposleni");
 		btnZaposleni.addActionListener(new ActionListener() {
@@ -111,7 +111,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnZaposleni);
+		
 		
 		JButton btnDodatne = new JButton("Dodatne usluge hotela");
 		btnDodatne.addActionListener(new ActionListener() {
@@ -123,7 +123,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnDodatne);
+		
 		
 		JButton btnSobe = new JButton("Sobe");
 		btnSobe.addActionListener(new ActionListener() {
@@ -135,7 +135,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnSobe);
+		
 		
 		JButton btnTipSobe = new JButton("Tip sobe");
 		btnTipSobe.addActionListener(new ActionListener() {
@@ -147,7 +147,7 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
-		jPanel.add(btnTipSobe);
+		
 		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.addActionListener(new ActionListener() {
@@ -160,6 +160,31 @@ public class GlavniProzor extends JFrame {
 				
 			}
 		});
+		
+		if(bazaObjekata.getTipKorisnika().equals("")) {
+			jPanel.add(btnRezervacija);
+			jPanel.add(btnTipSobe);
+			jPanel.add(btnDodatne);
+		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip())) {
+			jPanel.add(btnCenovnik);
+			jPanel.add(btnRezervacija);
+			jPanel.add(btnGosti);
+			jPanel.add(btnZaposleni);
+			jPanel.add(btnDodatne);
+			jPanel.add(btnSobe);
+			jPanel.add(btnTipSobe);
+			
+		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+			jPanel.add(btnGosti);
+			jPanel.add(btnSobe);
+			jPanel.add(btnTipSobe);
+			jPanel.add(btnRezervacija);
+			jPanel.add(btnDodatne);
+		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+			jPanel.add(btnSobe);
+		}
+		
+		
 		jPanel.add(btnLogout);
 		
 		add(jPanel);

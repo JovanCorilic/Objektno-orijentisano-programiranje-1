@@ -53,9 +53,16 @@ public class Main {
 		bazaObjekata.getMapaTipovaSobe().put(tip_Soba.getNaziv_tipa(),tip_Soba);
 		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
 		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
-		Zaposlen zaposlen = new Zaposlen("1", "123", "Pera", "Perić", "Srednji",
+		Zaposlen zaposlen = new Zaposlen("1", "1", "Pera", "Perić", "Srednji",
 				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.ADMIN.getTip());
+		Zaposlen zaposlen2 = new Zaposlen("2", "1", "Nikola", "Perić", "Srednji",
+				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.REC.getTip());
+		Zaposlen zaposlen3 = new Zaposlen("3", "1", "Tanja", "Perić", "Srednji",
+				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.SOBARICA.getTip());
+		
+		bazaObjekata.getMapaZaposlenih().put(zaposlen2.getEmail(), zaposlen2);
 		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
+		bazaObjekata.getMapaZaposlenih().put(zaposlen3.getEmail(), zaposlen3);
 	}
 	
 }
