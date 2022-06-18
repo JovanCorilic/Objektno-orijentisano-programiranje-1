@@ -1,5 +1,6 @@
 package glavni;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -162,6 +163,15 @@ public class GlavniProzor extends JFrame {
 		jPanel.add(btnLogout);
 		
 		add(jPanel);
+		JLabel jLabel = new JLabel();
+		if(tipKorisnika.equals("")) {
+			Korisnik korisnik = bazaObjekata.getMapaGosti().get(email);
+			jLabel.setText("Vi ste "+ korisnik.getIme()+" "+korisnik.getPrezime());
+		}else {
+			Zaposlen zaposlen = bazaObjekata.getMapaZaposlenih().get(email);
+			jLabel.setText("Vi ste "+zaposlen.getIme()+" "+zaposlen.getPrezime()+" "+zaposlen.getTip_zaposlen());
+		}
+		add(jLabel,BorderLayout.SOUTH);
 	}
 
 	
