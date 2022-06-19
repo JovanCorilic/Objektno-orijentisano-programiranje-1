@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,14 +33,26 @@ import glavni.KonverterDatum;
 import glavni.OperacijePretrage;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
+import objekti.OciscenaSoba;
 import objekti.Rezervacija;
 import objekti.Soba;
 import objekti.Tip_Soba;
+import objekti.Zaposlen;
 
-public class SveSobeProzor extends JFrame{
+public class SveSobeProzor extends JFrame {
 	private String cuvanje;
+
 	public SveSobeProzor(BazaObjekata bazaObjekata) {
-		HashMap<Integer, Soba>mapa = bazaObjekata.getMapaSoba();
+		HashMap<Integer, Soba> mapaTemp = new HashMap<>();
+		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+			ArrayList<Integer> listaSoba = bazaObjekata.getMapaSobarica().get(bazaObjekata.getEmail());
+			for (Integer broj_Sobe : listaSoba) {
+				mapaTemp.put(broj_Sobe, bazaObjekata.getMapaSoba().get(broj_Sobe));
+			}
+		} else {
+			mapaTemp = bazaObjekata.getMapaSoba();
+		}
+		HashMap<Integer, Soba> mapa = mapaTemp;
 		setTitle("Sve sobe");
 		setSize(700, 400);
 		setLocationRelativeTo(null);
@@ -58,19 +71,27 @@ public class SveSobeProzor extends JFrame{
 		});
 
 		JPanel jPanel = new JPanel();
-		jPanel.add(jLabel);
-		jPanel.add(createNew);
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+			jPanel.add(jLabel);
+
+			jPanel.add(createNew);
+		}
 		JTextField pretraga = new JTextField();
-		GhostText ghostText = new GhostText(pretraga,"Unesite tekst ovde...");
+		GhostText ghostText = new GhostText(pretraga, "Unesite tekst ovde...");
 		JButton buttonPretraga = new JButton("Pretraga");
 		jPanel.add(new JLabel("             "));
-		pretraga.setPreferredSize(new Dimension(200,25));
+		pretraga.setPreferredSize(new Dimension(200, 25));
 		jPanel.add(pretraga);
 		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
+		String[] zaglavljatemp;
+		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+			zaglavljatemp = new String[] { "Broj sobe", "Status", "Tip sobe", "Spremanje" };
+		} else {
+			zaglavljatemp = new String[] { "Broj sobe", "Status", "Tip sobe", "Brisanje" };
+		}
+		String[] zaglavlja = zaglavljatemp;
 
-		String[] zaglavlja = new String[] { "Broj sobe", "Status", "Tip sobe", "Brisanje" };
-		
 		String[][] data = new String[mapa.size()][4];
 		int br = 0;
 		for (Soba temp : mapa.values()) {
@@ -78,7 +99,10 @@ public class SveSobeProzor extends JFrame{
 			for (int i = 0; i < lista2.length; i++) {
 				data[br][i] = lista2[i];
 			}
-			data[br][lista2.length] = "Delete";
+			if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()))
+				data[br][lista2.length] = "Ocisćena";
+			else
+				data[br][lista2.length] = "Delete";
 			br++;
 		}
 
@@ -91,7 +115,24 @@ public class SveSobeProzor extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				JTable jTable = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
-				mapa.remove(Integer.parseInt(jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString()));
+				int kljuc = Integer.parseInt(jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString());
+				if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+					bazaObjekata.getMapaSoba().get(kljuc).setStatus(Soba.Statusi.SLO.getVrednost());
+					ArrayList<Integer> listaSoba = bazaObjekata.getMapaSobarica().get(bazaObjekata.getEmail());
+					for (int i = 0; i < listaSoba.size(); i++) {
+						if (listaSoba.get(i) == kljuc)
+							bazaObjekata.getMapaSobarica().get(bazaObjekata.getEmail()).remove(i);
+					}
+					if (!bazaObjekata.getMapaOciscenihSobaSobarica().containsKey(bazaObjekata.getEmail())) {
+						bazaObjekata.getMapaOciscenihSobaSobarica().put(bazaObjekata.getEmail(), new ArrayList<>());
+					}
+					bazaObjekata.getMapaOciscenihSobaSobarica().get(bazaObjekata.getEmail())
+							.add(new OciscenaSoba(kljuc, LocalDateTime.now()));
+
+				} else {
+					mapa.remove(kljuc);
+
+				}
 				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
 				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
 
@@ -109,39 +150,40 @@ public class SveSobeProzor extends JFrame{
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
+					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()))
+						throw new Exception();
 
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					if(column == 0) {
+					if (column == 0) {
 						Soba soba = mapa.get(Integer.parseInt(cuvanje));
 						mapa.remove(Integer.parseInt(cuvanje));
 						soba.unosObjekta(column, temp2);
 						mapa.put(Integer.parseInt(temp2), soba);
-						for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
-							if(rezervacija.getBroj_sobe()==Integer.parseInt(cuvanje)) {
+						for (Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+							if (rezervacija.getBroj_sobe() == Integer.parseInt(cuvanje)) {
 								rezervacija.setBroj_sobe(Integer.parseInt(temp2));
 							}
 						}
-						for(ArrayList<Integer>lista : bazaObjekata.getMapaSobarica().values()) {
-							if(lista.contains(Integer.parseInt(cuvanje))) {
-								for(int t : lista) {
-									if(t==Integer.parseInt(cuvanje)) {
-										t=Integer.parseInt(temp2);
+						for (ArrayList<Integer> lista : bazaObjekata.getMapaSobarica().values()) {
+							if (lista.contains(Integer.parseInt(cuvanje))) {
+								for (int t : lista) {
+									if (t == Integer.parseInt(cuvanje)) {
+										t = Integer.parseInt(temp2);
 									}
 								}
 							}
 						}
-						
-					}else {
+
+					} else {
 						final String kljuc = (String) jTable.getValueAt(row, 0);
 
 						mapa.get(Integer.parseInt(kljuc)).unosObjekta(column, temp2);
 					}
-				}
-				catch (Exception e2) {
+				} catch (Exception e2) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 					jTable.setValueAt(cuvanje, row, column);
@@ -176,10 +218,13 @@ public class SveSobeProzor extends JFrame{
 		});
 
 		JComboBox<String> box = new JComboBox<>();
-		box.addItem(Soba.Statusi.SLO.getVrednost());
-		box.addItem(Soba.Statusi.SPR.getVrednost());
-		box.addItem(Soba.Statusi.ZAU.getVrednost());
-		
+		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
+			box.addItem(Soba.Statusi.SPR.getVrednost());
+		} else {
+			box.addItem(Soba.Statusi.SLO.getVrednost());
+			box.addItem(Soba.Statusi.SPR.getVrednost());
+			box.addItem(Soba.Statusi.ZAU.getVrednost());
+		}
 
 		TableColumn column = jTable.getColumnModel().getColumn(1);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
@@ -188,16 +233,17 @@ public class SveSobeProzor extends JFrame{
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-
+					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()))
+						throw new Exception();
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					
+
 					final String kljuc = (String) jTable.getValueAt(row, 0);
-					
-					if(column==1) {
+
+					if (column == 1) {
 						String nesto = bazaObjekata.NajslobodnijaSobarica();
 						bazaObjekata.getMapaSobarica().get(nesto).add(Integer.parseInt(kljuc));
 					}
@@ -219,12 +265,11 @@ public class SveSobeProzor extends JFrame{
 			}
 		});
 		column.setCellEditor(cellEditor2);
-		
+
 		JComboBox<String> box2 = new JComboBox<>();
-		for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values())
-			box2.addItem(tip_Soba.getNaziv_tipa());
-		
-		
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()))
+			for (Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values())
+				box2.addItem(tip_Soba.getNaziv_tipa());
 
 		TableColumn column2 = jTable.getColumnModel().getColumn(2);
 		DefaultCellEditor cellEditor3 = new DefaultCellEditor(box2);
@@ -233,7 +278,8 @@ public class SveSobeProzor extends JFrame{
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-
+					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()))
+						throw new Exception();
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
@@ -259,31 +305,32 @@ public class SveSobeProzor extends JFrame{
 			}
 		});
 		column2.setCellEditor(cellEditor3);
-		
+
 		buttonPretraga.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				ArrayList<Integer>listaZaBrisanje = new ArrayList<>();
-				String[][]tempData = new String[jTable.getRowCount()][jTable.getColumnCount()];
-				for(int t = 0;t<jTable.getRowCount();t++) {
-					for(int k = 0;k<jTable.getColumnCount();k++) {
-						tempData[t][k]=(String) jTable.getValueAt(t, k);
+
+				ArrayList<Integer> listaZaBrisanje = new ArrayList<>();
+				String[][] tempData = new String[jTable.getRowCount()][jTable.getColumnCount()];
+				for (int t = 0; t < jTable.getRowCount(); t++) {
+					for (int k = 0; k < jTable.getColumnCount(); k++) {
+						tempData[t][k] = (String) jTable.getValueAt(t, k);
 					}
 				}
-				
+
 				String temp = pretraga.getText();
-				for(int i = 0;i<tempData.length;i++) {
-					if(!OperacijePretrage.daLiSadrzi(tempData[i], temp)) {
+				for (int i = 0; i < tempData.length; i++) {
+					if (!OperacijePretrage.daLiSadrzi(tempData[i], temp)) {
 						listaZaBrisanje.add(i);
 					}
 				}
-				for(int j = listaZaBrisanje.size()-1;j>-1;j--) {
-					((DefaultTableModel) jTable.getModel()).removeRow(jTable.convertRowIndexToModel(listaZaBrisanje.get(j)));
-					
+				for (int j = listaZaBrisanje.size() - 1; j > -1; j--) {
+					((DefaultTableModel) jTable.getModel())
+							.removeRow(jTable.convertRowIndexToModel(listaZaBrisanje.get(j)));
+
 				}
-				
+
 			}
 		});
 		jTable.setAutoCreateRowSorter(true);

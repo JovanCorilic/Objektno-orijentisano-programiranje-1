@@ -63,6 +63,11 @@ public class Main {
 		bazaObjekata.getMapaZaposlenih().put(zaposlen2.getEmail(), zaposlen2);
 		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
 		bazaObjekata.getMapaZaposlenih().put(zaposlen3.getEmail(), zaposlen3);
+		
+		Soba temp2 = new Soba(13, Soba.Statusi.SPR.getVrednost(), tip_Soba.getNaziv_tipa());
+		bazaObjekata.getMapaSoba().put(temp2.getBrojSobe(), temp2);
+		bazaObjekata.getMapaSobarica().put(zaposlen3.getEmail(), new ArrayList<>());
+		bazaObjekata.getMapaSobarica().get(zaposlen3.getEmail()).add(temp2.getBrojSobe());
 	}
 	
 }

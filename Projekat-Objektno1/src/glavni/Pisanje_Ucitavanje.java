@@ -13,6 +13,7 @@ import java.util.Map;
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
 import objekti.Korisnik;
+import objekti.OciscenaSoba;
 import objekti.Rezervacija;
 import objekti.Soba;
 import objekti.Tip_Soba;
@@ -101,6 +102,18 @@ public class Pisanje_Ucitavanje {
 		printWriter.close();
 	}
 	
+	public static void PisanjeOciscenihSobaSobarica(HashMap<String, ArrayList<OciscenaSoba>>mapa) throws IOException {
+		PrintWriter printWriter = new PrintWriter(new FileWriter("ocisceneSobeSobarica.csv"),false);
+		for(Map.Entry<String, ArrayList<OciscenaSoba>> entry : mapa.entrySet()) {
+			printWriter.print(entry.getKey()+";");
+			for(OciscenaSoba i : entry.getValue()) {
+				printWriter.print(";"+i);
+			}
+			printWriter.println();
+		}
+		printWriter.close();
+	}
+	
 	public static HashMap<Integer, ArrayList<String>> UcitavanjeRezervacijaDodatneUsluge() {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new FileReader("rezervacijeDodatneUsluge.csv"));
@@ -111,6 +124,25 @@ public class Pisanje_Ucitavanje {
 				mapa.put(Integer.parseInt(lista[0]), new ArrayList<>());
 				for(int i = 1;i<lista.length;i++) {
 					mapa.get(Integer.parseInt(lista[0])).add(lista[i]);
+				}
+				
+			}
+			return mapa;
+		} catch (Exception e) {
+			return new HashMap<>();
+		}
+	}
+	
+	public static HashMap<String, ArrayList<OciscenaSoba>> UcitavanjeOciscenihSobaSobarica(){
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader("ocisceneSobeSobarica.csv"));
+			String currentLine;
+			HashMap<String, ArrayList<OciscenaSoba>>mapa = new HashMap<>();
+			while((currentLine = bufferedReader.readLine())!=null) {
+				String[]lista = currentLine.split("\\;");
+				mapa.put(lista[0], new ArrayList<>());
+				for(int i = 1;i<lista.length;i++) {
+					mapa.get(lista[0]).add(new OciscenaSoba(lista[i]));
 				}
 				
 			}

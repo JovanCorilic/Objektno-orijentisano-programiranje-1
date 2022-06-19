@@ -19,6 +19,7 @@ public class BazaObjekata {
 	private HashMap<String, Tip_Soba> mapaTipovaSobe;
 	private HashMap<String, ArrayList<Integer>> mapaSobarica;
 	private HashMap<Integer, ArrayList<String>> mapaRezervacijaDodatneUsluge;
+	private HashMap<String, ArrayList<OciscenaSoba>> mapaOciscenihSobaSobarica;
 
 	public String NajslobodnijaSobarica() {
 		int min = -1;
@@ -51,7 +52,8 @@ public class BazaObjekata {
 				}
 			}
 		}
-		mapaRezervacijaDodatneUsluge= Pisanje_Ucitavanje.UcitavanjeRezervacijaDodatneUsluge();
+		mapaRezervacijaDodatneUsluge = Pisanje_Ucitavanje.UcitavanjeRezervacijaDodatneUsluge();
+		
 	}
 
 	public void Cuvanje() throws IOException {
@@ -64,17 +66,21 @@ public class BazaObjekata {
 		Pisanje_Ucitavanje.PisanjeTipaSobe(mapaTipovaSobe);
 		Pisanje_Ucitavanje.PisanjeSobarice(mapaSobarica);
 		Pisanje_Ucitavanje.PisanjeRezervacijaDodatneUsluge(mapaRezervacijaDodatneUsluge);
+		Pisanje_Ucitavanje.PisanjeOciscenihSobaSobarica(mapaOciscenihSobaSobarica);
 	}
 
 	
 
-	public BazaObjekata(HashMap<String, Cenovnik> mapaCenovnik,
+	public BazaObjekata(String email, String tipKorisnika, HashMap<String, Cenovnik> mapaCenovnik,
 			HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela, HashMap<String, Korisnik> mapaGosti,
 			HashMap<Integer, Rezervacija> mapaRezervacija, HashMap<Integer, Soba> mapaSoba,
 			HashMap<String, Zaposlen> mapaZaposlenih, HashMap<String, Tip_Soba> mapaTipovaSobe,
 			HashMap<String, ArrayList<Integer>> mapaSobarica,
-			HashMap<Integer, ArrayList<String>> mapaRezervacijaDodatneUsluge) {
+			HashMap<Integer, ArrayList<String>> mapaRezervacijaDodatneUsluge,
+			HashMap<String, ArrayList<OciscenaSoba>> mapaOciscenihSobaSobarica) {
 		super();
+		this.email = email;
+		this.tipKorisnika = tipKorisnika;
 		this.mapaCenovnik = mapaCenovnik;
 		this.mapaDodatneUslugeHotela = mapaDodatneUslugeHotela;
 		this.mapaGosti = mapaGosti;
@@ -84,6 +90,7 @@ public class BazaObjekata {
 		this.mapaTipovaSobe = mapaTipovaSobe;
 		this.mapaSobarica = mapaSobarica;
 		this.mapaRezervacijaDodatneUsluge = mapaRezervacijaDodatneUsluge;
+		this.mapaOciscenihSobaSobarica = mapaOciscenihSobaSobarica;
 	}
 
 	public BazaObjekata() {
@@ -95,14 +102,21 @@ public class BazaObjekata {
 		mapaRezervacija = new HashMap<>();
 		mapaTipovaSobe = new HashMap<>();
 		mapaSobarica = new HashMap<>();
-		mapaRezervacijaDodatneUsluge=new HashMap<>();
+		mapaRezervacijaDodatneUsluge = new HashMap<>();
+		mapaOciscenihSobaSobarica=new HashMap<>();
 	}
 
 	public HashMap<String, ArrayList<Integer>> getMapaSobarica() {
 		return mapaSobarica;
 	}
-	
-	
+
+	public HashMap<String, ArrayList<OciscenaSoba>> getMapaOciscenihSobaSobarica() {
+		return mapaOciscenihSobaSobarica;
+	}
+
+	public void setMapaOciscenihSobaSobarica(HashMap<String, ArrayList<OciscenaSoba>> mapaOciscenihSobaSobarica) {
+		this.mapaOciscenihSobaSobarica = mapaOciscenihSobaSobarica;
+	}
 
 	public String getEmail() {
 		return email;
