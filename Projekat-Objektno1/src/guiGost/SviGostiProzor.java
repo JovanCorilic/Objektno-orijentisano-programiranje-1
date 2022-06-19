@@ -31,6 +31,7 @@ import glavni.OperacijePretrage;
 import objekti.BazaObjekata;
 import objekti.Korisnik;
 import objekti.Rezervacija;
+import objekti.Zaposlen;
 
 public class SviGostiProzor extends JFrame {
 	private String cuvanje;
@@ -65,19 +66,37 @@ public class SviGostiProzor extends JFrame {
 		jPanel.add(pretraga);
 		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
-
-		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
-				"Adresa", "Brisanje" };
-
-		String[][] data = new String[mapa.size()][9];
-		int br = 0;
-		for (Korisnik temp : mapa.values()) {
-			String[] lista = temp.toString().split("\\|");
-			for (int i = 0; i < lista.length; i++) {
-				data[br][i] = lista[i];
+		String[] zaglavlja;
+		if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+			zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
+					"Adresa", "Brisanje" };
+		else {
+			zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
+					"Adresa" };
+		}
+		String[][] data;
+		if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+			data = new String[mapa.size()][9];
+			int br = 0;
+			for (Korisnik temp : mapa.values()) {
+				String[] lista = temp.toString().split("\\|");
+				for (int i = 0; i < lista.length; i++) {
+					data[br][i] = lista[i];
+				}
+				data[br][lista.length] = "Delete";
+				br++;
 			}
-			data[br][lista.length] = "Delete";
-			br++;
+		}else {
+			data = new String[mapa.size()][8];
+			int br = 0;
+			for (Korisnik temp : mapa.values()) {
+				String[] lista = temp.toString().split("\\|");
+				for (int i = 0; i < lista.length; i++) {
+					data[br][i] = lista[i];
+				}
+				
+				br++;
+			}
 		}
 
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
@@ -97,8 +116,9 @@ public class SviGostiProzor extends JFrame {
 		};
 
 		Button deleteButton = new Button("Delete");
-
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 8);
+		ButtonColumn buttonColumn;
+		if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+			 buttonColumn = new ButtonColumn(jTable, delete, 8);
 
 		jTable.setCellSelectionEnabled(true);
 
