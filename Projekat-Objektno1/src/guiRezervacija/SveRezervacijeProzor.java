@@ -36,6 +36,7 @@ import guiCenovnik.PravljenjeCenovnikaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
+import objekti.Zaposlen;
 
 public class SveRezervacijeProzor extends JFrame {
 	private String cuvanje;
@@ -88,7 +89,11 @@ public class SveRezervacijeProzor extends JFrame {
 		if(bazaObjekata.getTipKorisnika().equals("")) {
 			zaglavljaTemp = new String[] { "Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi", "Email gosta",
 					"Broj pasoša gosta" };
-		}else {
+		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())){
+			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
+					"Broj pasoša gosta" };
+		}
+		else {
 			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
 					"Broj pasoša gosta", "Brisanje" };
 		}
@@ -102,18 +107,30 @@ public class SveRezervacijeProzor extends JFrame {
 				String[] lista2 = temp.toString().split("\\|");
 				int duzina = lista2.length;
 				for (int i = 0; i < duzina; i++) {
-					if(i==6) {
-						i-=1;
-						duzina=-1;
-						continue;
+					if(i==5) {
+						break;
 					}
 					dataTemp[br][i] = lista2[i];
 				}
+				dataTemp[br][5]=temp.getEmail_gosta();
 				dataTemp[br][6]=temp.getBroj_pasosa();
 				
 				br++;
 			}
-		}else {
+		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())){
+			dataTemp = new String[mapa.size()][9];
+			int br = 0;
+			for (Rezervacija temp : mapa.values()) {
+				String[] lista2 = temp.toString().split("\\|");
+				dataTemp[br][0] = temp.getId() + "";
+				for (int i = 1; i < lista2.length+1; i++) {
+					dataTemp[br][i] = lista2[i-1];
+				}
+				
+				br++;
+			}
+		}
+		else {
 			dataTemp = new String[mapa.size()][10];
 			int br = 0;
 			for (Rezervacija temp : mapa.values()) {
@@ -145,7 +162,7 @@ public class SveRezervacijeProzor extends JFrame {
 		};
 		Button deleteButton = new Button("Delete");
 		ButtonColumn buttonColumn;
-		if (!bazaObjekata.getTipKorisnika().equals(""))
+		if (!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
 			buttonColumn= new ButtonColumn(jTable, delete, 9);
 
 		jTable.setCellSelectionEnabled(true);
@@ -220,47 +237,54 @@ public class SveRezervacijeProzor extends JFrame {
 
 		});
 		
-		if (!bazaObjekata.getTipKorisnika().equals("")) {
-			JComboBox<String> box = new JComboBox<>();
-			box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
-			box.addItem(Rezervacija.Statusi.ODBIJ.getVrednost());
-			box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
-			box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
-	
-			TableColumn column = jTable.getColumnModel().getColumn(1);
-			DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
-			cellEditor2.addCellEditorListener(new CellEditorListener() {
-	
-				@Override
-				public void editingStopped(ChangeEvent e) {
-					try {
-	
-						final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
-						final int row = jTable.getSelectedRow();
-						final int column = jTable.getSelectedColumn();
-	
-						String temp2 = defaultCellEditor.getCellEditorValue().toString();
-	
-						final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
-	
-						mapa.get(kljuc).unosObjekta(column, temp2);
-					} catch (Exception e2) {
-						/*
-						 * final int row = jTable.getSelectedRow(); final int column =
-						 * jTable.getSelectedColumn(); jTable.setValueAt(cuvanje, row, column);
-						 */
-					}
-	
-				}
-	
-				@Override
-				public void editingCanceled(ChangeEvent e) {
-					// TODO Auto-generated method stub
-	
-				}
-			});
-			column.setCellEditor(cellEditor2);
+		
+			
+		JComboBox<String> box = new JComboBox<>();
+		box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
+		
+		box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
+		if (!bazaObjekata.getTipKorisnika().equals("")) { 
+		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
+		box.addItem(Rezervacija.Statusi.ODBIJ.getVrednost());
 		}
+		TableColumn column;
+		if (!bazaObjekata.getTipKorisnika().equals(""))  
+			 column = jTable.getColumnModel().getColumn(1);
+		else
+			 column = jTable.getColumnModel().getColumn(0);
+		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
+		cellEditor2.addCellEditorListener(new CellEditorListener() {
+
+			@Override
+			public void editingStopped(ChangeEvent e) {
+				try {
+
+					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+
+					String temp2 = defaultCellEditor.getCellEditorValue().toString();
+
+					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
+
+					mapa.get(kljuc).unosObjekta(column, temp2);
+				} catch (Exception e2) {
+					/*
+					 * final int row = jTable.getSelectedRow(); final int column =
+					 * jTable.getSelectedColumn(); jTable.setValueAt(cuvanje, row, column);
+					 */
+				}
+
+			}
+
+			@Override
+			public void editingCanceled(ChangeEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		column.setCellEditor(cellEditor2);
+		
 		
 		buttonPretraga.addActionListener(new ActionListener() {
 			

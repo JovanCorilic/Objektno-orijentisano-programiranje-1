@@ -16,16 +16,17 @@ import guiCenovnik.SviCenovniciProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
+import objekti.Tip_Soba;
 
 public class PravljenjeRezervacijeProzor extends JFrame {
 	public PravljenjeRezervacijeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje rezervacije");
-		setSize(700, 200);
+		setSize(700, 240);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		JButton buttonSave;
 		if (bazaObjekata.getTipKorisnika().equals("")) {
-			setLayout(new GridLayout(6, 2));
+			setLayout(new GridLayout(8, 2));
 			add(new JLabel("Status rezervacije"));
 			
 			add(new JLabel(Rezervacija.Statusi.NACEK.getVrednost()));
@@ -35,12 +36,21 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			add(new JLabel("Kraj važenja (Mora biti u formatu 24.11.2022 13:20)"));
 			JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 			add(areakrajVazenja);
+			add(new JLabel("Tip sobe"));
+			JComboBox<String>boxTipSobe = new JComboBox<>();
+			for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
+				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
+			}
+			add(boxTipSobe);
 			add(new JLabel("Email gosta"));
 			
 			add(new JLabel(bazaObjekata.getEmail()));
 			add(new JLabel("Broj pasoša"));
 			
 			add(new JLabel(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka()));
+			add(new JLabel("Broj ljudi"));
+			JTextField areaBrojLjudi= new JTextField();
+			add(areaBrojLjudi);
 			buttonSave = new JButton("Napravi");
 			
 			buttonSave.addActionListener(new ActionListener() {
@@ -50,17 +60,18 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					try {
 						Rezervacija rezervacija = new Rezervacija();
 	
-						rezervacija.unosObjekta(0, Rezervacija.Statusi.NACEK.getVrednost());
+						rezervacija.unosObjekta(1, Rezervacija.Statusi.NACEK.getVrednost());
 	
-						rezervacija.unosObjekta(1, areapocetakVazenja.getText());
-						rezervacija.unosObjekta(2, areakrajVazenja.getText());
+						rezervacija.unosObjekta(2, areapocetakVazenja.getText());
+						rezervacija.unosObjekta(3, areakrajVazenja.getText());
 	
-						rezervacija.unosObjekta(4, bazaObjekata.getEmail());
+						rezervacija.setEmail_gosta(bazaObjekata.getEmail());
 						
-	
-						rezervacija.unosObjekta(5, bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka());
-	
+						
+						rezervacija.setBroj_pasosa(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka());
+						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
+						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 						bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
 	
 						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
@@ -75,7 +86,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 				}
 			});
 		}else {
-			setLayout(new GridLayout(7, 2));
+			setLayout(new GridLayout(9, 2));
 			add(new JLabel("Status rezervacije"));
 			JComboBox<String> box = new JComboBox<>();
 			box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
@@ -89,6 +100,12 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			add(new JLabel("Kraj važenja (Mora biti u formatu 24.11.2022 13:20)"));
 			JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 			add(areakrajVazenja);
+			add(new JLabel("Tip sobe"));
+			JComboBox<String>boxTipSobe = new JComboBox<>();
+			for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
+				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
+			}
+			add(boxTipSobe);
 			add(new JLabel("Broj sobe"));
 			JTextField areabroj_sobe = new JTextField();
 			add(areabroj_sobe);
@@ -98,6 +115,9 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			add(new JLabel("Broj pasoša"));
 			JTextField areaPasos = new JTextField();
 			add(areaPasos);
+			add(new JLabel("Broj ljudi"));
+			JTextField areaBrojLjudi= new JTextField();
+			add(areaBrojLjudi);
 		
 		
 		
@@ -109,19 +129,19 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					try {
 						Rezervacija rezervacija = new Rezervacija();
 	
-						rezervacija.unosObjekta(0, box.getSelectedItem().toString());
+						rezervacija.unosObjekta(1, box.getSelectedItem().toString());
 	
-						rezervacija.unosObjekta(1, areapocetakVazenja.getText());
-						rezervacija.unosObjekta(2, areakrajVazenja.getText());
+						rezervacija.unosObjekta(2, areapocetakVazenja.getText());
+						rezervacija.unosObjekta(3, areakrajVazenja.getText());
 	
-						rezervacija.unosObjekta(4, areaEmail.getText());
+						rezervacija.setEmail_gosta(areaEmail.getText());
 						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
 						if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()) && areaPasos.getText().equals(""))
 							throw arrayIndexOutOfBoundsException;
 	
-						rezervacija.unosObjekta(5, areaPasos.getText());
+						rezervacija.setBroj_pasosa(areaPasos.getText());
 	
-						rezervacija.unosObjekta(3, areabroj_sobe.getText());
+						rezervacija.setBroj_sobe(Integer.parseInt(areabroj_sobe.getText()));
 						ExceptionInInitializerError expError = new ExceptionInInitializerError();
 						if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
 							throw expError;
@@ -132,6 +152,8 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 							throw exception;
 						}
 						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
+						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
+						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 						bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
 	
 						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);

@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import javax.swing.plaf.OptionPaneUI;
 
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
+import objekti.Dodatne_Usluge_Hotela;
 import objekti.Tip_Soba;
 
 public class PravljenjeCenovnikaProzor extends JFrame {
@@ -56,11 +58,19 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 		JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 		add(areakrajVazenja);
 		add(new JLabel("Tip sobe"));
-		JTextField areabroj_sobe = new JTextField();
-		add(areabroj_sobe);
+		JComboBox<String>boxTipSobe = new JComboBox<>();
+		boxTipSobe.addItem("");
+		for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
+			boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
+		}
+		add(boxTipSobe);
 		add(new JLabel("Dodatna usluga hotela"));
-		JTextField areadodatna_usluga_hotela = new JTextField();
-		add(areadodatna_usluga_hotela);
+		JComboBox<String>boxDodatne = new JComboBox<>();
+		boxDodatne.addItem("");
+		for(Dodatne_Usluge_Hotela dodatne_Usluge_Hotela : bazaObjekata.getMapaDodatneUslugeHotela().values()) {
+			boxDodatne.addItem(dodatne_Usluge_Hotela.getNaziv());
+		}
+		add(boxDodatne);
 
 		JButton buttonSave = new JButton("Napravi");
 		buttonSave.addActionListener(new ActionListener() {
@@ -74,13 +84,15 @@ public class PravljenjeCenovnikaProzor extends JFrame {
 					cenovnik.unosObjekta(1, areacena.getText());
 					cenovnik.unosObjekta(2, areapocetakVazenja.getText());
 					cenovnik.unosObjekta(3, areakrajVazenja.getText());
-					if (areabroj_sobe.getText().equals("")) {
-						cenovnik.unosObjekta(5, areadodatna_usluga_hotela.getText());
+					String tip = boxTipSobe.getSelectedItem().toString();
+					String dodatna = boxDodatne.getSelectedItem().toString();
+					if (tip.equals("")) {
+						cenovnik.unosObjekta(5, dodatna);
 						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
 						if (!bazaObjekata.getMapaDodatneUslugeHotela().containsKey(cenovnik.getDodatna_usluga_hotela()))
 							throw arrayIndexOutOfBoundsException;
 					} else {
-						cenovnik.unosObjekta(4, areabroj_sobe.getText());
+						cenovnik.unosObjekta(4, tip);
 						ExceptionInInitializerError expError = new ExceptionInInitializerError();
 						if (!bazaObjekata.getMapaTipovaSobe().containsKey(cenovnik.getTip_sobe()))
 							throw expError;

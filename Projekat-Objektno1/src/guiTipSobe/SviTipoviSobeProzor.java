@@ -33,6 +33,7 @@ import objekti.Cenovnik;
 import objekti.Rezervacija;
 import objekti.Soba;
 import objekti.Tip_Soba;
+import objekti.Zaposlen;
 
 public class SviTipoviSobeProzor extends JFrame{
 	private String cuvanje;
@@ -57,8 +58,10 @@ public class SviTipoviSobeProzor extends JFrame{
 		});
 
 		JPanel jPanel = new JPanel();
-		jPanel.add(jLabel);
-		jPanel.add(createNew);
+		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+			jPanel.add(jLabel);
+			jPanel.add(createNew);
+		}
 		JTextField pretraga = new JTextField();
 		GhostText ghostText = new GhostText(pretraga,"Unesite tekst ovde...");
 		JButton buttonPretraga = new JButton("Pretraga");
@@ -67,19 +70,39 @@ public class SviTipoviSobeProzor extends JFrame{
 		jPanel.add(pretraga);
 		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
-
-		String[] zaglavlja = new String[] { "Naziv", "Deskripcija", "Brisanje" };
-		String[][] data = new String[mapa.size()][3];
-		int br = 0;
-		for (Tip_Soba temp : mapa.values()) {
-			String[] lista = temp.toString().split("\\|");
-			for (int i = 0; i < lista.length; i++) {
-				data[br][i] = lista[i];
-			}
-			data[br][lista.length] = "Delete";
-			br++;
+		
+		String[]zaglavljaTemp;
+		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+			zaglavljaTemp = new String[] { "Naziv", "Deskripcija", "Brisanje" };
+		}else {
+			zaglavljaTemp = new String[] { "Naziv", "Deskripcija"};
 		}
-
+		
+		String[] zaglavlja=zaglavljaTemp;
+		String[][] data;
+		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+			data = new String[mapa.size()][3];
+			int br = 0;
+			for (Tip_Soba temp : mapa.values()) {
+				String[] lista = temp.toString().split("\\|");
+				for (int i = 0; i < lista.length; i++) {
+					data[br][i] = lista[i];
+				}
+				data[br][lista.length] = "Delete";
+				br++;
+			}
+		}else {
+			data = new String[mapa.size()][2];
+			int br = 0;
+			for (Tip_Soba temp : mapa.values()) {
+				String[] lista = temp.toString().split("\\|");
+				for (int i = 0; i < lista.length; i++) {
+					data[br][i] = lista[i];
+				}
+				
+				br++;
+			}
+		}
 		DefaultTableModel defaultTableModel = new DefaultTableModel(data, zaglavlja);
 		JTable jTable = new JTable(defaultTableModel);
 
@@ -96,8 +119,9 @@ public class SviTipoviSobeProzor extends JFrame{
 			}
 		};
 		Button deleteButton = new Button("Delete");
-
-		ButtonColumn buttonColumn = new ButtonColumn(jTable, delete, 2);
+		ButtonColumn buttonColumn;
+		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+			 buttonColumn = new ButtonColumn(jTable, delete, 2);
 
 		jTable.setCellSelectionEnabled(true);
 
@@ -107,7 +131,8 @@ public class SviTipoviSobeProzor extends JFrame{
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-
+					if(bazaObjekata.getTipKorisnika().equals("") || bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+						throw new Exception();
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
