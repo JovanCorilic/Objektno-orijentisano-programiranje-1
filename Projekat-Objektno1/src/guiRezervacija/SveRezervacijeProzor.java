@@ -96,7 +96,7 @@ public class SveRezervacijeProzor extends JFrame {
 		}
 		else {
 			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
-					"Broj pasoša gosta", "Brisanje" };
+					"Broj pasoša gosta", "Brisanje","Dodatne usluge" };
 		}
 
 		String[] zaglavlja = zaglavljaTemp;
@@ -132,7 +132,7 @@ public class SveRezervacijeProzor extends JFrame {
 			}
 		}
 		else {
-			dataTemp = new String[mapa.size()][10];
+			dataTemp = new String[mapa.size()][11];
 			int br = 0;
 			for (Rezervacija temp : mapa.values()) {
 				String[] lista2 = temp.toString().split("\\|");
@@ -141,6 +141,7 @@ public class SveRezervacijeProzor extends JFrame {
 					dataTemp[br][i] = lista2[i-1];
 				}
 				dataTemp[br][lista2.length+1] = "Delete";
+				dataTemp[br][10] = "Dodatne usluge";
 				br++;
 			}
 		}
@@ -183,8 +184,10 @@ public class SveRezervacijeProzor extends JFrame {
 		Button deleteButton = new Button("Delete");
 		ButtonColumn buttonColumn;
 		
-		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip()))
+		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip())) {
 			buttonColumn= new ButtonColumn(jTable, delete, 9);
+			buttonColumn= new ButtonColumn(jTable, dodatne, 10);
+		}
 		else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
 			buttonColumn= new ButtonColumn(jTable, dodatne, 9);
 		else if( bazaObjekata.getTipKorisnika().equals(""))
