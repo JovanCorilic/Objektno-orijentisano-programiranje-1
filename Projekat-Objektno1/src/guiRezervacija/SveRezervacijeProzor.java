@@ -38,6 +38,7 @@ import guiDodatneUslugeHotela.SveDodatneUslugeHotelaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
+import objekti.Soba;
 import objekti.Zaposlen;
 
 public class SveRezervacijeProzor extends JFrame {
@@ -276,11 +277,7 @@ public class SveRezervacijeProzor extends JFrame {
 		box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
 		box.addItem(Rezervacija.Statusi.ODBIJ.getVrednost());
 		}
-		TableColumn column;
-		if (!bazaObjekata.getTipKorisnika().equals(""))  
-			 column = jTable.getColumnModel().getColumn(1);
-		else
-			 column = jTable.getColumnModel().getColumn(1);
+		TableColumn column = jTable.getColumnModel().getColumn(1);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
 		cellEditor2.addCellEditorListener(new CellEditorListener() {
 
@@ -297,28 +294,46 @@ public class SveRezervacijeProzor extends JFrame {
 					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
 					Rezervacija nesto = bazaObjekata.getMapaRezervacija().get(kljuc);
 					
-					LocalDateTime pocetni = nesto.getDatumPocetka();
-					LocalDateTime krajnji = nesto.getDatumKraja();
-					
-					ArrayList<Integer>listaSoba = new ArrayList<>();
-					for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
-						if(!rezervacija.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost()))
-							continue;
-						if(rezervacija.getDatumPocetka().isAfter(pocetni) && rezervacija.getDatumPocetka().isBefore(krajnji)) {
-							listaSoba.add(rezervacija.getBroj_sobe());
-						}else if(rezervacija.getDatumPocetka().isBefore(pocetni) && rezervacija.getDatumKraja().isAfter(pocetni)) {
-							listaSoba.add(rezervacija.getBroj_sobe());
+					if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()) || bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip())) {
+						LocalDateTime pocetni = nesto.getDatumPocetka();
+						LocalDateTime krajnji = nesto.getDatumKraja();
+						
+						ArrayList<Integer>listaSoba = new ArrayList<>();
+						for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+							if(!rezervacija.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost()))
+								continue;
+							if(rezervacija.getDatumPocetka().isAfter(pocetni) && rezervacija.getDatumPocetka().isBefore(krajnji)) {
+								listaSoba.add(rezervacija.getBroj_sobe());
+							}else if(rezervacija.getDatumPocetka().isBefore(pocetni) && rezervacija.getDatumKraja().isAfter(pocetni)) {
+								listaSoba.add(rezervacija.getBroj_sobe());
+							}
+						}
+						
+						ArrayList<String>listaTipova = new ArrayList<>();
+						for(Soba soba : bazaObjekata.getMapaSoba().values()) {
+							if(!listaSoba.contains(soba.getBrojSobe())) {
+								listaTipova.add(soba.getTip_Soba());
+							}
+						}
+						
+						if(!listaTipova.contains(nesto.getTip_sobe())) {
+							throw new ArithmeticException();
 						}
 					}
-					
-					
 
 					mapa.get(kljuc).unosObjekta(column, temp2);
-				} catch (Exception e2) {
-					/*
-					 * final int row = jTable.getSelectedRow(); final int column =
-					 * jTable.getSelectedColumn(); jTable.setValueAt(cuvanje, row, column);
-					 */
+				}catch (ArithmeticException e2) {
+					JOptionPane.showMessageDialog(null, "Nema slobodnih soba!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(Rezervacija.Statusi.NACEK.getVrednost(), row, column);
+				} 
+				catch (Exception e2) {
+					
+					/*final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(Rezervacija.Statusi.NACEK.getVrednost(), row, column);*/
 				}
 
 			}
