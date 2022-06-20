@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.nio.channels.AcceptPendingException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -210,7 +211,7 @@ public class SveRezervacijeProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
-					if(column==4 || column ==6 || column == 7 || column == 8) {
+					if(column==4 || column == 7 || column == 8) {
 						throw new ArithmeticException() ;
 					}
 					ExceptionInInitializerError error = new ExceptionInInitializerError();
@@ -218,9 +219,23 @@ public class SveRezervacijeProzor extends JFrame {
 						throw error;
 					
 					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
+					
+					if(column==6) {
+						int broj_sobe = Integer.parseInt(temp2);
+						if(bazaObjekata.getMapaSoba().get(broj_sobe).getStatus().equals(Soba.Statusi.SPR.getVrednost()))
+							throw new AcceptPendingException();
+						
+					}
 
 					mapa.get(kljuc).unosObjekta(column, temp2);
-				}catch (ArithmeticException e5) {
+				}catch (AcceptPendingException e34) {
+					JOptionPane.showMessageDialog(null, "Soba se i dalje sprema!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(cuvanje, row, column);
+				}
+				catch (ArithmeticException e5) {
 					JOptionPane.showMessageDialog(null, "Polja email, tip sobe ,broj sobe i broj pasoša se menjaju u svojoj listi respektivno!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 					final int row = jTable.getSelectedRow();
@@ -290,6 +305,13 @@ public class SveRezervacijeProzor extends JFrame {
 					final int column = jTable.getSelectedColumn();
 
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
+					
+					if(bazaObjekata.getTipKorisnika().equals("")) {
+						if(bazaObjekata.getMapaRezervacija().get(Integer.parseInt((String) jTable.getValueAt(row, 0))).getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost())) {
+							
+							throw new AcceptPendingException();
+						}
+					}
 
 					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
 					Rezervacija nesto = bazaObjekata.getMapaRezervacija().get(kljuc);
@@ -322,7 +344,12 @@ public class SveRezervacijeProzor extends JFrame {
 					}
 
 					mapa.get(kljuc).unosObjekta(column, temp2);
-				}catch (ArithmeticException e2) {
+				}catch (AcceptPendingException e3) {
+					final int row = jTable.getSelectedRow();
+					final int column = jTable.getSelectedColumn();
+					jTable.setValueAt(Rezervacija.Statusi.POTVR.getVrednost(), row, column);
+				}
+				catch (ArithmeticException e2) {
 					JOptionPane.showMessageDialog(null, "Nema slobodnih soba!", "Greška",
 							JOptionPane.ERROR_MESSAGE);
 					final int row = jTable.getSelectedRow();
