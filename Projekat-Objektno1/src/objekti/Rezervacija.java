@@ -68,7 +68,7 @@ public class Rezervacija {
 	}
 
 	public Rezervacija(String text) {
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.status = lista[0];
 		this.datumPocetka = KonverterDatum.konvertovanjeUDateTime(lista[1]);
 		this.datumKraja = KonverterDatum.konvertovanjeUDateTime(lista[2]);

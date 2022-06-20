@@ -54,7 +54,7 @@ public class Soba {
 
 	public Soba(String text) {
 		// TODO Auto-generated constructor stub
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.brojSobe = Integer.parseInt(lista[0]);
 		this.status = lista[1];
 		this.tip_Soba = lista[2];

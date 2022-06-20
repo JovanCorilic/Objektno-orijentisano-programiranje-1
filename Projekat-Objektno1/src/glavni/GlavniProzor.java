@@ -55,6 +55,12 @@ public class GlavniProzor extends JFrame {
 				int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni?", "Pitanje",
 						JOptionPane.YES_NO_OPTION);
 				if (choice == JOptionPane.YES_OPTION) {
+					try {
+						bazaObjekata.Cuvanje();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					dispose();
 					System.exit(EXIT_ON_CLOSE);
 				}

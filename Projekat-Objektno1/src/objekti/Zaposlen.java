@@ -92,7 +92,7 @@ public class Zaposlen extends Korisnik {
 
 	public Zaposlen(String text) {
 		super(text);
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.nivo_strucne_spreme = lista[8];
 		this.godina_staza = Integer.parseInt(lista[9]);
 		this.plata = Double.parseDouble(lista[10]);

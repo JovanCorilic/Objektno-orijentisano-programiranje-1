@@ -66,7 +66,7 @@ public class Korisnik {
 
 	public Korisnik(String text) {
 		// TODO Auto-generated constructor stub
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.email = lista[0];
 		this.lozinka = lista[1];
 		this.ime = lista[2];

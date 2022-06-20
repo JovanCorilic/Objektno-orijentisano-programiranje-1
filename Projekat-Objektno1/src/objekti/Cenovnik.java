@@ -118,7 +118,7 @@ public class Cenovnik {
 	}
 
 	public Cenovnik(String text) {
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.naziv = lista[0];
 		this.cena = Double.parseDouble(lista[1]);
 		this.pocetakVazenja = KonverterDatum.konvertovanjeUDateTime(lista[2]);

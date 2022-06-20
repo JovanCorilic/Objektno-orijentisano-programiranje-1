@@ -26,7 +26,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BazaObjekata bazaObjekata = new BazaObjekata();
-		bazaObjekata.ucitavanje();
+		//bazaObjekata.ucitavanje();
 		ucitavanje(bazaObjekata);
 		
 		LoginProzor loginProzor = new LoginProzor(bazaObjekata);
@@ -35,7 +35,7 @@ public class Main {
 	
 	public static void ucitavanje(BazaObjekata bazaObjekata) throws IOException {
 		// mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
-
+		
 		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		Cenovnik cenovnik2 = new Cenovnik("test123", 600, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		bazaObjekata.getMapaCenovnik().put("test", cenovnik);

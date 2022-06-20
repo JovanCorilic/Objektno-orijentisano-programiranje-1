@@ -45,7 +45,7 @@ public class Dodatne_Usluge_Hotela {
 
 	public Dodatne_Usluge_Hotela(String text) {
 		// TODO Auto-generated constructor stub
-		String[] lista = text.split("|");
+		String[] lista = text.split("\\|");
 		this.naziv = lista[0];
 		this.deskripcija = lista[1];
 	}

@@ -3,7 +3,10 @@ package glavni;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +25,23 @@ public class LoginProzor extends JFrame {
 		setSize(300, 150);
 		setResizable(false);
 		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					bazaObjekata.Cuvanje();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				dispose();
+				System.exit(EXIT_ON_CLOSE);
+			}
+			
+		});
 
 		JTextField pretragaArea = new JTextField();
 		GhostText ghostText = new GhostText(pretragaArea, "Unesite ovde email...");
