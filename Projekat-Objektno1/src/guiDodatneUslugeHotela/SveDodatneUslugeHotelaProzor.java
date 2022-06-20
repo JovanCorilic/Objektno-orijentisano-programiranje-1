@@ -36,7 +36,17 @@ import objekti.Zaposlen;
 public class SveDodatneUslugeHotelaProzor extends JFrame{
 	private String cuvanje;
 	public SveDodatneUslugeHotelaProzor(BazaObjekata bazaObjekata) {
-		HashMap<String, Dodatne_Usluge_Hotela>mapa = bazaObjekata.getMapaDodatneUslugeHotela();
+		HashMap<String, Dodatne_Usluge_Hotela>mapa;
+		if(bazaObjekata.getTipKorisnika().equals("Jednistveno")) {
+			ArrayList<String>lista = bazaObjekata.getMapaRezervacijaDodatneUsluge().get(bazaObjekata.getId());
+			mapa = new HashMap<>();
+			if (lista!= null)
+				for(int i =0;i<lista.size();i++) {
+					mapa.put(lista.get(i), bazaObjekata.getMapaDodatneUslugeHotela().get(lista.get(i)));
+				}
+			bazaObjekata.setTipKorisnika(bazaObjekata.getPamcenje());
+		}else
+			mapa= bazaObjekata.getMapaDodatneUslugeHotela();
 		setTitle("Sve dodatne usluge hotela");
 		setSize(700, 600);
 		setLocationRelativeTo(null);
@@ -55,7 +65,7 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 		});
 		
 		JPanel jPanel = new JPanel();
-		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+		if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip())) {
 			jPanel.add(jLabel);
 			jPanel.add(createNew);
 		}
@@ -69,13 +79,16 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 		
 		add(jPanel, BorderLayout.NORTH);
 		String[] zaglavlja;
-		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+		if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip()))
 			zaglavlja = new String[] { "Naziv", "Deskripcija", "Brisanje" };
+		else if(bazaObjekata.getTipKorisnika().equals("Dodatno")) {
+			zaglavlja = new String[] { "Naziv", "Deskripcija", "Dodavanje" };
+		}
 		else
 			zaglavlja = new String[] { "Naziv", "Deskripcija" };
 		
 		String[][] data;
-		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+		if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip())) {
 			data = new String[mapa.size()][3];
 			int br = 0;
 			for (Dodatne_Usluge_Hotela temp : mapa.values()) {
@@ -86,7 +99,19 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 				data[br][lista.length] = "Delete";
 				br++;
 			}
-		}else {
+		}else if(bazaObjekata.getTipKorisnika().equals("Dodatno")) {
+			data = new String[mapa.size()][3];
+			int br = 0;
+			for (Dodatne_Usluge_Hotela temp : mapa.values()) {
+				String[] lista = temp.toString().split("\\|");
+				for (int i = 0; i < lista.length; i++) {
+					data[br][i] = lista[i];
+				}
+				data[br][lista.length] = "Dodaj";
+				br++;
+			}
+		}
+		else {
 			data = new String[mapa.size()][2];
 			int br = 0;
 			for (Dodatne_Usluge_Hotela temp : mapa.values()) {
@@ -114,11 +139,34 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 
 			}
 		};
+		
+		Action dodaj = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTable jTable = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				String temp = jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString();
+				int kljuc = bazaObjekata.getMapaRezervacija().size();
+				if(!bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
+					bazaObjekata.getMapaRezervacijaDodatneUsluge().put(kljuc, new ArrayList<>());
+				}
+				if(!bazaObjekata.getMapaRezervacijaDodatneUsluge().get(kljuc).contains(temp))
+					bazaObjekata.getMapaRezervacijaDodatneUsluge().get(kljuc).add(temp);
+				((DefaultTableModel) jTable.getModel()).removeRow(modelRow);
+				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+
+			}
+		};
+		
 		Button deleteButton = new Button("Delete");
 		ButtonColumn buttonColumn;
-		if(!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+		if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip()))
 			 buttonColumn = new ButtonColumn(jTable, delete, 2);
-
+		else if(bazaObjekata.getTipKorisnika().equals("Dodatno")) {
+			buttonColumn = new ButtonColumn(jTable, dodaj, 2);
+		}
+		
 		jTable.setCellSelectionEnabled(true);
 
 		DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField());
@@ -127,7 +175,7 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-					if(bazaObjekata.getTipKorisnika().equals("") || bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+					if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip()))
 						throw new Exception();
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
@@ -222,8 +270,11 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 				});
 		jTable.setAutoCreateRowSorter(true);
 		jTable.getTableHeader().setReorderingAllowed(false);
+		
 		JScrollPane jScrollPane = new JScrollPane(jTable);
 		add(jScrollPane);
+		if(bazaObjekata.getTipKorisnika().equals("Dodatno"))
+			bazaObjekata.setTipKorisnika(bazaObjekata.getPamcenje());
 	}
 
 }

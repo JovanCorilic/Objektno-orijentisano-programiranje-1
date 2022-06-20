@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import guiCenovnik.SviCenovniciProzor;
+import guiDodatneUslugeHotela.SveDodatneUslugeHotelaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
@@ -26,7 +27,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		setResizable(false);
 		JButton buttonSave;
 		if (bazaObjekata.getTipKorisnika().equals("")) {
-			setLayout(new GridLayout(8, 2));
+			setLayout(new GridLayout(9, 2));
 			add(new JLabel("Status rezervacije"));
 			
 			add(new JLabel(Rezervacija.Statusi.NACEK.getVrednost()));
@@ -51,6 +52,8 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			add(new JLabel("Broj ljudi"));
 			JTextField areaBrojLjudi= new JTextField();
 			add(areaBrojLjudi);
+			
+			
 			buttonSave = new JButton("Napravi");
 			
 			buttonSave.addActionListener(new ActionListener() {
@@ -86,7 +89,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 				}
 			});
 		}else {
-			setLayout(new GridLayout(9, 2));
+			setLayout(new GridLayout(10, 2));
 			add(new JLabel("Status rezervacije"));
 			JComboBox<String> box = new JComboBox<>();
 			box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
@@ -155,7 +158,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 						bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
-	
+						
 						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
 						rezervacijeProzor.setVisible(true);
 						dispose();
@@ -183,6 +186,10 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int kljuc = bazaObjekata.getMapaRezervacija().size();
+				if(bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
+					bazaObjekata.getMapaRezervacijaDodatneUsluge().remove(kljuc);
+				}
 				SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
 				rezervacijeProzor.setVisible(true);
 				dispose();
@@ -193,6 +200,23 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		 * JPanel jPanel = new JPanel(); jPanel.add(buttonSave);
 		 * jPanel.add(buttonCancel); add(jPanel,BorderLayout.SOUTH);
 		 */
+		add(new JLabel("Dodatne usluge hotela"));
+		JButton dodatneButton = new JButton("Dodatne usluge hotela");
+		dodatneButton.addActionListener(new  ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bazaObjekata.setPamcenje(bazaObjekata.getTipKorisnika());
+				bazaObjekata.setTipKorisnika("Dodatno");
+				SveDodatneUslugeHotelaProzor dodatneUslugeHotelaProzor = new SveDodatneUslugeHotelaProzor(bazaObjekata);
+				
+				dodatneUslugeHotelaProzor.setVisible(true);
+				
+				
+			}
+		});
+		add(dodatneButton);
+		
 		add(buttonSave);
 		add(buttonCancel);
 	}

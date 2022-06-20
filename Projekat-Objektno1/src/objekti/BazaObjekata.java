@@ -10,6 +10,8 @@ import glavni.Pisanje_Ucitavanje;
 public class BazaObjekata {
 	private String email;
 	private String tipKorisnika;
+	private String pamcenje;
+	private int id;
 	private HashMap<String, Cenovnik> mapaCenovnik;
 	private HashMap<String, Dodatne_Usluge_Hotela> mapaDodatneUslugeHotela;
 	private HashMap<String, Korisnik> mapaGosti;
@@ -104,6 +106,25 @@ public class BazaObjekata {
 		mapaSobarica = new HashMap<>();
 		mapaRezervacijaDodatneUsluge = new HashMap<>();
 		mapaOciscenihSobaSobarica=new HashMap<>();
+	}
+	
+	
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPamcenje() {
+		return pamcenje;
+	}
+
+	public void setPamcenje(String pamcenje) {
+		this.pamcenje = pamcenje;
 	}
 
 	public HashMap<String, ArrayList<Integer>> getMapaSobarica() {

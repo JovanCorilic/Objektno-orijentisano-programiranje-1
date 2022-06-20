@@ -33,6 +33,7 @@ import glavni.GhostText;
 import glavni.KonverterDatum;
 import glavni.OperacijePretrage;
 import guiCenovnik.PravljenjeCenovnikaProzor;
+import guiDodatneUslugeHotela.SveDodatneUslugeHotelaProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
@@ -87,11 +88,11 @@ public class SveRezervacijeProzor extends JFrame {
 		
 		String[]zaglavljaTemp;
 		if(bazaObjekata.getTipKorisnika().equals("")) {
-			zaglavljaTemp = new String[] { "Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi", "Email gosta",
-					"Broj pasoša gosta" };
+			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi", "Email gosta",
+					"Broj pasoša gosta","Dodatne usluge" };
 		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())){
 			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
-					"Broj pasoša gosta" };
+					"Broj pasoša gosta","Dodatne usluge" };
 		}
 		else {
 			zaglavljaTemp = new String[] { "ID","Status", "Datum početka", "Datum kraja", "Tip sobe","Broj ljudi","Broj sobe", "Email gosta",
@@ -101,24 +102,24 @@ public class SveRezervacijeProzor extends JFrame {
 		String[] zaglavlja = zaglavljaTemp;
 		String[][] dataTemp;
 		if(bazaObjekata.getTipKorisnika().equals("")) {
-			dataTemp = new String[mapa.size()][7];
+			dataTemp = new String[mapa.size()][9];
 			int br = 0;
 			for (Rezervacija temp : mapa.values()) {
 				String[] lista2 = temp.toString().split("\\|");
-				int duzina = lista2.length;
-				for (int i = 0; i < duzina; i++) {
-					if(i==5) {
-						break;
-					}
-					dataTemp[br][i] = lista2[i];
-				}
-				dataTemp[br][5]=temp.getEmail_gosta();
-				dataTemp[br][6]=temp.getBroj_pasosa();
 				
+				dataTemp[br][0] = temp.getId() + "";
+				for (int i = 1; i < lista2.length+1; i++) {
+					if(i==6)
+						break;
+					dataTemp[br][i] = lista2[i-1];
+				}
+				dataTemp[br][6]=temp.getEmail_gosta();
+				dataTemp[br][7]=temp.getBroj_pasosa();
+				dataTemp[br][8] = "Dodatne usluge";
 				br++;
 			}
 		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())){
-			dataTemp = new String[mapa.size()][9];
+			dataTemp = new String[mapa.size()][10];
 			int br = 0;
 			for (Rezervacija temp : mapa.values()) {
 				String[] lista2 = temp.toString().split("\\|");
@@ -126,7 +127,7 @@ public class SveRezervacijeProzor extends JFrame {
 				for (int i = 1; i < lista2.length+1; i++) {
 					dataTemp[br][i] = lista2[i-1];
 				}
-				
+				dataTemp[br][9] = "Dodatne usluge";
 				br++;
 			}
 		}
@@ -160,11 +161,35 @@ public class SveRezervacijeProzor extends JFrame {
 
 			}
 		};
+		
+		Action dodatne = new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JTable jTable = (JTable) e.getSource();
+				int modelRow = Integer.valueOf(e.getActionCommand());
+				int kljuc = Integer.parseInt(jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString());
+				bazaObjekata.setPamcenje(bazaObjekata.getTipKorisnika());
+				bazaObjekata.setTipKorisnika("Jednistveno");
+				bazaObjekata.setId(kljuc);
+				SveDodatneUslugeHotelaProzor dodatneUslugeHotelaProzor = new SveDodatneUslugeHotelaProzor(bazaObjekata);
+				dodatneUslugeHotelaProzor.setVisible(true);
+				
+				// mapa.remove(jTable.getValueAt(modelRow, 0).toString());
+
+			}
+		};
+		
 		Button deleteButton = new Button("Delete");
 		ButtonColumn buttonColumn;
-		if (!bazaObjekata.getTipKorisnika().equals("") && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+		
+		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.ADMIN.getTip()))
 			buttonColumn= new ButtonColumn(jTable, delete, 9);
-
+		else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+			buttonColumn= new ButtonColumn(jTable, dodatne, 9);
+		else if( bazaObjekata.getTipKorisnika().equals(""))
+			buttonColumn= new ButtonColumn(jTable, dodatne, 8);
+		
 		jTable.setCellSelectionEnabled(true);
 
 		DefaultCellEditor cellEditor = new DefaultCellEditor(new JTextField());
@@ -251,7 +276,7 @@ public class SveRezervacijeProzor extends JFrame {
 		if (!bazaObjekata.getTipKorisnika().equals(""))  
 			 column = jTable.getColumnModel().getColumn(1);
 		else
-			 column = jTable.getColumnModel().getColumn(0);
+			 column = jTable.getColumnModel().getColumn(1);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
 		cellEditor2.addCellEditorListener(new CellEditorListener() {
 
