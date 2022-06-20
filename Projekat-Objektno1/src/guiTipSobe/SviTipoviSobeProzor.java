@@ -7,8 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
@@ -69,6 +73,15 @@ public class SviTipoviSobeProzor extends JFrame{
 		pretraga.setPreferredSize(new Dimension(200,25));
 		jPanel.add(pretraga);
 		jPanel.add(buttonPretraga);
+		
+		JTextField pocetniDatum = new JTextField("24.11.2022 11:00");
+		JTextField krajnjiDatum = new JTextField("24.11.2022 11:00");
+		JButton dugmeDostupneSobe = new JButton("Dostupnost");
+		jPanel.add(new JLabel("     "));
+		jPanel.add(pocetniDatum);
+		jPanel.add(krajnjiDatum);
+		jPanel.add(dugmeDostupneSobe);
+		
 		add(jPanel, BorderLayout.NORTH);
 		
 		String[]zaglavljaTemp;
@@ -225,6 +238,57 @@ public class SviTipoviSobeProzor extends JFrame{
 				
 			}
 		});
+		
+		dugmeDostupneSobe.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					LocalDateTime pocetni = KonverterDatum.konvertovanjeUDateTime(pocetniDatum.getText());
+					LocalDateTime krajnji = KonverterDatum.konvertovanjeUDateTime(krajnjiDatum.getText());
+					
+					ArrayList<Integer>listaSoba = new ArrayList<>();
+					for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+						if(rezervacija.getDatumPocetka().isAfter(pocetni) && rezervacija.getDatumPocetka().isBefore(krajnji)) {
+							listaSoba.add(rezervacija.getBroj_sobe());
+						}
+					}
+					
+					ArrayList<String>listaTipova = new ArrayList<>();
+					for(Soba soba : bazaObjekata.getMapaSoba().values()) {
+						if(!listaSoba.contains(soba.getBrojSobe())) {
+							listaTipova.add(soba.getTip_Soba());
+						}
+					}
+					
+					ArrayList<Integer>listaZaBrisanje = new ArrayList<>();
+					String[][]tempData = new String[jTable.getRowCount()][jTable.getColumnCount()];
+					for(int t = 0;t<jTable.getRowCount();t++) {
+						for(int k = 0;k<jTable.getColumnCount();k++) {
+							tempData[t][k]=(String) jTable.getValueAt(t, k);
+						}
+					}
+					
+					
+					for(int i = 0;i<tempData.length;i++) {
+						if(!listaTipova.contains(tempData[i][0])) {
+							listaZaBrisanje.add(i);
+						}
+					}
+					for(int j = listaZaBrisanje.size()-1;j>-1;j--) {
+						((DefaultTableModel) jTable.getModel()).removeRow(jTable.convertRowIndexToModel(listaZaBrisanje.get(j)));
+						
+					}
+						
+					
+				}catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "Pogrešan format za datum!", "Greška",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		
 		jTable.setAutoCreateRowSorter(true);
 		jTable.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane = new JScrollPane(jTable);
