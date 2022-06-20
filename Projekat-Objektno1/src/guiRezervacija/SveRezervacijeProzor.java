@@ -201,7 +201,7 @@ public class SveRezervacijeProzor extends JFrame {
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-					if (!bazaObjekata.getTipKorisnika().equals(""))
+					if (bazaObjekata.getTipKorisnika().equals(""))
 						throw new Exception();
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
