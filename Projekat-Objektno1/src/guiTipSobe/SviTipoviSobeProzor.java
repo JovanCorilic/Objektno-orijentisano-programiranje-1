@@ -249,7 +249,11 @@ public class SviTipoviSobeProzor extends JFrame{
 					
 					ArrayList<Integer>listaSoba = new ArrayList<>();
 					for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+						if(!rezervacija.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost()))
+							continue;
 						if(rezervacija.getDatumPocetka().isAfter(pocetni) && rezervacija.getDatumPocetka().isBefore(krajnji)) {
+							listaSoba.add(rezervacija.getBroj_sobe());
+						}else if(rezervacija.getDatumPocetka().isBefore(pocetni) && rezervacija.getDatumKraja().isAfter(pocetni)) {
 							listaSoba.add(rezervacija.getBroj_sobe());
 						}
 					}

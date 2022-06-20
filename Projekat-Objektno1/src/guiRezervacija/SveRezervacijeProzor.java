@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -294,6 +295,23 @@ public class SveRezervacijeProzor extends JFrame {
 					String temp2 = defaultCellEditor.getCellEditorValue().toString();
 
 					final int kljuc =Integer.parseInt((String) jTable.getValueAt(row, 0));
+					Rezervacija nesto = bazaObjekata.getMapaRezervacija().get(kljuc);
+					
+					LocalDateTime pocetni = nesto.getDatumPocetka();
+					LocalDateTime krajnji = nesto.getDatumKraja();
+					
+					ArrayList<Integer>listaSoba = new ArrayList<>();
+					for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+						if(!rezervacija.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost()))
+							continue;
+						if(rezervacija.getDatumPocetka().isAfter(pocetni) && rezervacija.getDatumPocetka().isBefore(krajnji)) {
+							listaSoba.add(rezervacija.getBroj_sobe());
+						}else if(rezervacija.getDatumPocetka().isBefore(pocetni) && rezervacija.getDatumKraja().isAfter(pocetni)) {
+							listaSoba.add(rezervacija.getBroj_sobe());
+						}
+					}
+					
+					
 
 					mapa.get(kljuc).unosObjekta(column, temp2);
 				} catch (Exception e2) {
