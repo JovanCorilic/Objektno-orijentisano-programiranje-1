@@ -3,6 +3,7 @@ package guiRezervacija;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.temporal.ChronoUnit;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +21,54 @@ import objekti.Rezervacija;
 import objekti.Tip_Soba;
 
 public class PravljenjeRezervacijeProzor extends JFrame {
+	
+	public void IzracunavanjeCene(Rezervacija rezervacija,BazaObjekata bazaObjekata,String text) {
+		boolean granica = false;
+		for (Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
+			if (cenovnik.getTip_sobe().equals(text)) {
+				if (cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumPocetka())
+						&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumPocetka())) {
+					if (cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())) {
+						int broj_dana = (int) rezervacija.getDatumPocetka()
+								.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+						rezervacija.setUkupno_zaduzenje(
+								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+						break;
+					} else {
+						int broj_dana = (int) rezervacija.getDatumPocetka()
+								.until(cenovnik.getKrajVazenja(), ChronoUnit.DAYS);
+						rezervacija.setUkupno_zaduzenje(
+								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+						granica = true;
+						break;
+					}
+				}
+			}
+		}
+
+		if (granica) {
+			for (Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
+				if (cenovnik.getTip_sobe().equals(text)) {
+					if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
+							&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())
+							&& cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumKraja())) {
+						int broj_dana = (int) cenovnik.getPocetakVazenja()
+								.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+						rezervacija.setUkupno_zaduzenje(
+								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+						break;
+					} else if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
+							&& cenovnik.getKrajVazenja().isBefore(rezervacija.getDatumKraja())) {
+						int broj_dana = (int) cenovnik.getPocetakVazenja()
+								.until(cenovnik.getKrajVazenja(), ChronoUnit.DAYS);
+						rezervacija.setUkupno_zaduzenje(
+								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+					}
+				}
+			}
+		}
+	}
+	
 	public PravljenjeRezervacijeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje rezervacije");
 		setSize(700, 240);
@@ -29,7 +78,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		if (bazaObjekata.getTipKorisnika().equals("")) {
 			setLayout(new GridLayout(9, 2));
 			add(new JLabel("Status rezervacije"));
-			
+
 			add(new JLabel(Rezervacija.Statusi.NACEK.getVrednost()));
 			add(new JLabel("Početak važenja (Mora biti u formatu 24.11.2022 13:20)"));
 			JTextField areapocetakVazenja = new JTextField("24.11.2022 13:20");
@@ -38,57 +87,73 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 			add(areakrajVazenja);
 			add(new JLabel("Tip sobe"));
-			JComboBox<String>boxTipSobe = new JComboBox<>();
-			for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
+			JComboBox<String> boxTipSobe = new JComboBox<>();
+			for (Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
 				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
 			}
 			add(boxTipSobe);
 			add(new JLabel("Email gosta"));
-			
+
 			add(new JLabel(bazaObjekata.getEmail()));
 			add(new JLabel("Broj pasoša"));
-			
+
 			add(new JLabel(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka()));
 			add(new JLabel("Broj ljudi"));
-			JTextField areaBrojLjudi= new JTextField();
+			JTextField areaBrojLjudi = new JTextField();
 			add(areaBrojLjudi);
-			
-			
+
 			buttonSave = new JButton("Napravi");
-			
+
 			buttonSave.addActionListener(new ActionListener() {
-	
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						Rezervacija rezervacija = new Rezervacija();
-	
+
 						rezervacija.unosObjekta(1, Rezervacija.Statusi.NACEK.getVrednost());
-	
+
 						rezervacija.unosObjekta(2, areapocetakVazenja.getText());
 						rezervacija.unosObjekta(3, areakrajVazenja.getText());
-	
+
 						rezervacija.setEmail_gosta(bazaObjekata.getEmail());
-						
-						
-						rezervacija.setBroj_pasosa(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka());
+
+						rezervacija
+								.setBroj_pasosa(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka());
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
-						bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
-	
-						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
-						rezervacijeProzor.setVisible(true);
-						dispose();
-	
-					}  catch (Exception e2) {
+
+						rezervacija.setUkupno_zaduzenje(0);
+						
+						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
+						
+						for(String naziv : bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId())) {
+							IzracunavanjeCene(rezervacija, bazaObjekata, naziv);
+						}
+						
+						
+
+						int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni ? Ukupno zaduženje je "+rezervacija.getUkupno_zaduzenje()+"din", "Pitanje",
+								JOptionPane.YES_NO_OPTION);
+						if (choice == JOptionPane.YES_OPTION) {
+							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(), rezervacija);
+
+							SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+							rezervacijeProzor.setVisible(true);
+							dispose();
+
+						}
+
+						
+					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
 					}
-	
+
 				}
 			});
-		}else {
+		} else {
 			setLayout(new GridLayout(10, 2));
 			add(new JLabel("Status rezervacije"));
 			JComboBox<String> box = new JComboBox<>();
@@ -104,8 +169,8 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			JTextField areakrajVazenja = new JTextField("24.11.2022 13:20");
 			add(areakrajVazenja);
 			add(new JLabel("Tip sobe"));
-			JComboBox<String>boxTipSobe = new JComboBox<>();
-			for(Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
+			JComboBox<String> boxTipSobe = new JComboBox<>();
+			for (Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values()) {
 				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
 			}
 			add(boxTipSobe);
@@ -119,36 +184,35 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			JTextField areaPasos = new JTextField();
 			add(areaPasos);
 			add(new JLabel("Broj ljudi"));
-			JTextField areaBrojLjudi= new JTextField();
+			JTextField areaBrojLjudi = new JTextField();
 			add(areaBrojLjudi);
-		
-		
-		
+
 			buttonSave = new JButton("Napravi");
 			buttonSave.addActionListener(new ActionListener() {
-	
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					try {
 						Rezervacija rezervacija = new Rezervacija();
-	
+
 						rezervacija.unosObjekta(1, box.getSelectedItem().toString());
-	
+
 						rezervacija.unosObjekta(2, areapocetakVazenja.getText());
 						rezervacija.unosObjekta(3, areakrajVazenja.getText());
-	
+
 						rezervacija.setEmail_gosta(areaEmail.getText());
 						ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException = new ArrayIndexOutOfBoundsException();
-						if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta()) && areaPasos.getText().equals(""))
+						if (!bazaObjekata.getMapaGosti().containsKey(rezervacija.getEmail_gosta())
+								&& areaPasos.getText().equals(""))
 							throw arrayIndexOutOfBoundsException;
-	
+
 						rezervacija.setBroj_pasosa(areaPasos.getText());
-	
+
 						rezervacija.setBroj_sobe(Integer.parseInt(areabroj_sobe.getText()));
 						ExceptionInInitializerError expError = new ExceptionInInitializerError();
 						if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
 							throw expError;
-	
+
 						if (areaEmail.getText().equals("") && areaPasos.getText().equals("")
 								&& areabroj_sobe.getText().equals("")) {
 							ArithmeticException exception = new ArithmeticException();
@@ -157,12 +221,26 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
-						bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size() , rezervacija);
 						
-						SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
-						rezervacijeProzor.setVisible(true);
-						dispose();
-	
+						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
+						
+						for(String naziv : bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId())) {
+							IzracunavanjeCene(rezervacija, bazaObjekata, naziv);
+						}
+						
+						
+
+						int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni ? Ukupno zaduženje je "+rezervacija.getUkupno_zaduzenje()+"din", "Pitanje",
+								JOptionPane.YES_NO_OPTION);
+						if (choice == JOptionPane.YES_OPTION) {
+							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(), rezervacija);
+
+							SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
+							rezervacijeProzor.setVisible(true);
+							dispose();
+
+						}
+
 					} catch (ArithmeticException e3) {
 						JOptionPane.showMessageDialog(null, "Fale esencijalne stvari za rezervaciju!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
@@ -170,13 +248,14 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						JOptionPane.showMessageDialog(null, "Ne postoji soba sa tim brojem!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
 					} catch (ArrayIndexOutOfBoundsException e2) {
-						JOptionPane.showMessageDialog(null, "Ne postoji gost sa tim email-om i niste upisali broj pasoša!", "Greška",
+						JOptionPane.showMessageDialog(null,
+								"Ne postoji gost sa tim email-om i niste upisali broj pasoša!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
 					}
-	
+
 				}
 			});
 		}
@@ -187,7 +266,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int kljuc = bazaObjekata.getMapaRezervacija().size();
-				if(bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
+				if (bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
 					bazaObjekata.getMapaRezervacijaDodatneUsluge().remove(kljuc);
 				}
 				SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
@@ -202,21 +281,20 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		 */
 		add(new JLabel("Dodatne usluge hotela"));
 		JButton dodatneButton = new JButton("Dodatne usluge hotela");
-		dodatneButton.addActionListener(new  ActionListener() {
-			
+		dodatneButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bazaObjekata.setPamcenje(bazaObjekata.getTipKorisnika());
 				bazaObjekata.setTipKorisnika("Dodatno");
 				SveDodatneUslugeHotelaProzor dodatneUslugeHotelaProzor = new SveDodatneUslugeHotelaProzor(bazaObjekata);
-				
+
 				dodatneUslugeHotelaProzor.setVisible(true);
-				
-				
+
 			}
 		});
 		add(dodatneButton);
-		
+
 		add(buttonSave);
 		add(buttonCancel);
 	}
