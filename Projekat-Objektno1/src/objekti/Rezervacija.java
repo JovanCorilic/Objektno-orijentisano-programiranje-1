@@ -14,6 +14,7 @@ public class Rezervacija {
 	private int broj_sobe;
 	private String email_gosta;
 	private String broj_pasosa;
+	private double ukupno_zaduzenje;
 	
 	public void unosObjekta(Integer column,String text) throws Exception {
 		switch (column) {
@@ -36,7 +37,9 @@ public class Rezervacija {
 		case 5:
 			broj_ljudi=Integer.parseInt(text);
 			break;
-		
+		case 9:
+			ukupno_zaduzenje=Double.parseDouble(text);
+			break;
 		default:
 			break;
 		}
@@ -78,12 +81,15 @@ public class Rezervacija {
 		this.broj_sobe = Integer.parseInt(lista[5]);
 		this.email_gosta = lista[6];
 		this.broj_pasosa = lista[7];
+		this.ukupno_zaduzenje = Double.parseDouble(lista[8]);
 	}
 
 	
 
+	
+
 	public Rezervacija(Integer id, String status, LocalDateTime datumPocetka, LocalDateTime datumKraja, String tip_sobe,
-			int broj_ljudi, int broj_sobe, String email_gosta, String broj_pasosa) {
+			int broj_ljudi, int broj_sobe, String email_gosta, String broj_pasosa, double ukupno_zaduzenje) {
 		super();
 		this.id = id;
 		this.status = status;
@@ -94,6 +100,17 @@ public class Rezervacija {
 		this.broj_sobe = broj_sobe;
 		this.email_gosta = email_gosta;
 		this.broj_pasosa = broj_pasosa;
+		this.ukupno_zaduzenje = ukupno_zaduzenje;
+	}
+	
+	
+
+	public double getUkupno_zaduzenje() {
+		return ukupno_zaduzenje;
+	}
+
+	public void setUkupno_zaduzenje(double ukupno_zaduzenje) {
+		this.ukupno_zaduzenje = ukupno_zaduzenje;
 	}
 
 	public String getStatus() {
@@ -176,7 +193,7 @@ public class Rezervacija {
 	public String toString() {
 		return status + "|" + KonverterDatum.konvertovanjeUString(datumPocetka) + "|"
 				+ KonverterDatum.konvertovanjeUString(datumKraja) + "|"+tip_sobe+"|"+broj_ljudi+"|" + broj_sobe + "|" + email_gosta + "|"
-				+ broj_pasosa;
+				+ broj_pasosa+"|"+ukupno_zaduzenje;
 	}
 
 }

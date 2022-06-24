@@ -47,7 +47,7 @@ public class Main {
 				"2656545454", "Tamo amo 57");
 		bazaObjekata.getMapaGosti().put(korisnik.getEmail(), korisnik);
 		Rezervacija rezervacija = new Rezervacija(0,Rezervacija.Statusi.NACEK.getVrednost(), LocalDateTime.now(),
-				LocalDateTime.now(),"Obična",3, 12, korisnik.getEmail(), korisnik.getLozinka());
+				LocalDateTime.now(),"Obična",3, 12, korisnik.getEmail(), korisnik.getLozinka(),200);
 		bazaObjekata.getMapaRezervacija().put(0,rezervacija);
 		Tip_Soba tip_Soba = new Tip_Soba("Obična","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
 		bazaObjekata.getMapaTipovaSobe().put(tip_Soba.getNaziv_tipa(),tip_Soba);
