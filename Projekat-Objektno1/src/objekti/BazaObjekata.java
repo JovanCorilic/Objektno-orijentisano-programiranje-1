@@ -22,6 +22,7 @@ public class BazaObjekata {
 	private HashMap<String, ArrayList<Integer>> mapaSobarica;
 	private HashMap<Integer, ArrayList<String>> mapaRezervacijaDodatneUsluge;
 	private HashMap<String, ArrayList<OciscenaSoba>> mapaOciscenihSobaSobarica;
+	private ArrayList<VremePromenaStatusaRezervacije>listaPromeneStatusaRezervacija;
 
 	public String NajslobodnijaSobarica() {
 		int min = -1;
@@ -55,7 +56,7 @@ public class BazaObjekata {
 			}
 		}
 		mapaRezervacijaDodatneUsluge = Pisanje_Ucitavanje.UcitavanjeRezervacijaDodatneUsluge();
-		
+		listaPromeneStatusaRezervacija=Pisanje_Ucitavanje.UcitavanjePromeneStatusaRezervacije();
 	}
 
 	public void Cuvanje() throws IOException {
@@ -69,6 +70,7 @@ public class BazaObjekata {
 		Pisanje_Ucitavanje.PisanjeSobarice(mapaSobarica);
 		Pisanje_Ucitavanje.PisanjeRezervacijaDodatneUsluge(mapaRezervacijaDodatneUsluge);
 		Pisanje_Ucitavanje.PisanjeOciscenihSobaSobarica(mapaOciscenihSobaSobarica);
+		Pisanje_Ucitavanje.PisanjeProemnaStatusaRezervacija(listaPromeneStatusaRezervacija);
 	}
 
 	
@@ -109,8 +111,19 @@ public class BazaObjekata {
 	}
 	
 	
-
 	
+	
+	
+
+	public ArrayList<VremePromenaStatusaRezervacije> getListaPromeneStatusaRezervacija() {
+		return listaPromeneStatusaRezervacija;
+	}
+
+	public void setListaPromeneStatusaRezervacija(
+			ArrayList<VremePromenaStatusaRezervacije> listaPromeneStatusaRezervacija) {
+		this.listaPromeneStatusaRezervacija = listaPromeneStatusaRezervacija;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -69,6 +69,16 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		}
 	}
 	
+	public static int pravljenjeID(BazaObjekata bazaObjekata) {
+		int max = -1;
+		for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+			if (max < rezervacija.getId()) {
+				max = rezervacija.getId();
+			}
+		}
+		return max+1;
+	}
+	
 	public PravljenjeRezervacijeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje rezervacije");
 		setSize(700, 240);
@@ -121,7 +131,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						rezervacija
 								.setBroj_pasosa(bazaObjekata.getMapaGosti().get(bazaObjekata.getEmail()).getLozinka());
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
-						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
+						rezervacija.setId(pravljenjeID(bazaObjekata));
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 
 						rezervacija.setUkupno_zaduzenje(0);
@@ -218,7 +228,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 							ArithmeticException exception = new ArithmeticException();
 							throw exception;
 						}
-						rezervacija.setId(bazaObjekata.getMapaRezervacija().size());
+						rezervacija.setId(pravljenjeID(bazaObjekata));
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 						
@@ -265,7 +275,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int kljuc = bazaObjekata.getMapaRezervacija().size();
+				int kljuc = pravljenjeID(bazaObjekata);
 				if (bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
 					bazaObjekata.getMapaRezervacijaDodatneUsluge().remove(kljuc);
 				}

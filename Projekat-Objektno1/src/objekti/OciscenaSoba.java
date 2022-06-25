@@ -26,7 +26,7 @@ public class OciscenaSoba {
 
 	@Override
 	public String toString() {
-		return broj_sobe + "|" + vreme_kada_je_ocisceno;
+		return broj_sobe + "|" + KonverterDatum.konvertovanjeUString(vreme_kada_je_ocisceno);
 	}
 
 

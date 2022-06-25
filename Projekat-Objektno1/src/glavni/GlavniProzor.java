@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import guiCenovnik.SviCenovniciProzor;
 import guiDodatneUslugeHotela.SveDodatneUslugeHotelaProzor;
 import guiGost.SviGostiProzor;
+import guiIzvestaji.SviIzvestajiProzor;
 import guiRezervacija.SveRezervacijeProzor;
 import guiSoba.SveSobeProzor;
 import guiTipSobe.SviTipoviSobeProzor;
@@ -167,6 +168,17 @@ public class GlavniProzor extends JFrame {
 			}
 		});
 		
+		JButton btnIzvestaji = new JButton("Izveštaji");
+		btnIzvestaji.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SviIzvestajiProzor sviIzvestajiProzor = new SviIzvestajiProzor(bazaObjekata);
+				sviIzvestajiProzor.setVisible(true);
+				
+			}
+		});
+		
 		if(bazaObjekata.getTipKorisnika().equals("")) {
 			jPanel.add(btnRezervacija);
 			jPanel.add(btnTipSobe);
@@ -179,6 +191,7 @@ public class GlavniProzor extends JFrame {
 			jPanel.add(btnDodatne);
 			jPanel.add(btnSobe);
 			jPanel.add(btnTipSobe);
+			jPanel.add(btnIzvestaji);
 			
 		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
 			jPanel.add(btnGosti);

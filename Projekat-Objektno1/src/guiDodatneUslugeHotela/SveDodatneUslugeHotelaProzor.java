@@ -28,6 +28,7 @@ import glavni.ButtonColumn;
 import glavni.GhostText;
 import glavni.KonverterDatum;
 import glavni.OperacijePretrage;
+import guiRezervacija.PravljenjeRezervacijeProzor;
 import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Dodatne_Usluge_Hotela;
@@ -147,7 +148,7 @@ public class SveDodatneUslugeHotelaProzor extends JFrame{
 				JTable jTable = (JTable) e.getSource();
 				int modelRow = Integer.valueOf(e.getActionCommand());
 				String temp = jTable.getValueAt(jTable.convertRowIndexToModel(modelRow), 0).toString();
-				int kljuc = bazaObjekata.getMapaRezervacija().size();
+				int kljuc = PravljenjeRezervacijeProzor.pravljenjeID(bazaObjekata);
 				if(!bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(kljuc)) {
 					bazaObjekata.getMapaRezervacijaDodatneUsluge().put(kljuc, new ArrayList<>());
 				}

@@ -17,6 +17,7 @@ import objekti.OciscenaSoba;
 import objekti.Rezervacija;
 import objekti.Soba;
 import objekti.Tip_Soba;
+import objekti.VremePromenaStatusaRezervacije;
 import objekti.Zaposlen;
 
 public class Pisanje_Ucitavanje {
@@ -105,11 +106,19 @@ public class Pisanje_Ucitavanje {
 	public static void PisanjeOciscenihSobaSobarica(HashMap<String, ArrayList<OciscenaSoba>>mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("ocisceneSobeSobarica.csv"),false);
 		for(Map.Entry<String, ArrayList<OciscenaSoba>> entry : mapa.entrySet()) {
-			printWriter.print(entry.getKey()+";");
+			printWriter.print(entry.getKey());
 			for(OciscenaSoba i : entry.getValue()) {
 				printWriter.print(";"+i);
 			}
 			printWriter.println();
+		}
+		printWriter.close();
+	}
+	
+	public static void PisanjeProemnaStatusaRezervacija(ArrayList<VremePromenaStatusaRezervacije>lista) throws IOException {
+		PrintWriter printWriter = new PrintWriter(new FileWriter("promeneStatusaRezervacije.csv"),false);
+		for(VremePromenaStatusaRezervacije entry :lista) {
+			printWriter.println(entry.toString());
 		}
 		printWriter.close();
 	}
@@ -130,6 +139,21 @@ public class Pisanje_Ucitavanje {
 			return mapa;
 		} catch (Exception e) {
 			return new HashMap<>();
+		}
+	}
+	
+	public static ArrayList<VremePromenaStatusaRezervacije> UcitavanjePromeneStatusaRezervacije(){
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader("promeneStatusaRezervacije.csv"));
+			String currentLine;
+			ArrayList<VremePromenaStatusaRezervacije>lista = new ArrayList<>();
+			while((currentLine = bufferedReader.readLine())!=null) {
+				lista.add(new VremePromenaStatusaRezervacije(currentLine));
+				
+			}
+			return lista;
+		} catch (Exception e) {
+			return new ArrayList<>();
 		}
 	}
 	

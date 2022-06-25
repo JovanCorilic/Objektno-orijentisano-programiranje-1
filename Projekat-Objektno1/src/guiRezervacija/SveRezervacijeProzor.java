@@ -345,8 +345,11 @@ public class SveRezervacijeProzor extends JFrame {
 							throw new ArithmeticException();
 						}
 					}
-
+					
 					mapa.get(kljuc).unosObjekta(column, temp2);
+					
+					
+					
 				}catch (AcceptPendingException e3) {
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
