@@ -108,6 +108,7 @@ public class BazaObjekata {
 		mapaSobarica = new HashMap<>();
 		mapaRezervacijaDodatneUsluge = new HashMap<>();
 		mapaOciscenihSobaSobarica=new HashMap<>();
+		listaPromeneStatusaRezervacija = new ArrayList<>();
 	}
 	
 	
