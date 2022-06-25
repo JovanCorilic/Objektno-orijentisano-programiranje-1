@@ -40,6 +40,7 @@ import objekti.BazaObjekata;
 import objekti.Cenovnik;
 import objekti.Rezervacija;
 import objekti.Soba;
+import objekti.VremePromenaStatusaRezervacije;
 import objekti.Zaposlen;
 
 public class SveRezervacijeProzor extends JFrame {
@@ -348,7 +349,7 @@ public class SveRezervacijeProzor extends JFrame {
 					
 					mapa.get(kljuc).unosObjekta(column, temp2);
 					
-					
+					bazaObjekata.getListaPromeneStatusaRezervacija().add(new VremePromenaStatusaRezervacije(kljuc, temp2, LocalDateTime.now()));
 					
 				}catch (AcceptPendingException e3) {
 					final int row = jTable.getSelectedRow();
