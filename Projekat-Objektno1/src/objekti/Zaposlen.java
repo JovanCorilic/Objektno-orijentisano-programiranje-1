@@ -29,8 +29,10 @@ public class Zaposlen extends Korisnik {
 
 	}
 	
-	public void racunanjePlate() {
-		plata += 1.2 * plata*godina_staza*10/100;
+	public Double racunanjePlate() {
+		Double temp = plata;
+		temp += 1.2 * temp*godina_staza*10/100;
+		return temp;
 	}
 
 	public void unosObjektaZaposlen(Integer column, String text) {

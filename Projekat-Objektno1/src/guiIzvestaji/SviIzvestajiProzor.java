@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -20,7 +21,9 @@ import glavni.KonverterDatum;
 import objekti.BazaObjekata;
 import objekti.OciscenaSoba;
 import objekti.Rezervacija;
+import objekti.Soba;
 import objekti.VremePromenaStatusaRezervacije;
+import objekti.Zaposlen;
 
 public class SviIzvestajiProzor extends JFrame {
 	private boolean kliknutoDugme;
@@ -78,7 +81,8 @@ public class SviIzvestajiProzor extends JFrame {
 						text += "\n";
 					text += "Sobarica : " + entity.getKey() + " "
 							+ bazaObjekata.getMapaZaposlenih().get(entity.getKey()).getIme() + " "
-							+ bazaObjekata.getMapaZaposlenih().get(entity.getKey()).getPrezime() + " Ukupno očišćenih soba : "+entity.getValue().size();
+							+ bazaObjekata.getMapaZaposlenih().get(entity.getKey()).getPrezime()
+							+ " Ukupno očišćenih soba : " + entity.getValue().size();
 
 					for (OciscenaSoba ociscenaSoba : entity.getValue()) {
 						if (kliknutoDugme) {
@@ -112,8 +116,8 @@ public class SviIzvestajiProzor extends JFrame {
 
 				ispisRezervacije(Rezervacija.Statusi.POTVR.getVrednost(), "IzvestajPotvrdjenihRezervacija.txt",
 						bazaObjekata);
-				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, "+br+ " je rezervacija ovde", "Info",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, " + br + " je rezervacija ovde",
+						"Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		jPanel2.add(btnRezervacijaPotvrdjeno);
@@ -125,8 +129,8 @@ public class SviIzvestajiProzor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ispisRezervacije(Rezervacija.Statusi.ODBIJ.getVrednost(), "IzvestajOdbijeneRezervacije.txt",
 						bazaObjekata);
-				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, "+br+ " je rezervacija ovde", "Info",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, " + br + " je rezervacija ovde",
+						"Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		jPanel2.add(btnRezervacijaOdbijeno);
@@ -138,20 +142,96 @@ public class SviIzvestajiProzor extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ispisRezervacije(Rezervacija.Statusi.OTKAZ.getVrednost(), "IzvestajOtkazaneRezervacije.txt",
 						bazaObjekata);
-				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, "+br+ " je rezervacija ovde", "Info",
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj, " + br + " je rezervacija ovde",
+						"Info", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		jPanel2.add(btnRezervacijaOtkazana);
-		
-		
+
+		JButton btnSobe = new JButton("Izveštaj o sobama");
+		btnSobe.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = "";
+				for (Soba soba : bazaObjekata.getMapaSoba().values()) {
+					if (!text.equals(""))
+						text += "\n";
+					text += "Broj sobe " + soba.getBrojSobe() + " Tip sobe " + soba.getTip_Soba() + " ";
+					int brojNocenja = 0;
+					double ukupnaCena = 0;
+					for (Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+						if (rezervacija.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost())) {
+							if (rezervacija.getBroj_sobe() == soba.getBrojSobe()) {
+								if (kliknutoDugme) {
+									if (rezervacija.getDatumKraja().isBefore(pocetak))
+										continue;
+									else if (rezervacija.getDatumPocetka().isAfter(kraj))
+										continue;
+								}
+								brojNocenja += (int) rezervacija.getDatumPocetka().until(rezervacija.getDatumKraja(),
+										ChronoUnit.DAYS);
+								ukupnaCena += rezervacija.getUkupno_zaduzenje();
+							}
+						}
+					}
+
+					text += "Ukupan broj noćenja " + brojNocenja;
+					text += " Ukupan prihod " + ukupnaCena;
+				}
+				try {
+					PrintWriter printWriter = new PrintWriter(
+							new FileWriter("IzvestajUkupanBrojNocenjaIPrihodiSobe.txt"));
+					printWriter.print(text);
+					printWriter.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		jPanel2.add(btnSobe);
+
+		JButton btnPrihodiRaskodi = new JButton("Prihodi i rashodi");
+		btnPrihodiRaskodi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String text = "Prihodi:";
+				for (VremePromenaStatusaRezervacije rezervacije : bazaObjekata.getListaPromeneStatusaRezervacija()) {
+					if (rezervacije.getStatus().equals(Rezervacija.Statusi.POTVR.getVrednost())
+							|| rezervacije.getStatus().equals(Rezervacija.Statusi.OTKAZ.getVrednost())) {
+						text += "\n";
+						text += "ID rezervacije " + rezervacije.getID() + " Ukupan iznos te rezervacije "
+								+ bazaObjekata.getMapaRezervacija().get(rezervacije.getID()).getUkupno_zaduzenje()
+								+ "din";
+					}
+				}
+				text+="\nRashodi";
+				for(Zaposlen zaposlen : bazaObjekata.getMapaZaposlenih().values()) {
+					text+="\n";
+					text+=zaposlen.getIme()+" "+zaposlen.getPrezime()+" "+zaposlen.getTip_zaposlen()+ " Plata : "+zaposlen.racunanjePlate()+"din";
+				}
+				for (VremePromenaStatusaRezervacije rezervacije : bazaObjekata.getListaPromeneStatusaRezervacija()) {
+					if (rezervacije.getStatus().equals(Rezervacija.Statusi.ODBIJ.getVrednost())) {
+						text += "\n";
+						text += "ID rezervacije " + rezervacije.getID() + " Ukupan iznos te rezervacije "
+								+ bazaObjekata.getMapaRezervacija().get(rezervacije.getID()).getUkupno_zaduzenje()
+								+ "din";
+					}
+				}
+
+			}
+		});
+		jPanel2.add(btnPrihodiRaskodi);
 
 		add(jPanel2);
 	}
 
 	public void ispisRezervacije(String status, String lokacija, BazaObjekata bazaObjekata) {
 		String text = "";
-		br=0;
+		br = 0;
 		for (VremePromenaStatusaRezervacije rezervacije : bazaObjekata.getListaPromeneStatusaRezervacija()) {
 			if (rezervacije.getStatus().equals(status)) {
 				if (kliknutoDugme) {
@@ -162,12 +242,13 @@ public class SviIzvestajiProzor extends JFrame {
 				if (!text.equals(""))
 					text += "\n";
 				text += "Vreme potvrde " + KonverterDatum.konvertovanjeUString(rezervacije.getVremePromeneStatusa())
-						+ " Rezervacija: " + bazaObjekata.getMapaRezervacija().get(rezervacije.getID()).toString().replace("|", " ");
+						+ " Rezervacija: "
+						+ bazaObjekata.getMapaRezervacija().get(rezervacije.getID()).toString().replace("|", " ");
 				br++;
 			}
-			
+
 		}
-		text+="\n"+br+"je rezervacija ovde";
+		text += "\n" + br + "je rezervacija ovde";
 		try {
 			PrintWriter printWriter = new PrintWriter(new FileWriter(lokacija, false));
 			printWriter.print(text);

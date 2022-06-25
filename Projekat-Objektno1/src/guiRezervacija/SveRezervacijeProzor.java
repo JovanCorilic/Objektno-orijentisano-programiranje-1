@@ -58,6 +58,14 @@ public class SveRezervacijeProzor extends JFrame {
 			tempMapa = bazaObjekata.getMapaRezervacija();
 		}
 		
+		for(Rezervacija rezervacija : tempMapa.values()) {
+			if(rezervacija.getStatus().equals(Rezervacija.Statusi.NACEK.getVrednost())) {
+				if(rezervacija.getDatumPocetka().isAfter(LocalDateTime.now())) {
+					rezervacija.setStatus(Rezervacija.Statusi.ODBIJ.getVrednost());
+				}
+			}
+		}
+		
 		HashMap<Integer, Rezervacija> mapa = tempMapa;
 		
 		setTitle("Sve rezervacije");
