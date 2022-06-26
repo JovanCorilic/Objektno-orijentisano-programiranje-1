@@ -68,7 +68,7 @@ public class SviZaposleniProzor extends JFrame {
 		jPanel.add(buttonPretraga);
 		add(jPanel, BorderLayout.NORTH);
 
-		String[] zaglavlja = new String[] { "Email", "Broj pasoša", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
+		String[] zaglavlja = new String[] { "Email", "Lozinka", "Ime", "Prezime", "Pol", "Datum rođenja", "Telefon",
 				"Adresa", "Nivo stručne spreme", "Godina staža", "Plata", "Tip posla", "Brisanje" };
 
 		String[][] data = new String[mapa.size()][13];

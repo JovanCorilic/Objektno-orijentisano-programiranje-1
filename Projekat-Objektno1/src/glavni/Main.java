@@ -26,8 +26,8 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BazaObjekata bazaObjekata = new BazaObjekata();
-		//bazaObjekata.ucitavanje();
-		ucitavanje(bazaObjekata);
+		bazaObjekata.ucitavanje();
+		//ucitavanje(bazaObjekata);
 		
 		LoginProzor loginProzor = new LoginProzor(bazaObjekata);
 		loginProzor.setVisible(true);
@@ -36,7 +36,7 @@ public class Main {
 	public static void ucitavanje(BazaObjekata bazaObjekata) throws IOException {
 		// mapaCenovnik= Pisanje_Ucitavanje.UcitavanjeCenovnik();
 		
-		Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
+		/*Cenovnik cenovnik = new Cenovnik("test", 100, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		Cenovnik cenovnik2 = new Cenovnik("test123", 600, LocalDateTime.now(), LocalDateTime.now(), "Obična", "izmisljeno");
 		bazaObjekata.getMapaCenovnik().put("test", cenovnik);
 		bazaObjekata.getMapaCenovnik().put(cenovnik2.getNaziv(), cenovnik2);
@@ -52,22 +52,23 @@ public class Main {
 		Tip_Soba tip_Soba = new Tip_Soba("Obična","widfhwuwfwuwufvwsbfvwbv wjkfvwjbfvjwbf");
 		bazaObjekata.getMapaTipovaSobe().put(tip_Soba.getNaziv_tipa(),tip_Soba);
 		Soba temp = new Soba(12, Soba.Statusi.SLO.getVrednost(), tip_Soba.getNaziv_tipa());
-		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);
+		bazaObjekata.getMapaSoba().put(temp.getBrojSobe(), temp);*/
 		Zaposlen zaposlen = new Zaposlen("1", "1", "Pera", "Perić", "Srednji",
 				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.ADMIN.getTip());
-		Zaposlen zaposlen2 = new Zaposlen("2", "1", "Nikola", "Perić", "Srednji",
+		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
+		/*Zaposlen zaposlen2 = new Zaposlen("2", "1", "Nikola", "Perić", "Srednji",
 				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.REC.getTip());
 		Zaposlen zaposlen3 = new Zaposlen("3", "1", "Tanja", "Perić", "Srednji",
 				LocalDate.now(), "45454355454", "Ulica 23", "Srednji", 6, 78952.20, Zaposlen.tipovi.SOBARICA.getTip());
 		
 		bazaObjekata.getMapaZaposlenih().put(zaposlen2.getEmail(), zaposlen2);
-		bazaObjekata.getMapaZaposlenih().put(zaposlen.getEmail(), zaposlen);
+		
 		bazaObjekata.getMapaZaposlenih().put(zaposlen3.getEmail(), zaposlen3);
 		
 		Soba temp2 = new Soba(13, Soba.Statusi.SPR.getVrednost(), tip_Soba.getNaziv_tipa());
 		bazaObjekata.getMapaSoba().put(temp2.getBrojSobe(), temp2);
 		bazaObjekata.getMapaSobarica().put(zaposlen3.getEmail(), new ArrayList<>());
-		bazaObjekata.getMapaSobarica().get(zaposlen3.getEmail()).add(temp2.getBrojSobe());
+		bazaObjekata.getMapaSobarica().get(zaposlen3.getEmail()).add(temp2.getBrojSobe());*/
 	}
 	
 }

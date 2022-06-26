@@ -1,2 +1,10 @@
-test|100.0|25.06.2022 19:44|25.06.2022 19:44|Obična|izmisljeno
-test123|600.0|25.06.2022 19:44|25.06.2022 19:44|Obična|izmisljeno
+RucakBasic|1500.0|24.11.2021 13:20|24.11.2023 13:20|null|Ručak Basic
+RucakVIP|5000.0|24.11.2021 13:20|24.11.2023 13:20|null|Ručak VIP
+DorucakBasic|4000.0|24.11.2021 13:20|24.11.2023 13:20|null|Doručak Basic
+VeceraVIP|9000.0|24.11.2021 13:20|24.11.2023 13:20|null|Večera VIP
+DokrevetnaDvaLezaja|2000.0|24.11.2020 13:20|24.11.2023 13:20|Dvokreventa sa dva ležaja|null
+VeceraBasic|900.0|24.11.2021 13:20|24.11.2023 13:20|null|Večera Basic
+DorucakVIP|10000.0|24.11.2021 13:20|24.11.2023 13:20|null|Doručak VIP
+Trokrevetna|3000.0|24.11.2021 13:20|24.11.2023 13:20|Trokreventa|null
+Jednokrevetna Cena|600.0|24.11.2020 13:20|24.11.2023 13:20|Jednokreventa|null
+DvokrevetnaJedanLezaj|1000.0|24.11.2021 13:20|24.11.2023 13:20|Dvokrevetna sa jednim ležajem |null

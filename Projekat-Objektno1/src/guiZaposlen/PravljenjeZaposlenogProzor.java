@@ -30,7 +30,7 @@ public class PravljenjeZaposlenogProzor extends JFrame{
 		add(new JLabel("Email"));
 		JTextField areaemail = new JTextField();
 		add(areaemail);
-		add(new JLabel("Broj pasoša"));
+		add(new JLabel("Lozinka"));
 		JTextField arealozinka = new JTextField();
 		add(arealozinka);
 		add(new JLabel("Ime"));
