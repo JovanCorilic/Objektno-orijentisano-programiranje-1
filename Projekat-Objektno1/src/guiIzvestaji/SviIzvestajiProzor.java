@@ -213,6 +213,7 @@ public class SviIzvestajiProzor extends JFrame {
 					text+="\n";
 					text+=zaposlen.getIme()+" "+zaposlen.getPrezime()+" "+zaposlen.getTip_zaposlen()+ " Plata : "+zaposlen.racunanjePlate()+"din";
 				}
+				text+="\nOdbijene rezervacije";
 				for (VremePromenaStatusaRezervacije rezervacije : bazaObjekata.getListaPromeneStatusaRezervacija()) {
 					if (rezervacije.getStatus().equals(Rezervacija.Statusi.ODBIJ.getVrednost())) {
 						text += "\n";

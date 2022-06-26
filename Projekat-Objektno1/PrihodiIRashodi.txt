@@ -4,3 +4,5 @@ Rashodi
 Pera Perić Administrator Plata : 135797.78399999999din
 Mile Miletić Recepcioner / Agent za usluge gostiju Plata : 112000.0din
 Nikolina Stančetić Sobarica Plata : 81600.0din
+Odbijene rezervacije
+ID rezervacije 1 Ukupan iznos te rezervacije 135000.0din
