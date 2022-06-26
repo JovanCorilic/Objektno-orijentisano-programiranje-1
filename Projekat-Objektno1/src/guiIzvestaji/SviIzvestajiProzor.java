@@ -37,7 +37,7 @@ public class SviIzvestajiProzor extends JFrame {
 		setLocationRelativeTo(null);
 		JTextField pocetniDatum = new JTextField("24.11.2022 11:00");
 		JTextField krajnjiDatum = new JTextField("24.11.2022 11:00");
-		JButton btnOpseg = new JButton("U ospegu unetih datuma");
+		JButton btnOpseg = new JButton("U ospegu unetih datuma da bude izveštaj");
 		kliknutoDugme = false;
 
 		btnOpseg.addActionListener(new ActionListener() {

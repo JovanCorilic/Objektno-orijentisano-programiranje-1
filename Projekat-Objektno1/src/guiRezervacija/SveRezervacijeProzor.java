@@ -71,7 +71,7 @@ public class SveRezervacijeProzor extends JFrame {
 		
 		setTitle("Sve rezervacije");
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		setSize(800, 400);
+		setSize(1500, 400);
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");

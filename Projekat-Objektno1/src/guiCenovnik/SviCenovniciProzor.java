@@ -47,7 +47,7 @@ public class SviCenovniciProzor extends JFrame {
 		// kliknuti na celiju da se edituje
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension dimension = toolkit.getScreenSize();
-		setSize(800, 400);
+		setSize(1500, 400);
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");

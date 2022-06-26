@@ -39,7 +39,7 @@ public class SviGostiProzor extends JFrame {
 	public SviGostiProzor(BazaObjekata bazaObjekata) {
 		HashMap<String, Korisnik> mapa = bazaObjekata.getMapaGosti();
 		setTitle("Svi gosti");
-		setSize(800, 400);
+		setSize(1500, 400);
 		setLocationRelativeTo(null);
 		JLabel jLabel = new JLabel("Dupli klik na ćeliju da se edituje");
 		JButton createNew = new JButton("Create new");
