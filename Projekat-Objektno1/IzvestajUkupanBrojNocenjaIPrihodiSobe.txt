@@ -1,0 +1,5 @@
+Broj sobe 1 Tip sobe Jednokreventa Ukupan broj noćenja 6 Ukupan prihod 78000.0
+Broj sobe 2 Tip sobe Dvokrevetna sa jednim ležajem  Ukupan broj noćenja 0 Ukupan prihod 0.0
+Broj sobe 3 Tip sobe Trokreventa Ukupan broj noćenja 0 Ukupan prihod 0.0
+Broj sobe 4 Tip sobe Dvokreventa sa dva ležaja Ukupan broj noćenja 0 Ukupan prihod 0.0
+Broj sobe 5 Tip sobe Jednokreventa Ukupan broj noćenja 0 Ukupan prihod 0.0

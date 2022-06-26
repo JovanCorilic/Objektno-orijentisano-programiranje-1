@@ -37,6 +37,9 @@ public class Rezervacija {
 		case 5:
 			broj_ljudi=Integer.parseInt(text);
 			break;
+		case 6:
+			broj_sobe=Integer.parseInt(text);
+			break;
 		case 9:
 			ukupno_zaduzenje=Double.parseDouble(text);
 			break;
@@ -82,6 +85,7 @@ public class Rezervacija {
 		this.email_gosta = lista[6];
 		this.broj_pasosa = lista[7];
 		this.ukupno_zaduzenje = Double.parseDouble(lista[8]);
+		this.id = Integer.parseInt(lista[9]);
 	}
 
 	

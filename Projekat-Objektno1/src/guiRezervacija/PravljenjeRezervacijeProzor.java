@@ -21,22 +21,22 @@ import objekti.Rezervacija;
 import objekti.Tip_Soba;
 
 public class PravljenjeRezervacijeProzor extends JFrame {
-	
-	public void IzracunavanjeCene(Rezervacija rezervacija,BazaObjekata bazaObjekata,String text) {
+
+	public void IzracunavanjeCene(Rezervacija rezervacija, BazaObjekata bazaObjekata, String text) {
 		boolean granica = false;
 		for (Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
 			if (cenovnik.getTip_sobe().equals(text)) {
 				if (cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumPocetka())
 						&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumPocetka())) {
 					if (cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())) {
-						int broj_dana = (int) rezervacija.getDatumPocetka()
-								.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+						int broj_dana = (int) rezervacija.getDatumPocetka().until(rezervacija.getDatumKraja(),
+								ChronoUnit.DAYS);
 						rezervacija.setUkupno_zaduzenje(
 								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
 						break;
 					} else {
-						int broj_dana = (int) rezervacija.getDatumPocetka()
-								.until(cenovnik.getKrajVazenja(), ChronoUnit.DAYS);
+						int broj_dana = (int) rezervacija.getDatumPocetka().until(cenovnik.getKrajVazenja(),
+								ChronoUnit.DAYS);
 						rezervacija.setUkupno_zaduzenje(
 								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
 						granica = true;
@@ -52,15 +52,15 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 					if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
 							&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())
 							&& cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumKraja())) {
-						int broj_dana = (int) cenovnik.getPocetakVazenja()
-								.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+						int broj_dana = (int) cenovnik.getPocetakVazenja().until(rezervacija.getDatumKraja(),
+								ChronoUnit.DAYS);
 						rezervacija.setUkupno_zaduzenje(
 								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
 						break;
 					} else if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
 							&& cenovnik.getKrajVazenja().isBefore(rezervacija.getDatumKraja())) {
-						int broj_dana = (int) cenovnik.getPocetakVazenja()
-								.until(cenovnik.getKrajVazenja(), ChronoUnit.DAYS);
+						int broj_dana = (int) cenovnik.getPocetakVazenja().until(cenovnik.getKrajVazenja(),
+								ChronoUnit.DAYS);
 						rezervacija.setUkupno_zaduzenje(
 								rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
 					}
@@ -68,17 +68,70 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			}
 		}
 	}
-	
+
+	public void IzracunavanjeDodatnihUsluga(Rezervacija rezervacija, BazaObjekata bazaObjekata) {
+		boolean granica = false;
+		if (bazaObjekata.getMapaRezervacijaDodatneUsluge().containsKey(rezervacija.getId())) {
+			if (bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId()) != null) {
+				for (String text : bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId())) {
+					for (Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
+						if (cenovnik.getDodatna_usluga_hotela().equals(text)) {
+							if (cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumPocetka())
+									&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumPocetka())) {
+								if (cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())) {
+									int broj_dana = (int) rezervacija.getDatumPocetka()
+											.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+									rezervacija.setUkupno_zaduzenje(
+											rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+									break;
+								} else {
+									int broj_dana = (int) rezervacija.getDatumPocetka().until(cenovnik.getKrajVazenja(),
+											ChronoUnit.DAYS);
+									rezervacija.setUkupno_zaduzenje(
+											rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+									granica = true;
+									break;
+								}
+							}
+						}
+					}
+
+					if (granica) {
+						for (Cenovnik cenovnik : bazaObjekata.getMapaCenovnik().values()) {
+							if (cenovnik.getDodatna_usluga_hotela().equals(text)) {
+								if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
+										&& cenovnik.getKrajVazenja().isAfter(rezervacija.getDatumKraja())
+										&& cenovnik.getPocetakVazenja().isBefore(rezervacija.getDatumKraja())) {
+									int broj_dana = (int) cenovnik.getPocetakVazenja()
+											.until(rezervacija.getDatumKraja(), ChronoUnit.DAYS);
+									rezervacija.setUkupno_zaduzenje(
+											rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+									break;
+								} else if (cenovnik.getPocetakVazenja().isAfter(rezervacija.getDatumPocetka())
+										&& cenovnik.getKrajVazenja().isBefore(rezervacija.getDatumKraja())) {
+									int broj_dana = (int) cenovnik.getPocetakVazenja().until(cenovnik.getKrajVazenja(),
+											ChronoUnit.DAYS);
+									rezervacija.setUkupno_zaduzenje(
+											rezervacija.getUkupno_zaduzenje() + broj_dana * cenovnik.getCena());
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public static int pravljenjeID(BazaObjekata bazaObjekata) {
 		int max = -1;
-		for(Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
+		for (Rezervacija rezervacija : bazaObjekata.getMapaRezervacija().values()) {
 			if (max < rezervacija.getId()) {
 				max = rezervacija.getId();
 			}
 		}
-		return max+1;
+		return max + 1;
 	}
-	
+
 	public PravljenjeRezervacijeProzor(BazaObjekata bazaObjekata) {
 		setTitle("Pravljenje rezervacije");
 		setSize(700, 240);
@@ -135,19 +188,19 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
 
 						rezervacija.setUkupno_zaduzenje(0);
-						
+
 						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
+
 						
-						for(String naziv : bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId())) {
-							IzracunavanjeCene(rezervacija, bazaObjekata, naziv);
-						}
-						
+						IzracunavanjeDodatnihUsluga(rezervacija, bazaObjekata);
 						
 
-						int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni ? Ukupno zaduženje je "+rezervacija.getUkupno_zaduzenje()+"din", "Pitanje",
-								JOptionPane.YES_NO_OPTION);
+						int choice = JOptionPane.showConfirmDialog(null,
+								"Da li ste sigruni ? Ukupno zaduženje je " + rezervacija.getUkupno_zaduzenje() + "din",
+								"Pitanje", JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
-							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(), rezervacija);
+							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(),
+									rezervacija);
 
 							SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
 							rezervacijeProzor.setVisible(true);
@@ -155,7 +208,6 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 						}
 
-						
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(null, "Jedno ili više polja ste pogrešno uneli!", "Greška",
 								JOptionPane.ERROR_MESSAGE);
@@ -231,19 +283,17 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 						rezervacija.setId(pravljenjeID(bazaObjekata));
 						rezervacija.setTip_sobe(boxTipSobe.getSelectedItem().toString());
 						rezervacija.unosObjekta(5, areaBrojLjudi.getText());
-						
-						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
-						
-						for(String naziv : bazaObjekata.getMapaRezervacijaDodatneUsluge().get(rezervacija.getId())) {
-							IzracunavanjeCene(rezervacija, bazaObjekata, naziv);
-						}
-						
-						
 
-						int choice = JOptionPane.showConfirmDialog(null, "Da li ste sigruni ? Ukupno zaduženje je "+rezervacija.getUkupno_zaduzenje()+"din", "Pitanje",
-								JOptionPane.YES_NO_OPTION);
+						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
+
+						IzracunavanjeDodatnihUsluga(rezervacija, bazaObjekata);
+
+						int choice = JOptionPane.showConfirmDialog(null,
+								"Da li ste sigruni ? Ukupno zaduženje je " + rezervacija.getUkupno_zaduzenje() + "din",
+								"Pitanje", JOptionPane.YES_NO_OPTION);
 						if (choice == JOptionPane.YES_OPTION) {
-							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(), rezervacija);
+							bazaObjekata.getMapaRezervacija().put(bazaObjekata.getMapaRezervacija().size(),
+									rezervacija);
 
 							SveRezervacijeProzor rezervacijeProzor = new SveRezervacijeProzor(bazaObjekata);
 							rezervacijeProzor.setVisible(true);

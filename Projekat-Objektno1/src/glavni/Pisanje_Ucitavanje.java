@@ -57,7 +57,7 @@ public class Pisanje_Ucitavanje {
 	public static void PisanjeRezervacija(HashMap<Integer, Rezervacija> mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("rezervacije.csv"), false);
 		for (Rezervacija temp : mapa.values()) {
-			printWriter.println(temp.toString());
+			printWriter.println(temp.toString()+"|"+temp.getId());
 		}
 		printWriter.close();
 	}
@@ -275,11 +275,12 @@ public class Pisanje_Ucitavanje {
 			BufferedReader br = new BufferedReader(new FileReader("rezervacije.csv"));
 			String currentLine;
 			HashMap<Integer,Rezervacija> lista = new HashMap<>();
-			int temp = 0;
+			
 			
 			while ((currentLine = br.readLine()) != null) {
-				lista.put(temp , new Rezervacija(currentLine));
-				temp++;
+				Rezervacija rezervacija = new Rezervacija(currentLine);
+				lista.put(rezervacija.getId() , rezervacija);
+				
 			}
 			br.close();
 			return lista;

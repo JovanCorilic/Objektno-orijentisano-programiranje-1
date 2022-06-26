@@ -60,8 +60,9 @@ public class SveRezervacijeProzor extends JFrame {
 		
 		for(Rezervacija rezervacija : tempMapa.values()) {
 			if(rezervacija.getStatus().equals(Rezervacija.Statusi.NACEK.getVrednost())) {
-				if(rezervacija.getDatumPocetka().isAfter(LocalDateTime.now())) {
+				if(rezervacija.getDatumPocetka().isBefore(LocalDateTime.now())) {
 					rezervacija.setStatus(Rezervacija.Statusi.ODBIJ.getVrednost());
+					bazaObjekata.getListaPromeneStatusaRezervacija().add(new VremePromenaStatusaRezervacije(rezervacija.getId(), rezervacija.getStatus(), LocalDateTime.now()));
 				}
 			}
 		}

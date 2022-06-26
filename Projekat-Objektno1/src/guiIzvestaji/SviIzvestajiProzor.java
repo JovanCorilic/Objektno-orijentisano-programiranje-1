@@ -221,6 +221,14 @@ public class SviIzvestajiProzor extends JFrame {
 								+ "din";
 					}
 				}
+				try {
+					PrintWriter printWriter = new PrintWriter(new FileWriter("PrihodiIRashodi.txt"));
+					printWriter.print(text);
+					printWriter.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -248,7 +256,7 @@ public class SviIzvestajiProzor extends JFrame {
 			}
 
 		}
-		text += "\n" + br + "je rezervacija ovde";
+		text += "\n" + br + " je rezervacija ovde";
 		try {
 			PrintWriter printWriter = new PrintWriter(new FileWriter(lokacija, false));
 			printWriter.print(text);
