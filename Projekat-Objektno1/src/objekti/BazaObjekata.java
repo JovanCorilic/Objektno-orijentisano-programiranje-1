@@ -28,6 +28,9 @@ public class BazaObjekata {
 		int min = -1;
 		String temp = "";
 		for (Map.Entry<String, ArrayList<Integer>> entry : mapaSobarica.entrySet()) {
+			if(entry.getKey().equals("")) {
+				continue;
+			}
 			if (min == -1) {
 				temp = entry.getKey();
 				min = entry.getValue().size();

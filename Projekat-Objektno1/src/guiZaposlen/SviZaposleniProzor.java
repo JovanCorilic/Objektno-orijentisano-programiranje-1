@@ -35,7 +35,7 @@ import objekti.Zaposlen;
 
 public class SviZaposleniProzor extends JFrame {
 	private String cuvanje;
-
+	private int ponavljanje;
 	public SviZaposleniProzor(BazaObjekata bazaObjekata) {
 		HashMap<String, Zaposlen> mapa = bazaObjekata.getMapaZaposlenih();
 		
@@ -166,6 +166,7 @@ public class SviZaposleniProzor extends JFrame {
 		
 		box.addItem(Zaposlen.tipovi.REC.getTip());
 		box.addItem(Zaposlen.tipovi.SOBARICA.getTip());
+		box.addItem(Zaposlen.tipovi.ADMIN.getTip());
 
 		TableColumn column = jTable.getColumnModel().getColumn(11);
 		DefaultCellEditor cellEditor2 = new DefaultCellEditor(box);
@@ -174,7 +175,12 @@ public class SviZaposleniProzor extends JFrame {
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-
+					ponavljanje++;
+					if(ponavljanje==1)
+						throw new Exception();
+					else if(ponavljanje==2) {
+						ponavljanje=0;
+					}
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();

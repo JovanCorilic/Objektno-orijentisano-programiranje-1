@@ -41,6 +41,7 @@ import objekti.Zaposlen;
 
 public class SveSobeProzor extends JFrame {
 	private String cuvanje;
+	private int ponavljanje;
 
 	public SveSobeProzor(BazaObjekata bazaObjekata) {
 		HashMap<Integer, Soba> mapaTemp = new HashMap<>();
@@ -71,7 +72,8 @@ public class SveSobeProzor extends JFrame {
 		});
 
 		JPanel jPanel = new JPanel();
-		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()) && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())
+				&& !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
 			jPanel.add(jLabel);
 
 			jPanel.add(createNew);
@@ -87,15 +89,14 @@ public class SveSobeProzor extends JFrame {
 		String[] zaglavljatemp;
 		if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())) {
 			zaglavljatemp = new String[] { "Broj sobe", "Status", "Tip sobe", "Spremanje" };
-		}else if(bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+		} else if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
 			zaglavljatemp = new String[] { "Broj sobe", "Status", "Tip sobe" };
-		}
-		else {
+		} else {
 			zaglavljatemp = new String[] { "Broj sobe", "Status", "Tip sobe", "Brisanje" };
 		}
 		String[] zaglavlja = zaglavljatemp;
 		String[][] data;
-		if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip())) {
 			data = new String[mapa.size()][4];
 			int br = 0;
 			for (Soba temp : mapa.values()) {
@@ -109,7 +110,7 @@ public class SveSobeProzor extends JFrame {
 					data[br][lista2.length] = "Delete";
 				br++;
 			}
-		}else {
+		} else {
 			data = new String[mapa.size()][3];
 			int br = 0;
 			for (Soba temp : mapa.values()) {
@@ -117,7 +118,7 @@ public class SveSobeProzor extends JFrame {
 				for (int i = 0; i < lista2.length; i++) {
 					data[br][i] = lista2[i];
 				}
-				
+
 				br++;
 			}
 		}
@@ -136,8 +137,10 @@ public class SveSobeProzor extends JFrame {
 					bazaObjekata.getMapaSoba().get(kljuc).setStatus(Soba.Statusi.SLO.getVrednost());
 					ArrayList<Integer> listaSoba = bazaObjekata.getMapaSobarica().get(bazaObjekata.getEmail());
 					for (int i = 0; i < listaSoba.size(); i++) {
-						if (listaSoba.get(i) == kljuc)
+						if (listaSoba.get(i) == kljuc) {
 							bazaObjekata.getMapaSobarica().get(bazaObjekata.getEmail()).remove(i);
+							break;
+						}
 					}
 					if (!bazaObjekata.getMapaOciscenihSobaSobarica().containsKey(bazaObjekata.getEmail())) {
 						bazaObjekata.getMapaOciscenihSobaSobarica().put(bazaObjekata.getEmail(), new ArrayList<>());
@@ -156,8 +159,8 @@ public class SveSobeProzor extends JFrame {
 		};
 		Button deleteButton = new Button("Delete");
 		ButtonColumn buttonColumn;
-		if(!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
-			 buttonColumn = new ButtonColumn(jTable, delete, 3);
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+			buttonColumn = new ButtonColumn(jTable, delete, 3);
 
 		jTable.setCellSelectionEnabled(true);
 
@@ -167,7 +170,8 @@ public class SveSobeProzor extends JFrame {
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()) || bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())
+							|| bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
 						throw new Exception();
 
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
@@ -249,8 +253,14 @@ public class SveSobeProzor extends JFrame {
 
 			@Override
 			public void editingStopped(ChangeEvent e) {
+
 				try {
-					
+					ponavljanje++;
+					if(ponavljanje==1)
+						throw new Exception();
+					else if(ponavljanje==2) {
+						ponavljanje=0;
+					}
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
@@ -259,17 +269,14 @@ public class SveSobeProzor extends JFrame {
 
 					final String kljuc = (String) jTable.getValueAt(row, 0);
 
-					if (column == 1) {
+					if (column == 1 && temp2.equals(Soba.Statusi.SPR.getVrednost())) {
 						String nesto = bazaObjekata.NajslobodnijaSobarica();
 						bazaObjekata.getMapaSobarica().get(nesto).add(Integer.parseInt(kljuc));
 					}
 
 					mapa.get(Integer.parseInt(kljuc)).unosObjekta(column, temp2);
 				} catch (Exception e2) {
-					/*
-					 * final int row = jTable.getSelectedRow(); final int column =
-					 * jTable.getSelectedColumn(); jTable.setValueAt(cuvanje, row, column);
-					 */
+
 				}
 
 			}
@@ -283,7 +290,8 @@ public class SveSobeProzor extends JFrame {
 		column.setCellEditor(cellEditor2);
 
 		JComboBox<String> box2 = new JComboBox<>();
-		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()) && !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+		if (!bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())
+				&& !bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
 			for (Tip_Soba tip_Soba : bazaObjekata.getMapaTipovaSobe().values())
 				box2.addItem(tip_Soba.getNaziv_tipa());
 
@@ -294,8 +302,15 @@ public class SveSobeProzor extends JFrame {
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip()) || bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
+					if (bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.SOBARICA.getTip())
+							|| bazaObjekata.getTipKorisnika().equals(Zaposlen.tipovi.REC.getTip()))
 						throw new Exception();
+					ponavljanje++;
+					if(ponavljanje==1)
+						throw new Exception();
+					else if(ponavljanje==2) {
+						ponavljanje=0;
+					}
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();

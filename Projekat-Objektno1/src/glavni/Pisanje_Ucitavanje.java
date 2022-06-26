@@ -81,37 +81,48 @@ public class Pisanje_Ucitavanje {
 	
 	public static void PisanjeSobarice(HashMap<String, ArrayList<Integer>>mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("sobarice.csv"),false);
+		String text = "";
 		for(Map.Entry<String, ArrayList<Integer>> entry : mapa.entrySet()) {
-			printWriter.print(entry.getKey());
+			if(!text.equals(""))
+				text+="\n";
+			text+=entry.getKey();
 			for(Integer i : entry.getValue()) {
-				printWriter.print("|"+i);
+				text+="|"+i;
 			}
-			printWriter.println();
+
 		}
+		printWriter.print(text);
 		printWriter.close();
 	}
 	
 	public static void PisanjeRezervacijaDodatneUsluge(HashMap<Integer, ArrayList<String>> mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("rezervacijeDodatneUsluge.csv"),false);
+		String text = "";
 		for(Map.Entry<Integer, ArrayList<String>> entry : mapa.entrySet()) {
-			printWriter.print(entry.getKey());
+			if(!text.equals(""))
+				text+="\n";
+			text+=entry.getKey();
 			for(String i : entry.getValue()) {
-				printWriter.print("|"+i);
+				text+="|"+i;
 			}
-			printWriter.println();
 		}
+		printWriter.print(text);
 		printWriter.close();
 	}
 	
 	public static void PisanjeOciscenihSobaSobarica(HashMap<String, ArrayList<OciscenaSoba>>mapa) throws IOException {
 		PrintWriter printWriter = new PrintWriter(new FileWriter("ocisceneSobeSobarica.csv"),false);
+		String text = "";
 		for(Map.Entry<String, ArrayList<OciscenaSoba>> entry : mapa.entrySet()) {
-			printWriter.print(entry.getKey());
+			if(!text.equals(""))
+				text+="\n";
+			text+=entry.getKey();
 			for(OciscenaSoba i : entry.getValue()) {
-				printWriter.print(";"+i);
+				text+=";"+i;
 			}
-			printWriter.println();
+	
 		}
+		printWriter.print(text);
 		printWriter.close();
 	}
 	

@@ -45,7 +45,7 @@ import objekti.Zaposlen;
 
 public class SveRezervacijeProzor extends JFrame {
 	private String cuvanje;
-
+	private int ponavljanje;
 	public SveRezervacijeProzor(BazaObjekata bazaObjekata) {
 		HashMap<Integer, Rezervacija>tempMapa;
 		if(bazaObjekata.getTipKorisnika().equals("")) {
@@ -312,7 +312,12 @@ public class SveRezervacijeProzor extends JFrame {
 			@Override
 			public void editingStopped(ChangeEvent e) {
 				try {
-
+					ponavljanje++;
+					if(ponavljanje==1)
+						throw new Exception();
+					else if(ponavljanje==2) {
+						ponavljanje=0;
+					}
 					final DefaultCellEditor defaultCellEditor = (DefaultCellEditor) e.getSource();
 					final int row = jTable.getSelectedRow();
 					final int column = jTable.getSelectedColumn();
