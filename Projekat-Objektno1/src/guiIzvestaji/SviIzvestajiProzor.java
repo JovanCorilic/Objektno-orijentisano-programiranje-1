@@ -47,7 +47,7 @@ public class SviIzvestajiProzor extends JFrame {
 				try {
 					LocalDateTime temp1 = KonverterDatum.konvertovanjeUDateTime(pocetniDatum.getText());
 					LocalDateTime temp2 = KonverterDatum.konvertovanjeUDateTime(krajnjiDatum.getText());
-					if (pocetak.isAfter(kraj))
+					if (temp1.isAfter(temp2))
 						throw new Exception();
 					kliknutoDugme = true;
 					pocetak = temp1;
@@ -99,6 +99,8 @@ public class SviIzvestajiProzor extends JFrame {
 					PrintWriter printWriter = new PrintWriter(new FileWriter("IzvestajOciscenihSoba.txt", false));
 					printWriter.print(text);
 					printWriter.close();
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
+							"Info", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -184,6 +186,8 @@ public class SviIzvestajiProzor extends JFrame {
 							new FileWriter("IzvestajUkupanBrojNocenjaIPrihodiSobe.txt"));
 					printWriter.print(text);
 					printWriter.close();
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
+							"Info", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -226,6 +230,8 @@ public class SviIzvestajiProzor extends JFrame {
 					PrintWriter printWriter = new PrintWriter(new FileWriter("PrihodiIRashodi.txt"));
 					printWriter.print(text);
 					printWriter.close();
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
+							"Info", JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

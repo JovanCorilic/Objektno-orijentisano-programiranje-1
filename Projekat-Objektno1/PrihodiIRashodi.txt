@@ -1,8 +1,11 @@
 Prihodi:
 ID rezervacije 0 Ukupan iznos te rezervacije 78000.0din
+ID rezervacije 2 Ukupan iznos te rezervacije 77400.0din
+ID rezervacije 3 Ukupan iznos te rezervacije 582000.0din
 Rashodi
 Pera Perić Administrator Plata : 135797.78399999999din
 Mile Miletić Recepcioner / Agent za usluge gostiju Plata : 112000.0din
 Nikolina Stančetić Sobarica Plata : 81600.0din
+Milena Mile Sobarica Plata : 120400.0din
 Odbijene rezervacije
 ID rezervacije 1 Ukupan iznos te rezervacije 135000.0din

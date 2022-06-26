@@ -216,13 +216,11 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 				}
 			});
 		} else {
-			setLayout(new GridLayout(10, 2));
+			setLayout(new GridLayout(9, 2));
 			add(new JLabel("Status rezervacije"));
 			JComboBox<String> box = new JComboBox<>();
 			box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
-			box.addItem(Rezervacija.Statusi.ODBIJ.getVrednost());
-			box.addItem(Rezervacija.Statusi.OTKAZ.getVrednost());
-			box.addItem(Rezervacija.Statusi.POTVR.getVrednost());
+			
 			add(box);
 			add(new JLabel("Početak važenja (Mora biti u formatu 24.11.2022 13:20)"));
 			JTextField areapocetakVazenja = new JTextField("24.11.2022 13:20");
@@ -236,9 +234,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
 			}
 			add(boxTipSobe);
-			add(new JLabel("Broj sobe"));
-			JTextField areabroj_sobe = new JTextField();
-			add(areabroj_sobe);
+			
 			add(new JLabel("Email gosta"));
 			JTextField areaEmail = new JTextField();
 			add(areaEmail);
@@ -270,13 +266,10 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 						rezervacija.setBroj_pasosa(areaPasos.getText());
 
-						rezervacija.setBroj_sobe(Integer.parseInt(areabroj_sobe.getText()));
-						ExceptionInInitializerError expError = new ExceptionInInitializerError();
-						if (!bazaObjekata.getMapaSoba().containsKey(rezervacija.getBroj_sobe()))
-							throw expError;
+						
 
 						if (areaEmail.getText().equals("") && areaPasos.getText().equals("")
-								&& areabroj_sobe.getText().equals("")) {
+								&& areaBrojLjudi.getText().equals("")) {
 							ArithmeticException exception = new ArithmeticException();
 							throw exception;
 						}

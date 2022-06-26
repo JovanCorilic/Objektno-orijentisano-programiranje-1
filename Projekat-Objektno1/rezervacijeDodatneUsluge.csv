@@ -1,2 +1,4 @@
 0|Ručak Basic|Doručak VIP|Večera Basic
 1|Večera VIP|Doručak VIP|Ručak Basic
+2|Doručak Basic|Večera Basic|Ručak VIP
+3|Ručak VIP|Doručak VIP|Večera Basic|Ručak Basic
