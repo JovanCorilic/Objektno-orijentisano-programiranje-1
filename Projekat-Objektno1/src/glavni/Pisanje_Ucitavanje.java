@@ -163,7 +163,7 @@ public class Pisanje_Ucitavanje {
 			String currentLine;
 			HashMap<String, ArrayList<OciscenaSoba>>mapa = new HashMap<>();
 			while((currentLine = bufferedReader.readLine())!=null) {
-				String[]lista = currentLine.split("\\;");
+				String[]lista = currentLine.split(";");
 				mapa.put(lista[0], new ArrayList<>());
 				for(int i = 1;i<lista.length;i++) {
 					mapa.get(lista[0]).add(new OciscenaSoba(lista[i]));

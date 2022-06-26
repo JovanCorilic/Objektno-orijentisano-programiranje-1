@@ -57,6 +57,7 @@ public class BazaObjekata {
 		}
 		mapaRezervacijaDodatneUsluge = Pisanje_Ucitavanje.UcitavanjeRezervacijaDodatneUsluge();
 		listaPromeneStatusaRezervacija=Pisanje_Ucitavanje.UcitavanjePromeneStatusaRezervacije();
+		mapaOciscenihSobaSobarica=Pisanje_Ucitavanje.UcitavanjeOciscenihSobaSobarica();
 	}
 
 	public void Cuvanje() throws IOException {
