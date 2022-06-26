@@ -50,7 +50,7 @@ public class PravljenjeSobeProzor extends JFrame{
 					soba.unosObjekta(0, areaBrojSobe.getText());
 					ArithmeticException exception = new ArithmeticException();
 
-					if (bazaObjekata.getMapaSoba().containsKey(soba.getBrojSobe())) {
+					if (bazaObjekata.getMapaSoba().containsKey(soba.getBrojSobe()) || soba.getBrojSobe()==0) {
 						throw exception;
 					}
 					soba.unosObjekta(1, boxStatus.getSelectedItem().toString());
