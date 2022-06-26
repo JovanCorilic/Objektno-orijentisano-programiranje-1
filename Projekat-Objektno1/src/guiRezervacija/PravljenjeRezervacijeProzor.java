@@ -191,9 +191,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 
 						IzracunavanjeCene(rezervacija, bazaObjekata, rezervacija.getTip_sobe());
 
-						
 						IzracunavanjeDodatnihUsluga(rezervacija, bazaObjekata);
-						
 
 						int choice = JOptionPane.showConfirmDialog(null,
 								"Da li ste sigruni ? Ukupno zaduženje je " + rezervacija.getUkupno_zaduzenje() + "din",
@@ -220,7 +218,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 			add(new JLabel("Status rezervacije"));
 			JComboBox<String> box = new JComboBox<>();
 			box.addItem(Rezervacija.Statusi.NACEK.getVrednost());
-			
+
 			add(box);
 			add(new JLabel("Početak važenja (Mora biti u formatu 24.11.2022 13:20)"));
 			JTextField areapocetakVazenja = new JTextField("24.11.2022 13:20");
@@ -234,7 +232,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 				boxTipSobe.addItem(tip_Soba.getNaziv_tipa());
 			}
 			add(boxTipSobe);
-			
+
 			add(new JLabel("Email gosta"));
 			JTextField areaEmail = new JTextField();
 			add(areaEmail);
@@ -265,8 +263,6 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 							throw arrayIndexOutOfBoundsException;
 
 						rezervacija.setBroj_pasosa(areaPasos.getText());
-
-						
 
 						if (areaEmail.getText().equals("") && areaPasos.getText().equals("")
 								&& areaBrojLjudi.getText().equals("")) {

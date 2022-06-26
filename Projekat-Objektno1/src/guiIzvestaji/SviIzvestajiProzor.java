@@ -95,12 +95,13 @@ public class SviIzvestajiProzor extends JFrame {
 								+ KonverterDatum.konvertovanjeUString(ociscenaSoba.getVreme_kada_je_ocisceno());
 					}
 				}
+
 				try {
 					PrintWriter printWriter = new PrintWriter(new FileWriter("IzvestajOciscenihSoba.txt", false));
 					printWriter.print(text);
 					printWriter.close();
-					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
-							"Info", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -186,8 +187,8 @@ public class SviIzvestajiProzor extends JFrame {
 							new FileWriter("IzvestajUkupanBrojNocenjaIPrihodiSobe.txt"));
 					printWriter.print(text);
 					printWriter.close();
-					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
-							"Info", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -212,12 +213,13 @@ public class SviIzvestajiProzor extends JFrame {
 								+ "din";
 					}
 				}
-				text+="\nRashodi";
-				for(Zaposlen zaposlen : bazaObjekata.getMapaZaposlenih().values()) {
-					text+="\n";
-					text+=zaposlen.getIme()+" "+zaposlen.getPrezime()+" "+zaposlen.getTip_zaposlen()+ " Plata : "+zaposlen.racunanjePlate()+"din";
+				text += "\nRashodi";
+				for (Zaposlen zaposlen : bazaObjekata.getMapaZaposlenih().values()) {
+					text += "\n";
+					text += zaposlen.getIme() + " " + zaposlen.getPrezime() + " " + zaposlen.getTip_zaposlen()
+							+ " Plata : " + zaposlen.racunanjePlate() + "din";
 				}
-				text+="\nOdbijene rezervacije";
+				text += "\nOdbijene rezervacije";
 				for (VremePromenaStatusaRezervacije rezervacije : bazaObjekata.getListaPromeneStatusaRezervacija()) {
 					if (rezervacije.getStatus().equals(Rezervacija.Statusi.ODBIJ.getVrednost())) {
 						text += "\n";
@@ -230,8 +232,8 @@ public class SviIzvestajiProzor extends JFrame {
 					PrintWriter printWriter = new PrintWriter(new FileWriter("PrihodiIRashodi.txt"));
 					printWriter.print(text);
 					printWriter.close();
-					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj",
-							"Info", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Uspešno napravljen izveštaj", "Info",
+							JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
