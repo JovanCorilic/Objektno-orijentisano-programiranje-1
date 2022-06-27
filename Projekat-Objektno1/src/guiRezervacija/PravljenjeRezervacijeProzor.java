@@ -137,6 +137,7 @@ public class PravljenjeRezervacijeProzor extends JFrame {
 		setSize(700, 240);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		JButton buttonSave;
 		if (bazaObjekata.getTipKorisnika().equals("")) {
 			setLayout(new GridLayout(9, 2));
